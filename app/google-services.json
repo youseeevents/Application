@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "53971308672",
+    "firebase_url": "https://youseeevents-version-1.firebaseio.com",
+    "project_id": "youseeevents-version-1",
+    "storage_bucket": "youseeevents-version-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53971308672:android:2201663b59ef3986",
+        "android_client_info": {
+          "package_name": "com.example.youseeeventsv1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53971308672-iqpvtqderpmn35rtfde52vodg2uoanih.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJqIHP5IQJCnO6IG3nUo8ZQ83D5ONgXV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53971308672-iqpvtqderpmn35rtfde52vodg2uoanih.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
