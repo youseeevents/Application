@@ -29,8 +29,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,10 +168,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        User user = new User(email, password);
-        databaseRef = firebaseRef.getReference().child("user1");
-        databaseRef.setValue(user);
-
         boolean cancel = false;
         View focusView = null;
 
@@ -188,21 +187,50 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
+        } else if (!isEmailUCSD(email)) {
+            mEmailView.setError("This email address is not associated with University of California"
+                    + ", San Diego");
+            focusView = mEmailView;
+            cancel = true;
         }
+
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
         } else {
+
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            // showProgress(true);
+            // mAuthTask = new UserLoginTask(email, password);
+            // mAuthTask.execute((Void) null);
+
+            /* WHAT WE HAVE DONE SO FAR */
+
+            final String email_id = isEmailValid(email) ? email.substring(0, email.indexOf('@')) : " ";
+            databaseRef = firebaseRef.getReference().child(email_id);
+
+            if(______TODO______) {
+                System.out.println("NEW USER");
+                mEmailView.setError("There is not account " +
+                        "registered under this email address.");
+                focusView = mEmailView;
+                cancel = true;
+            } else {
+                System.out.println("RETURNING USER");
+                User user = new User(email, password);
+                databaseRef.setValue(user);
+                showProgress(true);
+
+            }
+
         }
     }
-
+    private boolean isEmailUCSD(String email) {
+        return email.contains("@ucsd.edu");
+    }
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
