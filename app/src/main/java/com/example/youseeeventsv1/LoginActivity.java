@@ -212,7 +212,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             final String email_id = isEmailValid(email) ? email.substring(0, email.indexOf('@')) : " ";
             databaseRef = firebaseRef.getReference().child(email_id);
 
-            if(______TODO______) {
+            if(false) {
                 System.out.println("NEW USER");
                 mEmailView.setError("There is not account " +
                         "registered under this email address.");
