@@ -3,8 +3,10 @@ package com.example.youseeeventsv1;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -20,6 +22,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -104,6 +107,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_test_1:
+                        startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+                        break;
+                    case R.id.menu_test_2:
+                        startActivity(new Intent( LoginActivity.this, MainActivity.class));
+                        break;
+                    case R.id.menu_test_3:
+
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     private void populateAutoComplete() {
@@ -223,7 +245,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 User user = new User(email, password);
                 databaseRef.setValue(user);
                 showProgress(true);
-
+                finish();
             }
 
         }

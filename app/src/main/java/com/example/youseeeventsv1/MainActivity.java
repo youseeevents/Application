@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         break;
                     case R.id.menu_test_2:
-
+                        startActivity(new Intent( MainActivity.this, MainActivity.class));
                         break;
                     case R.id.menu_test_3:
 
