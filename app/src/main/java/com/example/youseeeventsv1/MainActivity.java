@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.menu_search:
-                fragment = new LoginFragment();
+                //fragment = 
                 break;
 
             case R.id.menu_my_events:
