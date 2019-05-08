@@ -3,15 +3,15 @@
     <item
         android:id="@+id/menu_test_1"
         android:icon="@android:color/holo_green_light"
-        android:title='"Login"' />
+        android:title='Test 1' />
 
     <item
         android:id="@+id/menu_test_2"
         android:icon="@android:color/holo_blue_dark"
-        android:title='"Main"' />
+        android:title='Main' />
 
     <item
         android:id="@+id/menu_test_3"
         android:icon="@android:color/holo_red_dark"
-        android:title='"Test 3"' />
+        android:title='Login' />
 </menu>
