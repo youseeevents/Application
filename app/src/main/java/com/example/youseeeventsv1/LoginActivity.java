@@ -108,24 +108,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_test_1:
-                        startActivity(new Intent(LoginActivity.this, LoginActivity.class));
-                        break;
-                    case R.id.menu_test_2:
-                        startActivity(new Intent( LoginActivity.this, MainActivity.class));
-                        break;
-                    case R.id.menu_test_3:
-
-                        break;
-                }
-                return true;
-            }
-        });
     }
 
     private void populateAutoComplete() {

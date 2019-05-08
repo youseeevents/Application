@@ -9,7 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,8 +18,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        loadFragment(new HomeFragment());
+
+        BottomNavigationView bottom_navbar = (BottomNavigationView) findViewById(R.id.navigation);
+        bottom_navbar.setOnNavigationItemSelectedListener(this);
+
+        /*
+        BottomNavigationView bottom_navbar = (BottomNavigationView) findViewById(R.id.navigation);
+        bottom_navbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -36,7 +42,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        /*
+        */
+
+
+        /* FLOATTING ACTION BUTTON
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,5 +57,41 @@ public class MainActivity extends AppCompatActivity {
         });
         */
     }
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Fragment fragment = null;
 
+        switch (item.getItemId()) {
+            case R.id.menu_home:
+                fragment = new HomeFragment();
+                break;
+
+            case R.id.menu_search:
+                fragment = new LoginFragment();
+                break;
+
+            case R.id.menu_my_events:
+                fragment = new MyEventsFragment();
+                break;
+            case R.id.menu_account:
+                fragment = new AccountFragment();
+                break;
+        }
+        return loadFragment(fragment);
+    }
+    private boolean loadFragment(Fragment fragment) {
+        //switching fragment
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
 }

@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_test_1"
+        android:id="@+id/menu_home"
         android:icon="@android:color/holo_green_light"
-        android:title='Test 1' />
+        android:title='Home' />
 
     <item
-        android:id="@+id/menu_test_2"
+        android:id="@+id/menu_search"
         android:icon="@android:color/holo_blue_dark"
-        android:title='Main' />
+        android:title='Search' />
 
     <item
-        android:id="@+id/menu_test_3"
+        android:id="@+id/menu_my_events"
         android:icon="@android:color/holo_red_dark"
-        android:title='Login' />
+        android:title='My Events' />
+
+    <item
+        android:id="@+id/menu_account"
+        android:icon="@android:color/holo_red_dark"
+        android:title='Account' />
 </menu>
