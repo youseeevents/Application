@@ -73,7 +73,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 fragment = new MyEventsFragment();
                 break;
             case R.id.menu_account:
+                /*
+                if logged in...
+                 */
                 fragment = new AccountFragment();
+                /*
+                else (not logged in)...
+                    startActivity -> LoginActivity
+                 */
+
                 break;
         }
         return loadFragment(fragment);
