@@ -19,9 +19,9 @@ import java.util.Date;
 
 public class MyEventsFragment extends Fragment {
 
-    private FirebaseDatabase firebaseRef = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseRef = firebaseRef.getReference("Events");
-
+    private FirebaseDatabase database;
+    private DatabaseReference databaseRef;
+    private DatabaseReference mDatabase;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,7 +29,6 @@ public class MyEventsFragment extends Fragment {
         //with the fragment you want to inflate
         //like if the class is HomeFragment it should have R.layout.home_fragment
         //if it is DashboardFragment it should have R.layout.fragment_dashboard
-
         return inflater.inflate(R.layout.fragment_my_events, null);
     }
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
@@ -43,8 +42,12 @@ public class MyEventsFragment extends Fragment {
     }
     private void makeDummyEvent() {
         System.out.println("Dummy event made");
-        Event dummy = new Event("Test", "Test Desc",new Date(5,8,2019), "0", "Geisel 1W", null);
-        databaseRef = firebaseRef.getReference().child("Events/"+dummy.getName());
-        databaseRef.setValue(dummy);
+        Event dummy = new Event("Test", "What if we... uploaded an event into firebase",new Date(5,8,2019), "0", "Geisel 1W", null);
+        System.out.println(dummy);
+
+        database = FirebaseDatabase.getInstance();
+        databaseRef = database.getReference("Events");
+        mDatabase = databaseRef.child(dummy.getName());
+        mDatabase.setValue(dummy);
     }
 }
