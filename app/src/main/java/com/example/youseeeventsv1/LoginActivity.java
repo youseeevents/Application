@@ -224,7 +224,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 cancel = true;
             } else {
                 System.out.println("RETURNING USER");
-                User user = new User(email, password);
+                User user = new User(email, email_id, password);
                 databaseRef.setValue(user);
                 showProgress(true);
                 finish();
