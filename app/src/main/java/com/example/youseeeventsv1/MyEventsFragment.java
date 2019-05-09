@@ -20,7 +20,7 @@ import java.util.Date;
 public class MyEventsFragment extends Fragment {
 
     private FirebaseDatabase firebaseRef = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseRef = firebaseRef.getReference();
+    private DatabaseReference databaseRef = firebaseRef.getReference("Events");
 
     @Nullable
     @Override
@@ -41,11 +41,10 @@ public class MyEventsFragment extends Fragment {
             }
         });
     }
-
     private void makeDummyEvent() {
         System.out.println("Dummy event made");
         Event dummy = new Event("Test", "Test Desc",new Date(5,8,2019), 0, "Geisel 1W", null);
-        databaseRef = firebaseRef.getReference().child(dummy.getName());
+
         databaseRef.setValue(dummy);
     }
 }
