@@ -3,6 +3,7 @@ import java.util.Date;
 
 
 public class Event {
+
     private int eventId;
     private String name;
     private String eventDescription;
@@ -14,6 +15,18 @@ public class Event {
 
     private String[] tags;
 
+    public Event(String name, String eventDescription, Date date, int time, String location, String[]  tags){
+        // eventId will be set up by the database... figure that out
+        this.name = name;
+        this.eventDescription = eventDescription;
+        this.eventCounter = 0;
+
+        this.date = date;
+        this.time = time;
+        this.location = location;
+
+        this.tags = tags;
+    }
     /** SETTERS */
     public void setEventId(int eventId) {
         this.eventId = eventId;
