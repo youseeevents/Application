@@ -10,7 +10,7 @@ public class ScrapeReader {
         //create Scanner object
         Scanner eventScanner = new Scanner("./scrape_fitness&well-being.txt");
         //read the whole file
-        while(eventScanner.hasNextLine() == True){
+        while(eventScanner.hasNextLine() == true){
             String current = eventScanner.nextLine();
 
             int first = current.indexOf(',');
@@ -41,16 +41,16 @@ public class ScrapeReader {
             //convert eventDate to a Date object
             int month = 0;
             int date = 0;
-            int seperate = 0
+            int seperate = 0;
             for(int x = 0; x < eventDate.length(); x++){
                 char index = eventDate.charAt(x);
-                if(Character.isDigit(index) == True){
+                if(Character.isDigit(index) == true){
                     seperate = x;
                     break;
                 }
             }
             //create Date object
-            date = parseInt(eventDate.substring(seperate));
+            //date = parseInt(eventDate.substring(seperate));
 
             //month = ;
 

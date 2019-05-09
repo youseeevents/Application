@@ -43,8 +43,8 @@ public class MyEventsFragment extends Fragment {
     }
     private void makeDummyEvent() {
         System.out.println("Dummy event made");
-        Event dummy = new Event("Test", "Test Desc",new Date(5,8,2019), 0, "Geisel 1W", null);
-
+        Event dummy = new Event("Test", "Test Desc",new Date(5,8,2019), "0", "Geisel 1W", null);
+        databaseRef = firebaseRef.getReference().child("Events/"+dummy.getName());
         databaseRef.setValue(dummy);
     }
 }

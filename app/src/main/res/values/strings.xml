@@ -42,4 +42,5 @@
     <string name="error_field_required">Error: Field Required</string>
     <string name="error_invalid_email">No user found with that email</string>
     <string name="permission_rationale">Not Permitted</string>
+    <string name="username_hint">Username</string>
 </resources>
