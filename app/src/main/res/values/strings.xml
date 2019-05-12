@@ -43,4 +43,8 @@
     <string name="error_invalid_email">No user found with that email</string>
     <string name="permission_rationale">Not Permitted</string>
     <string name="username_hint">Username</string>
+    <string name="fragment_my_events">My Events</string>
+    <string name="fragment_account">Account</string>
+    <string name="fragment_search">Search</string>
+    <string name="fragment_home">Home</string>
 </resources>

@@ -29,8 +29,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
 
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimary"
         android:visibility="visible"
+        app:itemBackground="@color/white"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav_items"
         tools:layout_editor_absoluteX="0dp" />

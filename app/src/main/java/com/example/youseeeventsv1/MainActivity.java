@@ -63,20 +63,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.menu_home:
                 fragment = new HomeFragment();
+                setTitle("Home");
                 break;
 
             case R.id.menu_search:
                 fragment = new SearchFragment();
+                setTitle("Search");
                 break;
 
             case R.id.menu_my_events:
                 fragment = new MyEventsFragment();
+                setTitle("My Events");
                 //startActivity(new Intent(MainActivity.this, SignUpActivity.class));
                 break;
             case R.id.menu_account:
                 /*
                 if logged in...
                  */
+                setTitle("Account");
                 fragment = new AccountFragment();
                 /*
                 else (not logged in)...
