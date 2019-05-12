@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.menu_my_events:
                 fragment = new MyEventsFragment();
-                //startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                //startActivity(new Intent(MainActivity.this, SignUpActivity.class));
                 break;
             case R.id.menu_account:
                 /*

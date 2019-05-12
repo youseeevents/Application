@@ -18,6 +18,8 @@ public class Event {
 
     private static int eventIDCounter = 0;
 
+    public Event(){}
+
     public Event(String name, String eventDescription, Date date, String time, String location, String[]  tags){
         // eventId will be set up by the database... figure that out
         this.name = name;
