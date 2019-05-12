@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,6 +16,7 @@
         android:id="@+id/dummy_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/my_events_scroll"
         android:text="Button" />
 
     <ScrollView
@@ -28,15 +30,132 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/dummy_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="textPersonName"
-                android:text="Name" />
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/border">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dp">
+
+                    <EditText
+                        android:id="@+id/event_name_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:background="@null"
+                        android:capitalize="characters"
+                        android:contentDescription="Not editable"
+                        android:editable="false"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:text="Event"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+                    <EditText
+                        android:id="@+id/event_name_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:capitalize="sentences"
+                        android:clickable="false"
+                        android:contentDescription="Not editable"
+                        android:editable="false"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:singleLine="false"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/event_location_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:background="@null"
+                        android:capitalize="characters"
+                        android:contentDescription="Not editable"
+                        android:editable="false"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:text="Location"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+                    <EditText
+                        android:id="@+id/event_location_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:capitalize="sentences"
+                        android:clickable="false"
+                        android:contentDescription="Not editable"
+                        android:editable="false"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:singleLine="false"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/TextAppearance.AppCompat" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="10dp">
+
+                    <EditText
+                        android:id="@+id/event_date_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:background="@null"
+                        android:capitalize="characters"
+                        android:contentDescription="Not editable"
+                        android:editable="false"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:text="Date"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+                    <EditText
+                        android:id="@+id/event_date_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:capitalize="sentences"
+                        android:clickable="false"
+                        android:contentDescription="Not editable"
+                        android:editable="false"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:singleLine="false"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/TextAppearance.AppCompat" />
+                </TableRow>
+
+            </TableLayout>
         </LinearLayout>
     </ScrollView>
 

@@ -32,8 +32,12 @@ public class MyEventsFragment extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference databaseRef;
     private DatabaseReference mDatabase;
+
     private TextView dummy_text;
+    private TextView dummy_location;
+    private TextView dummy_date;
     private Button dummy_button;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,7 +49,9 @@ public class MyEventsFragment extends Fragment {
     }
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
         dummy_button = (Button) getView().findViewById(R.id.dummy_button);
-        dummy_text = (TextView) getView().findViewById(R.id.dummy_text);
+        dummy_text = (TextView) getView().findViewById(R.id.event_name_text);
+        dummy_date = (TextView) getView().findViewById(R.id.event_date_text);
+        dummy_location = (TextView) getView().findViewById(R.id.event_location_text);
 
         database = FirebaseDatabase.getInstance();
         databaseRef = database.getReference("Events");
@@ -67,7 +73,7 @@ public class MyEventsFragment extends Fragment {
     private void makeDummyEvent() {
         System.out.println("Dummy event made");
         Event dummy_event = new Event("Dummy", "What if we... " +
-                "uploaded an event into firebase",new Date(5,8,2019), "0",
+                "uploaded an event into firebase",new Date(), "0",
                 "Geisel 1W", null);
         System.out.println(dummy_event);
 
@@ -89,6 +95,8 @@ public class MyEventsFragment extends Fragment {
                     // need to make an event and set it equal to the getValue()
                     Event eve = ds.getValue(Event.class);
                     dummy_text.setText(eve.getName());
+                    dummy_location.setText(eve.getLocation());
+                    dummy_date.setText(eve.getDate().toString());
                 }
             }
 
