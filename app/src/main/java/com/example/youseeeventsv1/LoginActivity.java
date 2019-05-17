@@ -19,16 +19,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText inputEmail, inputPassword, inputUsername;
+    private EditText inputEmailUser, inputPassword;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
-    String email;
-    String username;
+    String emailUser, password;
+    //Check to see if the input is a username or email
+    boolean isEmail = false;
     DatabaseReference mDatabase;
     User user;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -37,40 +42,34 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_login);
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
         btnSignIn = (Button) findViewById(R.id.sign_in_button);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
-        inputEmail = (EditText) findViewById(R.id.user_email);
+        inputEmailUser = (EditText) findViewById(R.id.user_email);
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
 
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(com.example.youseeeventsv1.LoginActivity.this, SignUpActivity.class));
             }
         });
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
-                username = inputUsername.getText().toString().trim();
+                emailUser = inputEmailUser.getText().toString().trim();
+                password = inputPassword.getText().toString().trim();
 
-                if (TextUtils.isEmpty(username)) {
-                    Toast.makeText(getApplicationContext(), "Enter username!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(emailUser)) {
+                    Toast.makeText(getApplicationContext(), "Enter username or email!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -78,44 +77,61 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if( !emailUser.contains("@")) {
+                    // Checks if a username is already taken
+                    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users");
+                    rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            if (!snapshot.hasChild(emailUser)) {
+                                Toast.makeText(getApplicationContext(), "Username does not exist!", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            else{
+                                emailUser = snapshot.child(emailUser).child("email").getValue(String.class).trim();
+                                signIn( emailUser, password );
+                            }
 
-                if (password.length() < 6) {
-                    Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                     return;
                 }
+                else {
+                    signIn( emailUser, password );
+                }
 
-                progressBar.setVisibility(View.VISIBLE);
-                //create user
-                auth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(com.example.youseeeventsv1.LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(com.example.youseeeventsv1.LoginActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                                progressBar.setVisibility(View.GONE);
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                if (!task.isSuccessful()) {
-                                    Toast.makeText(com.example.youseeeventsv1.LoginActivity.this, "Authentication failed." + task.getException(),
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
-                                    //finish();
-                                    pushData(email);
-                                    //startActivity(new Intent(com.example.youseeeventsv1.SignUpActivity.this, MainActivity.class));
-                                }
-                            }
-                        });
 
             }
         });
     }
-
-    private void pushData ( String email) {
-        String userId =  FirebaseAuth.getInstance().getCurrentUser().getUid();
-        user = new User(email, userId, username);
-        mDatabase = ref.child(username);
-        mDatabase.setValue(user);
-        finish();
+    private void signIn(String user_email, String password ) {
+        progressBar.setVisibility(View.VISIBLE);
+        //Sign in user
+        auth.signInWithEmailAndPassword(emailUser, password)
+                .addOnCompleteListener(com.example.youseeeventsv1.LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressBar.setVisibility(View.GONE);
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(com.example.youseeeventsv1.LoginActivity.this, "Authentication failed." + task.getException(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        if( task.isSuccessful()) {
+                            startActivity(new Intent(com.example.youseeeventsv1.LoginActivity.this, MainActivity.class));
+                        }
+                    }
+                });
+    }
+    public void setEmail( String email ) {
+        emailUser = email;
     }
     @Override
     protected void onResume() {

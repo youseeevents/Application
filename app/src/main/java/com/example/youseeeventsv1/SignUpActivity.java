@@ -1,5 +1,6 @@
 package com.example.youseeeventsv1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,18 +16,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword, inputUsername;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
-    String email;
-    String username;
+    String username, password, email;
     DatabaseReference mDatabase;
     User user;
+    boolean userNameTaken = false;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference("Users");
     @Override
@@ -45,17 +49,10 @@ public class SignUpActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
 
-        btnResetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //startActivity(new Intent(SignUpActivity.this, ResetPasswordActivity.class));
-            }
-        });
-
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
             }
         });
 
@@ -64,7 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
+                password = inputPassword.getText().toString().trim();
                 username = inputUsername.getText().toString().trim();
 
                 if (TextUtils.isEmpty(username)) {
@@ -86,30 +83,47 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                // Checks if a username is already taken
+                DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users");
+                rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        if (snapshot.hasChild(username)) {
+                            Toast.makeText(getApplicationContext(), "Username already exists!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        else{
+                            progressBar.setVisibility(View.VISIBLE);
+                            //create user
+                            auth.createUserWithEmailAndPassword(email, password)
+                                    .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            //Toast.makeText(SignUpActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                            progressBar.setVisibility(View.GONE);
+                                            // If sign in fails, display a message to the user. If sign in succeeds
+                                            // the auth state listener will be notified and logic to handle the
+                                            // signed in user can be handled in the listener.
+                                            if (!task.isSuccessful()) {
+                                                Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException(),
+                                                        Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                //finish();
+                                                pushData(email);
+                                                startActivity(new Intent(SignUpActivity.this, LoginActivity
+                                                        .class));
+                                            }
+                                        }
+                                    });
+                        }
+                    }
 
-                progressBar.setVisibility(View.VISIBLE);
-                //create user
-                auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(SignUpActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                                progressBar.setVisibility(View.GONE);
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                if (!task.isSuccessful()) {
-                                    Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException(),
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                    //startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-                                    //finish();
-                                    pushData(email);
-
-                                }
-                            }
-                        });
+                    }
+                });
+                return;
 
             }
         });
