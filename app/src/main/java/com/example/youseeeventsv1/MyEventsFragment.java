@@ -1,31 +1,24 @@
 package com.example.youseeeventsv1;
 
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-
-/**
- * Created by Belal on 1/23/2018.
- */
 
 public class MyEventsFragment extends Fragment {
 
@@ -33,77 +26,111 @@ public class MyEventsFragment extends Fragment {
     private DatabaseReference databaseRef;
     private DatabaseReference mDatabase;
 
-    private TextView dummy_text;
-    private TextView dummy_location;
-    private TextView dummy_date;
     private Button dummy_button;
+
+    private final static int load_incr = 20;
+    static int start_ind = 0;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter myAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    private final static Event[] events = new Event[20];
+    private static DataSnapshot lastVisible;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //just change the fragment_dashboard
-        //with the fragment you want to inflate
-        //like if the class is HomeFragment it should have R.layout.home_fragment
-        //if it is DashboardFragment it should have R.layout.fragment_dashboard
         return inflater.inflate(R.layout.fragment_my_events, null);
     }
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
-        dummy_button = (Button) getView().findViewById(R.id.dummy_button);
-        dummy_text = (TextView) getView().findViewById(R.id.event_name_text);
-        dummy_date = (TextView) getView().findViewById(R.id.event_date_text);
-        dummy_location = (TextView) getView().findViewById(R.id.event_location_text);
 
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
         database = FirebaseDatabase.getInstance();
         databaseRef = database.getReference("Events");
-        /*
-            Button sends Dummy Event into Firebase
-         */
+
+        // Dummy button for testing out things
+        dummy_button = (Button) getView().findViewById(R.id.dummy_button);
         dummy_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeDummyEvent();
+                //System.out.println("STATUS REPORT: " + '\n' +
+                //        "Number of events: " + events.length + "\n" +
+                //        "First event: " + events[0].getName() + "\n" +
+                //        "Last event: " + events[19].getName());
+                start_ind = start_ind + 20;
+                fillEventsArray();
             }
         });
 
-        /*
-            Trying to read Dummy Event from Database and putting it onto a TextView Object
-         */
-        readFromDatabase();
+        fillEventsArray();
+        System.out.println("CHECK " + events.length + " " + events[0] + " to " + events[19]);
+
+        // Setting up the recycler view and filling it with objects in the events array.
+        recyclerView = (RecyclerView) getView().findViewById(R.id.events_recycler_view);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        myAdapter = new MyAdapter(events);
+        recyclerView.setAdapter(myAdapter);
     }
+
+
     private void makeDummyEvent() {
         System.out.println("Dummy event made");
         Event dummy_event = new Event("Dummy", "What if we... " +
-                "uploaded an event into firebase",new Date(), "0",
+                "uploaded an event into firebase", "dummy_date", "0",
                 "Geisel 1W", null);
         System.out.println(dummy_event);
 
         mDatabase = databaseRef.child(dummy_event.getName());
         mDatabase.setValue(dummy_event);
     }
-    private void readFromDatabase(){
 
-        databaseRef.addValueEventListener(new ValueEventListener() {
+    private void fillEventsArray(){
+        System.out.println("READING FROM " + start_ind);
+
+        FirebaseDatabase.getInstance().getReference("Events")
+                .orderByValue()
+                .startAt(0)
+                .limitToFirst(20)
+                .addListenerForSingleValueEvent(new ValueEventListener(){
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Basically, this will retrieve every event object under the "Events" tab.
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
-                    /* For debugging
-                    System.out.println(ds.getKey());
-                    System.out.println(ds.getValue());
-                    */
-                    // getValue() from a DataSnapshot returns the information in a hashmap. So you
-                    // need to make an event and set it equal to the getValue()
-                    Event eve = ds.getValue(Event.class);
-                    dummy_text.setText(eve.getName());
-                    dummy_location.setText(eve.getLocation());
-                    dummy_date.setText(eve.getDate().toString());
+                int event_ind = 0;
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    events[event_ind] = ds.getValue(Event.class);
+                    System.out.println(ds);
+                    //System.out.println(ds.getKey() + " " + events[event_ind].getName());
+                    event_ind = event_ind + 1;
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.v("dummy", "failed to read value", databaseError.toException());
+
             }
         });
     }
 }
+/*************************************************************
+ * ARCHAIC METHOD - would read EVERYTHING from the database. *
+ *************************************************************
+private void readFromDatabase(){
+
+    databaseRef.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            // Basically, this will retrieve every event object under the "Events" tab.
+            for (DataSnapshot ds : dataSnapshot.getChildren()){
+                // getValue() from a DataSnapshot returns the information in a hashmap. So you
+                // need to make an event and set it equal to the getValue()
+                Event e = ds.getValue(Event.class);
+            }
+        }
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Log.v("dummy", "failed to read value", databaseError.toException());
+        }
+    });
+}
+*/
