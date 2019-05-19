@@ -47,4 +47,8 @@
     <string name="fragment_account">Account</string>
     <string name="fragment_search">Search</string>
     <string name="fragment_home">Home</string>
+    <string name="event_name_label">Event</string>
+    <string name="event_date_label">Date</string>
+    <string name="event_location_label">Location</string>
+    <string name="user_email_login">Login</string>
 </resources>

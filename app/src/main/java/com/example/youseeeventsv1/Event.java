@@ -10,7 +10,7 @@ public class Event {
     private int eventCounterGoing;
     private int eventCounterInterested;
 
-    private Date date;
+    private String date;
     private String time;
     private String location;
 
@@ -20,7 +20,7 @@ public class Event {
 
     public Event(){}
 
-    public Event(String name, String eventDescription, Date date, String time, String location, String[]  tags){
+    public Event(String name, String eventDescription, String date, String time, String location, String[]  tags){
         // eventId will be set up by the database... figure that out
         this.name = name;
         this.eventDescription = eventDescription;
@@ -55,7 +55,7 @@ public class Event {
         this.eventCounterInterested = eventCounterInterested;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -92,7 +92,7 @@ public class Event {
         return eventCounterInterested;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
