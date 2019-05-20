@@ -23,28 +23,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         BottomNavigationView bottom_navbar = (BottomNavigationView) findViewById(R.id.navigation);
         bottom_navbar.setOnNavigationItemSelectedListener(this);
 
-        /*
-        BottomNavigationView bottom_navbar = (BottomNavigationView) findViewById(R.id.navigation);
-        bottom_navbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_test_1:
-                        Fragment home_fragment = new HomeFragment();
-                        break;
-                    case R.id.menu_test_2:
-                        startActivity(new Intent( MainActivity.this, MainActivity.class));
-                        break;
-                    case R.id.menu_test_3:
-                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                        break;
-                }
-                return true;
-            }
-        });
-        */
-
-
         /* FLOATTING ACTION BUTTON
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -74,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.menu_my_events:
                 fragment = new MyEventsFragment();
                 setTitle("My Events");
-                //startActivity(new Intent(MainActivity.this, SignUpActivity.class));
                 break;
             case R.id.menu_account:
                 /*
