@@ -25,8 +25,8 @@ public class SignUpActivityTest {
     @Test
     public void testSignUp() {
 
-        onView(withId(R.id.email)).perform(typeText("testemail@website.com"), closeSoftKeyboard());
-        onView(withId(R.id.username)).perform(typeText("testuser"), closeSoftKeyboard());
+        onView(withId(R.id.email)).perform(typeText("tester.teameight@gmail.com"), closeSoftKeyboard());
+        onView(withId(R.id.username)).perform(typeText("teameighttest"), closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText("testpassword"), closeSoftKeyboard());
         onView(withId(R.id.sign_up_button)).perform(click());
 

@@ -22,7 +22,7 @@ public class LoginActivityTest {
     @Test
     public void testLogin() {
 
-        onView(withId(R.id.email)).perform(typeText("testemail@website.com"), closeSoftKeyboard());
+        onView(withId(R.id.user_email)).perform(typeText("tester.teameight@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText("testpassword"), closeSoftKeyboard());
         onView(withId(R.id.sign_in_button)).perform(click());
 
