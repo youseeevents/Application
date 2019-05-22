@@ -11,12 +11,25 @@ import android.widget.TextView;
 class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
 
     private Event[] mDataset;
+    private OnItemClickListener listener;
+    /**
+     * Constructor
+     */
+    public MyAdapter(Event[] myDataset, OnItemClickListener listener) {
+        mDataset = myDataset;
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Event v);
+    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public View view;
         public TextView e_name;
         public TextView e_date;
         public TextView e_location;
+
         public MyViewHolder(@NonNull ConstraintLayout v) {
             super(v);
             view = v;
@@ -24,10 +37,15 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             e_date = view.findViewById(R.id.event_date_text);
             e_location = view.findViewById(R.id.event_location_text);
         }
-    }
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(Event[] myDataset) {
-        mDataset = myDataset;
+
+        public void bind(final Event item, final OnItemClickListener listener){
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+                    listener.onItemClick(item);
+                }
+            });
+        }
     }
 
     // Create new views (invoked by the layout manager)
@@ -51,6 +69,8 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             ((MyViewHolder) holder).e_date.setText(mDataset[position].getDate());
             ((MyViewHolder) holder).e_location.setText(mDataset[position].getLocation());
         }
+        System.out.println("WORKING");
+        ((MyViewHolder)holder).bind(mDataset[position], listener);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -58,4 +78,5 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
     public int getItemCount() {
         return mDataset.length;
     }
+
 }
