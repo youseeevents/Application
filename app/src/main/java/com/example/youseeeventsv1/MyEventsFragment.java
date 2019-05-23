@@ -8,20 +8,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class MyEventsFragment extends Fragment {
@@ -75,7 +71,6 @@ public class MyEventsFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         myAdapter = new MyAdapter(events, new MyAdapter.OnItemClickListener(){
             @Override public void onItemClick(Event item){
-                System.out.println(item.getName());
                 // event -> EventActivity
                 Intent object = new Intent(getContext(), EventActivity.class);
                 Bundle bundle = new Bundle();
@@ -124,7 +119,6 @@ public class MyEventsFragment extends Fragment {
                 if(count >= dataSnapshot.getChildrenCount()){
                     initial_load = true;
                     mProgressBar.setVisibility(View.GONE);
-                    System.out.println("CHECK " + events.length + " " + events[0] + " to " + events[19]);
                     recyclerView.setAdapter(myAdapter);
                     recyclerView.setVisibility(View.VISIBLE);
                 }

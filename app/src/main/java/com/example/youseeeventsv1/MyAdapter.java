@@ -69,7 +69,6 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             ((MyViewHolder) holder).e_date.setText(mDataset[position].getDate());
             ((MyViewHolder) holder).e_location.setText(mDataset[position].getLocation());
         }
-        System.out.println("WORKING");
         ((MyViewHolder)holder).bind(mDataset[position], listener);
     }
 

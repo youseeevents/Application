@@ -2,14 +2,12 @@ package com.example.youseeeventsv1;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Date;
-
 
 public class Event implements Parcelable {
 
     private int eventId;
     private String name;
-    private String eventDescription;
+    private String description;
     private int eventCounterGoing;
     private int eventCounterInterested;
 
@@ -23,10 +21,10 @@ public class Event implements Parcelable {
 
     public Event(){}
 
-    public Event(String name, String eventDescription, String date, String time, String location, String[]  tags){
+    public Event(String name, String description, String date, String time, String location, String[]  tags){
         // eventId will be set up by the database... figure that out
         this.name = name;
-        this.eventDescription = eventDescription;
+        this.description = description;
 
         this.date = date;
         this.time = time;
@@ -40,7 +38,7 @@ public class Event implements Parcelable {
     public Event(Parcel p){
         // eventId will be set up by the database... figure that out
         this.name = p.readString();
-        this.eventDescription = p.readString();
+        this.description = p.readString();
         this.date = p.readString();
         this.time = p.readString();
         this.location = p.readString();
@@ -59,8 +57,8 @@ public class Event implements Parcelable {
         this.name = name;
     }
 
-    public void setEventDescription(String eventDescription) {
-        this.eventDescription = eventDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setEventCounterGoing(int eventCounterGoing) {
@@ -96,8 +94,8 @@ public class Event implements Parcelable {
         return name;
     }
 
-    public String getEventDescription() {
-        return eventDescription;
+    public String getDescription() {
+        return description;
     }
 
     public int getEventCounterGoing() {
@@ -146,7 +144,7 @@ public class Event implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        dest.writeString(eventDescription);
+        dest.writeString(description);
         dest.writeString(date);
         dest.writeString(time);
         dest.writeString(location);
