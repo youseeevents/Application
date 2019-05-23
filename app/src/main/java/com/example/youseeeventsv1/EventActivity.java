@@ -1,11 +1,8 @@
 package com.example.youseeeventsv1;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 public class EventActivity extends AppCompatActivity {
@@ -38,8 +35,9 @@ public class EventActivity extends AppCompatActivity {
         location.setText(event.getLocation());
 
         TextView event_description = findViewById(R.id.event_description);
-        event_description.setText(event.getEventDescription());
+        event_description.setText(event.getDescription());
 
+        System.out.println(event.getDescription());
     }
 
 }
