@@ -9,12 +9,20 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+    private FirebaseAuth auth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        auth = FirebaseAuth.getInstance();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -43,15 +51,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 setTitle("My Events");
                 break;
             case R.id.menu_account:
-                /*
-                if logged in...
-                 */
+
+                user = auth.getCurrentUser();
+
                 setTitle("Account");
-                fragment = new AccountFragment();
-                /*
-                else (not logged in)...
-                    startActivity -> LoginActivity
-                 */
+                if(user != null) {
+                    fragment = new AccountFragment();
+                }
+                else {
+                    fragment = new NoAccountFragment();
+                }
 
                 break;
         }
