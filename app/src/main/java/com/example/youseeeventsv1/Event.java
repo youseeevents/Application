@@ -1,8 +1,11 @@
 package com.example.youseeeventsv1;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 
-public class Event {
+public class Event implements Parcelable {
 
     private int eventId;
     private String name;
@@ -34,6 +37,19 @@ public class Event {
         this.eventId = eventIDCounter;
         eventIDCounter++;
     }
+    public Event(Parcel p){
+        // eventId will be set up by the database... figure that out
+        this.name = p.readString();
+        this.eventDescription = p.readString();
+        this.date = p.readString();
+        this.time = p.readString();
+        this.location = p.readString();
+        this.eventCounterGoing = p.readInt();
+        this.eventCounterInterested = p.readInt();
+        //this.tags = p.readArray();
+        this.eventId = p.readInt();
+    }
+
     /** SETTERS */
     public void setEventId(int eventId) {
         this.eventId = eventId;
@@ -106,5 +122,37 @@ public class Event {
 
     public String[] getTags() {
         return tags;
+    }
+
+    /*
+      PARCEABLEMETHODS
+     */
+
+    public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>(){
+        public Event createFromParcel(Parcel in){
+            return new Event(in);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[0];
+        }
+    };
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(eventDescription);
+        dest.writeString(date);
+        dest.writeString(time);
+        dest.writeString(location);
+        dest.writeInt(eventCounterGoing);
+        dest.writeInt(eventCounterInterested);
+        dest.writeArray(tags);
+        dest.writeInt(eventId);
     }
 }

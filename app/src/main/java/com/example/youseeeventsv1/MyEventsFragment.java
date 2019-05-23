@@ -1,6 +1,7 @@
 package com.example.youseeeventsv1;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -75,6 +76,12 @@ public class MyEventsFragment extends Fragment {
         myAdapter = new MyAdapter(events, new MyAdapter.OnItemClickListener(){
             @Override public void onItemClick(Event item){
                 System.out.println(item.getName());
+                // event -> EventActivity
+                Intent object = new Intent(getContext(), EventActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("Event", item);
+                object.putExtras(bundle);
+                startActivity(object);
             }
         });
     }
