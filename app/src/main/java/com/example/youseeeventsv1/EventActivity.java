@@ -8,7 +8,6 @@ import android.widget.TextView;
 public class EventActivity extends AppCompatActivity {
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
@@ -16,15 +15,16 @@ public class EventActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Bundle extras = getIntent().getExtras();
+        // Here, we are taking the bundle passed from MyEventFragment and creating an Event object
+        // it. We do this because we cannot pass an Event object through activity creation
+        Bundle bundle = getIntent().getExtras();
         Event event = null;
-        if (extras != null) {
-            event = extras.getParcelable("Event");
+        if (bundle != null) {
+            event = bundle.getParcelable("Event");
             //The key argument here must match that used in the other activity
         }
-        System.out.println("EVENT PAGE OPENED");
-        System.out.println("EVENT NAME: "+ event.getName());
 
+        // This sets the text fields on the EventActivity page.
         TextView title = findViewById(R.id.event_title);
         title.setText(event.getName());
 
@@ -36,8 +36,6 @@ public class EventActivity extends AppCompatActivity {
 
         TextView event_description = findViewById(R.id.event_description);
         event_description.setText(event.getDescription());
-
-        System.out.println(event.getDescription());
     }
 
 }

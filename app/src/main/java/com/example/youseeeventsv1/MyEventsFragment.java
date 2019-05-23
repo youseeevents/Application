@@ -70,13 +70,13 @@ public class MyEventsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         myAdapter = new MyAdapter(events, new MyAdapter.OnItemClickListener(){
-            @Override public void onItemClick(Event item){
+            @Override public void onItemClick(Event event){
                 // event -> EventActivity
-                Intent object = new Intent(getContext(), EventActivity.class);
+                Intent intent = new Intent(getContext(), EventActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("Event", item);
-                object.putExtras(bundle);
-                startActivity(object);
+                bundle.putParcelable("Event", event);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }
