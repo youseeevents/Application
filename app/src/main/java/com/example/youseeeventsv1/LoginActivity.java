@@ -108,7 +108,15 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+        btnResetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
+            }
+        });
     }
+
     private void signIn(String user_email, String password ) {
         progressBar.setVisibility(View.VISIBLE);
         //Sign in user
@@ -130,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
     public void setEmail( String email ) {
         emailUser = email;
     }
