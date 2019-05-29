@@ -127,7 +127,15 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
+
+        btnResetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignUpActivity.this, ResetPasswordActivity.class));
+            }
+        });
     }
+
     private void pushData ( String email) {
         String userId =  FirebaseAuth.getInstance().getCurrentUser().getUid();
         user = new User(email, userId, username);
@@ -135,6 +143,7 @@ public class SignUpActivity extends AppCompatActivity {
         mDatabase.setValue(user);
         finish();
     }
+
     @Override
     protected void onResume() {
         super.onResume();

@@ -62,7 +62,7 @@ public class MyEventsFragment extends Fragment {
             }
         });
 
-        if(!initial_load) {
+        if(recyclerView == null) {
             fillEventsArray();
         }
         // Setting up the recycler view and filling it with objects in the events array.
