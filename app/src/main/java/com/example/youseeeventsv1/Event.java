@@ -8,10 +8,11 @@ public class Event implements Parcelable {
     private String eventId;
     private String name;
     private String description;
-    private int eventCounterGoing;
-    private int eventCounterInterested;
+    private int counterGoing;
+    private int counterInterested;
 
     private String date;
+    private String date_readable;
     private String time;
     private String location;
 
@@ -21,16 +22,17 @@ public class Event implements Parcelable {
 
     public Event(){}
 
-    public Event(String eventId, String name, String description, String date, String time, String location, String tag){
+    public Event(String eventId, String name, String description, String date, String date_readable, String time, String location, String tag){
         // eventId will be set up by the database... figure that out
         this.name = name;
         this.description = description;
 
         this.date = date;
+        this.date_readable = date_readable;
         this.time = time;
         this.location = location;
-        this.eventCounterGoing = 0;
-        this.eventCounterInterested = 0;
+        this.counterGoing = 0;
+        this.counterInterested = 0;
         this.tag = tag;
         this.eventId = eventId;
     }
@@ -39,11 +41,12 @@ public class Event implements Parcelable {
         this.name = p.readString();
         this.description = p.readString();
         this.date = p.readString();
+        this.date_readable = p.readString();
         this.time = p.readString();
         this.location = p.readString();
-        this.eventCounterGoing = p.readInt();
-        this.eventCounterInterested = p.readInt();
-        //this.tags = p.readArray();
+        this.counterGoing = p.readInt();
+        this.counterInterested = p.readInt();
+        this.tag = p.readString();
         this.eventId = p.readString();
     }
 
@@ -60,17 +63,19 @@ public class Event implements Parcelable {
         this.description = description;
     }
 
-    public void setEventCounterGoing(int eventCounterGoing) {
-        this.eventCounterGoing = eventCounterGoing;
+    public void setCounterGoing(int counterGoing) {
+        this.counterGoing = counterGoing;
     }
 
-    public void setEventCounterInterested(int eventCounterInterested) {
-        this.eventCounterInterested = eventCounterInterested;
+    public void setCounterInterested(int counterInterested) {
+        this.counterInterested = counterInterested;
     }
 
     public void setDate(String date) {
         this.date = date;
     }
+
+    public void setDate_readable(String date_readable) { this.date_readable = date_readable; }
 
     public void setTime(String time) {
         this.time = time;
@@ -97,16 +102,19 @@ public class Event implements Parcelable {
         return description;
     }
 
-    public int getEventCounterGoing() {
-        return eventCounterGoing;
+    public int getCounterGoing() {
+        return counterGoing;
     }
 
-    public int getEventCounterInterested() {
-        return eventCounterInterested;
+    public int getCounterInterested() {
+        return counterInterested;
     }
 
     public String getDate() {
         return date;
+    }
+
+    public String getDate_readable() { return date_readable;
     }
 
     public String getTime() {
@@ -145,10 +153,11 @@ public class Event implements Parcelable {
         dest.writeString(name);
         dest.writeString(description);
         dest.writeString(date);
+        dest.writeString(date_readable);
         dest.writeString(time);
         dest.writeString(location);
-        dest.writeInt(eventCounterGoing);
-        dest.writeInt(eventCounterInterested);
+        dest.writeInt(counterGoing);
+        dest.writeInt(counterInterested);
         dest.writeString(tag);
         dest.writeString(eventId);
     }

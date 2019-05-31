@@ -16,7 +16,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class create_event extends AppCompatActivity {
+import java.util.Date;
+
+public class CreateEventActivity extends AppCompatActivity {
 
     private DatabaseReference databaseRef;
     ImageButton createEventImageButton;
@@ -44,18 +46,23 @@ public class create_event extends AppCompatActivity {
         description = findViewById(R.id.description);
         datetime = findViewById(R.id.DateTime);
         location = findViewById(R.id.location);
-        //tags = findViewById(R.id.tags);
+        tags = findViewById(R.id.tags);
 
         createEventImageButton = (ImageButton) findViewById(R.id.image_createEvent);
 
         createEventImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Toast.makeText(create_event.this, "It works", Toast.LENGTH_LONG).show();
+                //Toast.makeText(CreateEventActivity.this, "It works", Toast.LENGTH_LONG).show();
 
                 //create new Event
-                Event dummy_event = new Event(name.getText().toString(), description.getText().toString(),
-                        datetime.getText().toString(), "0",
-                        location.getText().toString(), null);
+                String name_text = name.getText().toString();
+                String name_ns = name_text.replaceAll("\\s", "");
+                String datetime_text = datetime.getText().toString();
+
+                String description_text = description.getText().toString();
+                Event dummy_event = new Event(name_ns + "",name_text, description_text,
+                        datetime_text, datetime.getText().toString(), "0",
+                        location.getText().toString(), tags.getText().toString());
 
                 databaseRef.child("new").setValue(dummy_event);
 
@@ -84,7 +91,7 @@ public class create_event extends AppCompatActivity {
         createEvent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //go to new page
-                Intent intent = new Intent(v.getContext(), create_event.class);
+                Intent intent = new Intent(v.getContext(), CreateEventActivity.class);
                 v.getContext().startActivity(intent);
             }
         });
