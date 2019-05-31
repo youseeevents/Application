@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class AccountFragment extends Fragment {
     private FirebaseAuth auth;
 
-    private Button logoutButton;
+    private Button logoutButton, resetButton;
 
     @Nullable
     @Override
@@ -32,12 +32,20 @@ public class AccountFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
 
         logoutButton = (Button) view.findViewById(R.id.logoutButton);
+        resetButton = (Button) view.findViewById(R.id.btnResetPassword);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 auth.signOut();
                 startActivity(new Intent( getActivity(), MainActivity.class));
+            }
+        });
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent( getActivity(), ResetPasswordActivity.class));
             }
         });
 
