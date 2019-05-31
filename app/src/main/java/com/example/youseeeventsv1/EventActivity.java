@@ -38,6 +38,9 @@ public class EventActivity extends AppCompatActivity {
             event = bundle.getParcelable("Event");
             //The key argument here must match that used in the other activity
         }
+        else if (event == null) {
+            finish();
+        }
 
         // This sets the text fields on the EventActivity page.
         TextView title = findViewById(R.id.event_title);
@@ -72,7 +75,8 @@ public class EventActivity extends AppCompatActivity {
 
                 // user is logged in
                 if(user != null) {
-                    ref.child(user.getDisplayName()).child("events").push().setValue(finalEvent.getName());
+                    ref.child(user.getDisplayName()).child("events").push().setValue(finalEvent.getEventId());
+                    System.out.println(finalEvent.getEventId());
                 }
                 // user is not logged in
                 else {
