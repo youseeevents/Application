@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.menu_account:
 
                 user = auth.getCurrentUser();
-                user = null;
+                //user = null;
 
                 setTitle("Account");
                 if(user != null) {
