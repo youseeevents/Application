@@ -5,7 +5,6 @@ public class User {
     private String email;
     private String uid;
     private String username;
-    private Array events;
 
     public User(String e, String id, String u){
         this.email = e;

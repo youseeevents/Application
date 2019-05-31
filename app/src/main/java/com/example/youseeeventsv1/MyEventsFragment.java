@@ -104,7 +104,7 @@ public class MyEventsFragment extends Fragment {
         // This is how we are supposedly querying the data from Firebase. It doesn't work right now.
         FirebaseDatabase.getInstance().getReference("Events")
                 .orderByChild("Date")
-                //.startAt(5)
+                .startAt(0)
                 .limitToFirst(20)
                 .addListenerForSingleValueEvent(new ValueEventListener(){
             @Override

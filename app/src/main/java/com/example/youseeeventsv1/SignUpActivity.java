@@ -16,11 +16,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.lang.reflect.Array;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword, inputUsername;
@@ -110,6 +113,14 @@ public class SignUpActivity extends AppCompatActivity {
                                             } else {
                                                 //finish();
                                                 pushData(email);
+
+                                                FirebaseUser user = auth.getCurrentUser();
+
+                                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                        .setDisplayName(username).build();
+
+                                                user.updateProfile(profileUpdates);
+
                                                 startActivity(new Intent(SignUpActivity.this, LoginActivity
                                                         .class));
                                             }
