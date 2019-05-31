@@ -75,8 +75,8 @@ public class EventActivity extends AppCompatActivity {
 
                 // user is logged in
                 if(user != null) {
-                    ref.child(user.getDisplayName()).child("events").push().setValue(finalEvent.getEventId());
-                    System.out.println(finalEvent.getEventId());
+                    DatabaseReference user_ref = ref.child(user.getDisplayName());
+                    user_ref.child("events").push().setValue(finalEvent.getEventId());
                 }
                 // user is not logged in
                 else {

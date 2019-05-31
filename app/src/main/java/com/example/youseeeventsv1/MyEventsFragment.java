@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MyEventsFragment extends Fragment {
-
+    
     private FirebaseDatabase database;
     private DatabaseReference databaseRef;
     private DatabaseReference mDatabase;
@@ -52,7 +51,7 @@ public class MyEventsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
         database = FirebaseDatabase.getInstance();
         databaseRef = database.getReference("Events");
-        mProgressBar = getActivity().findViewById(R.id.progressBar2);
+        mProgressBar = getActivity().findViewById(R.id.events_progress_bar);
 
         // Dummy button for testing out things
         dummy_button = (Button) getView().findViewById(R.id.dummy_button);
@@ -104,7 +103,8 @@ public class MyEventsFragment extends Fragment {
         // This is how we are supposedly querying the data from Firebase. It doesn't work right now.
         FirebaseDatabase.getInstance().getReference("Events")
                 .orderByChild("Date")
-                //startAt(0)
+                //
+                // startAt(0)
                 .limitToFirst(20)
                 .addListenerForSingleValueEvent(new ValueEventListener(){
             @Override
@@ -114,6 +114,7 @@ public class MyEventsFragment extends Fragment {
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     events[event_ind] = ds.getValue(Event.class);
+                    events[event_ind].setEventId(ds.getKey());
                     // event_ind fills the events array, which is passed into the recycler view
                     count = count + 1;
                     event_ind = event_ind + 1;
