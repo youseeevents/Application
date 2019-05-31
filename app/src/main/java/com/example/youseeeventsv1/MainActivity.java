@@ -8,6 +8,9 @@ import android.view.MenuItem;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         auth = FirebaseAuth.getInstance();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -30,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         BottomNavigationView bottom_navbar = (BottomNavigationView) findViewById(R.id.navigation);
         bottom_navbar.setOnNavigationItemSelectedListener(this);
+
 
     }
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

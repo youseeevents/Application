@@ -50,6 +50,7 @@
                         android:layout_height="wrap_content">
 
                         <android.support.design.widget.TextInputEditText
+                            android:id="@+id/event_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
@@ -97,6 +98,7 @@
                             android:layout_height="wrap_content">
 
                             <android.support.design.widget.TextInputEditText
+                                android:id="@+id/location"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
@@ -109,6 +111,7 @@
                             android:layout_height="wrap_content">
 
                             <android.support.design.widget.TextInputEditText
+                                android:id="@+id/tags"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
@@ -136,6 +139,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <android.support.design.widget.TextInputEditText
+                        android:id="@+id/description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:height="150dp"
@@ -159,7 +163,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
                     app:layout_constraintVertical_bias="0.357"
-                    app:srcCompat="@drawable/CreateEventButton" />
+                    app:srcCompat="@drawable/createeventbutton" />
 
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>
