@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class Event implements Parcelable {
 
-    private int eventId;
+    private String eventId;
     private String name;
     private String description;
     private int eventCounterGoing;
@@ -15,13 +15,13 @@ public class Event implements Parcelable {
     private String time;
     private String location;
 
-    private String[] tags;
+    private String tag;
 
     private static int eventIDCounter = 0;
 
     public Event(){}
 
-    public Event(String name, String description, String date, String time, String location, String[]  tags){
+    public Event(String eventId, String name, String description, String date, String time, String location, String tag){
         // eventId will be set up by the database... figure that out
         this.name = name;
         this.description = description;
@@ -31,9 +31,8 @@ public class Event implements Parcelable {
         this.location = location;
         this.eventCounterGoing = 0;
         this.eventCounterInterested = 0;
-        this.tags = tags;
-        this.eventId = eventIDCounter;
-        eventIDCounter++;
+        this.tag = tag;
+        this.eventId = eventId;
     }
     public Event(Parcel p){
         // eventId will be set up by the database... figure that out
@@ -45,11 +44,11 @@ public class Event implements Parcelable {
         this.eventCounterGoing = p.readInt();
         this.eventCounterInterested = p.readInt();
         //this.tags = p.readArray();
-        this.eventId = p.readInt();
+        this.eventId = p.readString();
     }
 
     /** SETTERS */
-    public void setEventId(int eventId) {
+    public void setEventId(String eventId) {
         this.eventId = eventId;
     }
 
@@ -81,12 +80,12 @@ public class Event implements Parcelable {
         this.location = location;
     }
 
-    public void setTags(String[] tags) {
-        this.tags = tags;
+    public void setTags(String tag) {
+        this.tag = tag;
     }
 
     /** GETTERS */
-    public int getEventId() {
+    public String getEventId() {
         return eventId;
     }
 
@@ -118,8 +117,8 @@ public class Event implements Parcelable {
         return location;
     }
 
-    public String[] getTags() {
-        return tags;
+    public String getTag() {
+        return tag;
     }
 
     /*
@@ -150,7 +149,7 @@ public class Event implements Parcelable {
         dest.writeString(location);
         dest.writeInt(eventCounterGoing);
         dest.writeInt(eventCounterInterested);
-        dest.writeArray(tags);
-        dest.writeInt(eventId);
+        dest.writeString(tag);
+        dest.writeString(eventId);
     }
 }

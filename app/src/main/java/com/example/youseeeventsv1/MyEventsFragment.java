@@ -90,9 +90,9 @@ public class MyEventsFragment extends Fragment {
      */
     private void makeDummyEvent() {
         System.out.println("Dummy event made");
-        Event dummy_event = new Event("Dummy", "What if we... " +
+        Event dummy_event = new Event("ID", "Dummy", "What if we... " +
                 "uploaded an event into firebase", "dummy_date", "0",
-                "Geisel 1W", null);
+                "Geisel 1W", "tag");
         System.out.println(dummy_event);
         mDatabase = databaseRef.child(dummy_event.getName());
         mDatabase.setValue(dummy_event);
