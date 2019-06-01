@@ -28,8 +28,6 @@ public class EventActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         // Here, we are taking the bundle passed from MyEventFragment and creating an Event object
         // it. We do this because we cannot pass an Event object through activity creation
