@@ -29,7 +29,7 @@ public class HomeFragment extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference databaseRef;
     private DatabaseReference mDatabase;
-    
+
 
     private final static int load_incr = 20;
     static int start_ind = 0;
