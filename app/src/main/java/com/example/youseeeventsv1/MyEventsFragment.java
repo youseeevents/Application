@@ -46,8 +46,6 @@ public class MyEventsFragment extends Fragment {
 
     private static boolean initial_load = false;
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,17 +57,6 @@ public class MyEventsFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         databaseRef = database.getReference("Events");
         mProgressBar = getActivity().findViewById(R.id.events_progress_bar);
-
-        /* Dummy button for testing out things
-        dummy_button = (Button) getView().findViewById(R.id.dummy_button);
-        dummy_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                start_ind = start_ind + 20;
-                recyclerView.setVisibility(View.GONE);
-                fillEventsArray();
-            }
-        });*/
 
         createEvent = getView().findViewById(R.id.eventCreate);
         createEvent.setOnClickListener(new View.OnClickListener() {
@@ -99,19 +86,6 @@ public class MyEventsFragment extends Fragment {
             }
         });
 
-    }
-
-    /**
-     * Method for creating a dummy event. Not needed anymore, but here it is for reference.
-     */
-    private void makeDummyEvent() {
-        System.out.println("Dummy event made");
-        Event dummy_event = new Event("ID", "Dummy", "What if we... " +
-                "uploaded an event into firebase", "dummy_date", "dummy_readable", "0",
-                "Geisel 1W", "tag");
-        System.out.println(dummy_event);
-        mDatabase = databaseRef.child(dummy_event.getName());
-        mDatabase.setValue(dummy_event);
     }
 
     private void fillEventsArray(){
@@ -147,25 +121,3 @@ public class MyEventsFragment extends Fragment {
         });
     }
 }
-/*************************************************************
- * ARCHAIC METHOD - would read EVERYTHING from the database. *
- *************************************************************
-private void readFromDatabase(){
-
-    databaseRef.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            // Basically, this will retrieve every event object under the "Events" tab.
-            for (DataSnapshot ds : dataSnapshot.getChildren()){
-                // getValue() from a DataSnapshot returns the information in a hashmap. So you
-                // need to make an event and set it equal to the getValue()
-                Event e = ds.getValue(Event.class);
-            }
-        }
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-            Log.v("dummy", "failed to read value", databaseError.toException());
-        }
-    });
-}
-*/
