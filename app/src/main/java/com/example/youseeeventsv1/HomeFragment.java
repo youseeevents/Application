@@ -76,9 +76,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void fillEventsArray(){
-        System.out.println("READING FROM " + start_ind);
         mProgressBar.setVisibility(View.VISIBLE);
-        // This is how we are supposedly querying the data from Firebase. It doesn't work right now.
+        events.clear();
         FirebaseDatabase.getInstance().getReference("Events")
                 .orderByChild("date")
                 // startAt(0)
@@ -94,7 +93,7 @@ public class HomeFragment extends Fragment {
                             // event_ind fills the events array, which is passed into the recycler view
                             event_ind = event_ind + 1;
                         }
-                        // When the event_ind is 19, that means the events array is full. At this point,
+                        // At this point, we have read in all the events so we need to
                         // display the events in the view and hide the progress bar.
                         if(events.size() >= dataSnapshot.getChildrenCount()){
                             initial_load = true;

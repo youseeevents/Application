@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,9 +44,13 @@ public class MyEventsFragment extends Fragment {
     private RecyclerView.Adapter myAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private static ProgressBar mProgressBar;
-    private static ArrayList<Event> events = new ArrayList<>();
+    private static ArrayList<Event> saved_events = new ArrayList<>();
+    private static ArrayList<String> saved_events_names = new ArrayList<>();
 
     private static boolean initial_load = false;
+
+    private FirebaseAuth auth;
+    private FirebaseUser user;
 
     @Nullable
     @Override
@@ -58,6 +64,10 @@ public class MyEventsFragment extends Fragment {
         databaseRef = database.getReference("Events");
         mProgressBar = getActivity().findViewById(R.id.events_progress_bar);
 
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
+        /*
         createEvent = getView().findViewById(R.id.eventCreate);
         createEvent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -65,17 +75,24 @@ public class MyEventsFragment extends Fragment {
                 Intent intent = new Intent(v.getContext(), CreateEventActivity.class);
                 v.getContext().startActivity(intent);
             }
-        });
+        }); */
 
 
-        if(recyclerView == null) {
-            fillEventsArray();
+        if (user == null){
+            // Do something here, user is not logged in. Redirect to login.
         }
+        else if (user != null) {
+            String display_name = user.getDisplayName();
+            if(recyclerView == null) {
+                fillSavedEvents(display_name);
+            }
+        }
+
         // Setting up the recycler view and filling it with objects in the events array.
         recyclerView = (RecyclerView) getView().findViewById(R.id.events_recycler_view);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        myAdapter = new MyAdapter(events, new MyAdapter.OnItemClickListener(){
+        myAdapter = new MyAdapter(saved_events, new MyAdapter.OnItemClickListener(){
             @Override public void onItemClick(Event event){
                 // event -> EventActivity
                 Intent intent = new Intent(getContext(), EventActivity.class);
@@ -88,36 +105,52 @@ public class MyEventsFragment extends Fragment {
 
     }
 
-    private void fillEventsArray(){
-        System.out.println("READING FROM " + start_ind);
+    private void fillSavedEvents(String username){
         mProgressBar.setVisibility(View.VISIBLE);
-        // This is how we are supposedly querying the data from Firebase. It doesn't work right now.
-        FirebaseDatabase.getInstance().getReference("Events")
-                .orderByChild("date")
-                // startAt(0)
-                //.limitToFirst(20)
+        saved_events_names.clear();
+        saved_events.clear();
+        // Read all the saved events.
+        FirebaseDatabase.getInstance().getReference("Users").child(username).child("events")
                 .addListenerForSingleValueEvent(new ValueEventListener(){
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int event_ind = 0;
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    events.add(ds.getValue(Event.class));
-                    events.get(event_ind).setEventId(ds.getKey());
-                    // event_ind fills the events array, which is passed into the recycler view
-                    event_ind = event_ind + 1;
+                    saved_events_names.add(ds.getValue(String.class));
                 }
-                // When the event_ind is 19, that means the events array is full. At this point,
-                // display the events in the view and hide the progress bar.
-                if(events.size() >= dataSnapshot.getChildrenCount()){
-                    initial_load = true;
-                    mProgressBar.setVisibility(View.GONE);
-                    recyclerView.setAdapter(myAdapter);
-                    recyclerView.setVisibility(View.VISIBLE);
+                // When you finish reading all the events from the user's saved events, you want to
+                // go through FirebaseDatabase and read all the events. If the event has the name of
+                // a saved event, display it.
+                if(saved_events_names.size() >= dataSnapshot.getChildrenCount()){
+                    FirebaseDatabase.getInstance().getReference("Events")
+                            .orderByChild("date")
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    int event_ind = 0;
+                                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                        if(saved_events_names.contains(ds.getKey())){
+                                            saved_events.add(ds.getValue(Event.class));
+                                            saved_events.get(event_ind).setEventId(ds.getKey());
+                                            event_ind += 1;
+                                            if(saved_events.size() >= saved_events_names.size()){
+                                                initial_load = true;
+                                                mProgressBar.setVisibility(View.GONE);
+                                                recyclerView.setAdapter(myAdapter);
+                                                recyclerView.setVisibility(View.VISIBLE);
+                                            }
+                                        }
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                }
+                            });
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
     }
 }
