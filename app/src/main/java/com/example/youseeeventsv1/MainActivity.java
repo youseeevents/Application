@@ -28,9 +28,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         auth = FirebaseAuth.getInstance();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         loadFragment(new HomeFragment());
 
         BottomNavigationView bottom_navbar = (BottomNavigationView) findViewById(R.id.navigation);
