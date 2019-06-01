@@ -29,8 +29,7 @@ public class HomeFragment extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference databaseRef;
     private DatabaseReference mDatabase;
-
-    private Button dummy_button;
+    
 
     private final static int load_incr = 20;
     static int start_ind = 0;
@@ -40,7 +39,6 @@ public class HomeFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private static ProgressBar mProgressBar;
     private static ArrayList<Event> events = new ArrayList<>();
-    private static DataSnapshot lastVisible;
 
     private static boolean initial_load = false;
 
@@ -56,17 +54,6 @@ public class HomeFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         databaseRef = database.getReference("Events");
         mProgressBar = getActivity().findViewById(R.id.home_progress_bar);
-
-        // Dummy button for testing out things
-        dummy_button = (Button) getView().findViewById(R.id.dummy_button2);
-        dummy_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                start_ind = start_ind + 20;
-                recyclerView.setVisibility(View.GONE);
-                fillEventsArray();
-            }
-        });
 
         if(recyclerView == null) {
             fillEventsArray();
@@ -86,19 +73,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-    }
-
-    /**
-     * Method for creating a dummy event. Not needed anymore, but here it is for reference.
-     */
-    private void makeDummyEvent() {
-        System.out.println("Dummy event made");
-        Event dummy_event = new Event("ID", "Dummy", "What if we... " +
-                "uploaded an event into firebase", "dummy_date", "dummy_readable", "0",
-                "Geisel 1W", "tag");
-        System.out.println(dummy_event);
-        mDatabase = databaseRef.child(dummy_event.getName());
-        mDatabase.setValue(dummy_event);
     }
 
     private void fillEventsArray(){

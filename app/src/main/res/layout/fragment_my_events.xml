@@ -13,17 +13,98 @@
         android:layout_marginBottom="20dp"
         android:visibility="gone" />
 
-    <Button
-        android:id="@+id/dummy_button"
+    <HorizontalScrollView
+        android:id="@+id/event_tag_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/events_recycler_view"
-        android:text="Button" />
+        android:layout_weight="0"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/event_linear_layout_tag_list"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/event_tag_AC_button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_border"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="Arts and Culture"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/event_tag_FW_button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_border"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="Fitness and Wellbeing"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/event_tag_A_button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_border"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="Athletics"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/event_tag_S_button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_border"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="Seminars"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/event_tag_C_button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_border"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="Community"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/event_tag_W_button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_border"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="Weekend Events"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/events_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_below="@id/event_tag_buttons">
 
     </android.support.v7.widget.RecyclerView>
 

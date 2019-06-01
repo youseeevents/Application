@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -77,6 +78,7 @@ public class EventActivity extends AppCompatActivity {
                 if(user != null) {
                     DatabaseReference user_ref = ref.child(user.getDisplayName());
                     user_ref.child("events").push().setValue(finalEvent.getEventId());
+                    Toast.makeText(getApplicationContext(), "Event Saved!",Toast.LENGTH_SHORT).show();
                 }
                 // user is not logged in
                 else {

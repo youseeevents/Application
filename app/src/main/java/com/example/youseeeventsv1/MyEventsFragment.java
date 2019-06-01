@@ -28,7 +28,6 @@ public class MyEventsFragment extends Fragment {
     private DatabaseReference databaseRef;
     private DatabaseReference mDatabase;
 
-    private Button dummy_button;
 
     private final static int load_incr = 20;
     static int start_ind = 0;
@@ -38,7 +37,6 @@ public class MyEventsFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private static ProgressBar mProgressBar;
     private static ArrayList<Event> events = new ArrayList<>();
-    private static DataSnapshot lastVisible;
 
     private static boolean initial_load = false;
 
@@ -54,17 +52,6 @@ public class MyEventsFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         databaseRef = database.getReference("Events");
         mProgressBar = getActivity().findViewById(R.id.events_progress_bar);
-
-        // Dummy button for testing out things
-        dummy_button = (Button) getView().findViewById(R.id.dummy_button);
-        dummy_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                start_ind = start_ind + 20;
-                recyclerView.setVisibility(View.GONE);
-                fillEventsArray();
-            }
-        });
 
         if(recyclerView == null) {
             fillEventsArray();
