@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 /**
  * Created by Belal on 1/23/2018.
  */
@@ -37,7 +39,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView.Adapter myAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private static ProgressBar mProgressBar;
-    private static Event[] events = new Event[20];
+    private static ArrayList<Event> events = new ArrayList<>();
     private static DataSnapshot lastVisible;
 
     private static boolean initial_load = false;
@@ -107,7 +109,7 @@ public class HomeFragment extends Fragment {
                 .orderByChild("Date")
                 //
                 // startAt(0)
-                .limitToFirst(20)
+                //.limitToFirst(20)
                 .addListenerForSingleValueEvent(new ValueEventListener(){
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -115,8 +117,8 @@ public class HomeFragment extends Fragment {
                         int count = 0;
 
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            events[event_ind] = ds.getValue(Event.class);
-                            events[event_ind].setEventId(ds.getKey());
+                            events.add(ds.getValue(Event.class));
+                            events.get(event_ind).setEventId(ds.getKey());
                             // event_ind fills the events array, which is passed into the recycler view
                             count = count + 1;
                             event_ind = event_ind + 1;
