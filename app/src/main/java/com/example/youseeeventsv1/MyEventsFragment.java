@@ -30,11 +30,10 @@ public class MyEventsFragment extends Fragment {
     private DatabaseReference databaseRef;
     private DatabaseReference mDatabase;
 
-<<<<<<< HEAD
-=======
-    private Button dummy_button;
+
+    //private Button dummy_button;
     private Button createEvent;
->>>>>>> 83677fe7e67c7fff86fec0b72f18826f5cfc7baf
+
 
     private final static int load_incr = 20;
     static int start_ind = 0;
@@ -61,9 +60,7 @@ public class MyEventsFragment extends Fragment {
         databaseRef = database.getReference("Events");
         mProgressBar = getActivity().findViewById(R.id.events_progress_bar);
 
-<<<<<<< HEAD
-=======
-        // Dummy button for testing out things
+        /* Dummy button for testing out things
         dummy_button = (Button) getView().findViewById(R.id.dummy_button);
         dummy_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +69,7 @@ public class MyEventsFragment extends Fragment {
                 recyclerView.setVisibility(View.GONE);
                 fillEventsArray();
             }
-        });
+        });*/
 
         createEvent = getView().findViewById(R.id.eventCreate);
         createEvent.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +81,6 @@ public class MyEventsFragment extends Fragment {
         });
 
 
->>>>>>> 83677fe7e67c7fff86fec0b72f18826f5cfc7baf
         if(recyclerView == null) {
             fillEventsArray();
         }
