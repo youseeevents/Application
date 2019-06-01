@@ -22,8 +22,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class MyEventsFragment extends Fragment {
-    
+
     private FirebaseDatabase database;
     private DatabaseReference databaseRef;
     private DatabaseReference mDatabase;
@@ -38,7 +40,7 @@ public class MyEventsFragment extends Fragment {
     private RecyclerView.Adapter myAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private static ProgressBar mProgressBar;
-    private static Event[] events = new Event[20];
+    private static ArrayList<Event> events = new ArrayList<>();
     private static DataSnapshot lastVisible;
 
     private static boolean initial_load = false;
@@ -116,26 +118,22 @@ public class MyEventsFragment extends Fragment {
         mProgressBar.setVisibility(View.VISIBLE);
         // This is how we are supposedly querying the data from Firebase. It doesn't work right now.
         FirebaseDatabase.getInstance().getReference("Events")
-                .orderByChild("Date")
-                //
+                .orderByChild("date")
                 // startAt(0)
-                .limitToFirst(20)
+                //.limitToFirst(20)
                 .addListenerForSingleValueEvent(new ValueEventListener(){
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int event_ind = 0;
-                int count = 0;
-
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    events[event_ind] = ds.getValue(Event.class);
-                    events[event_ind].setEventId(ds.getKey());
+                    events.add(ds.getValue(Event.class));
+                    events.get(event_ind).setEventId(ds.getKey());
                     // event_ind fills the events array, which is passed into the recycler view
-                    count = count + 1;
                     event_ind = event_ind + 1;
                 }
                 // When the event_ind is 19, that means the events array is full. At this point,
                 // display the events in the view and hide the progress bar.
-                if(count >= dataSnapshot.getChildrenCount()){
+                if(events.size() >= dataSnapshot.getChildrenCount()){
                     initial_load = true;
                     mProgressBar.setVisibility(View.GONE);
                     recyclerView.setAdapter(myAdapter);

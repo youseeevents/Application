@@ -8,14 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
 
-    private Event[] mDataset;
+    private ArrayList<Event> mDataset;
     private OnItemClickListener listener;
     /**
      * Constructor
      */
-    public MyAdapter(Event[] myDataset, OnItemClickListener listener) {
+    public MyAdapter(ArrayList<Event> myDataset, OnItemClickListener listener) {
         mDataset = myDataset;
         this.listener = listener;
     }
@@ -64,18 +66,18 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        if(mDataset[position]!=null) {
-            ((MyViewHolder) holder).e_name.setText(mDataset[position].getName());
-            ((MyViewHolder) holder).e_date.setText(mDataset[position].getDate_readable());
-            ((MyViewHolder) holder).e_location.setText(mDataset[position].getLocation());
+        if(mDataset.get(position)!=null) {
+            ((MyViewHolder) holder).e_name.setText(mDataset.get(position).getName());
+            ((MyViewHolder) holder).e_date.setText(mDataset.get(position).getDate_readable());
+            ((MyViewHolder) holder).e_location.setText(mDataset.get(position).getLocation());
         }
-        ((MyViewHolder)holder).bind(mDataset[position], listener);
+        ((MyViewHolder)holder).bind(mDataset.get(position), listener);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 
 }
