@@ -68,7 +68,7 @@ public class MyEventsFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
-        /*
+
         createEvent = getView().findViewById(R.id.eventCreate);
         createEvent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -76,7 +76,7 @@ public class MyEventsFragment extends Fragment {
                 Intent intent = new Intent(v.getContext(), CreateEventActivity.class);
                 v.getContext().startActivity(intent);
             }
-        }); */
+        });
 
 
         if (user == null){

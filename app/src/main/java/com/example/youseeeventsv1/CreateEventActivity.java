@@ -34,9 +34,6 @@ public class CreateEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         databaseRef = FirebaseDatabase.getInstance().getReference("Events");
 
 
@@ -64,8 +61,12 @@ public class CreateEventActivity extends AppCompatActivity {
                         datetime_text, datetime.getText().toString(), "0",
                         location.getText().toString(), tags.getText().toString());
 
-                databaseRef.child(name_ns).setValue(dummy_event);
-
+                if(!name_ns.equals("")) {
+                    databaseRef.child(name_ns).setValue(dummy_event);
+                }
+                else{
+                    Toast.makeText(CreateEventActivity.this, "Some of your fields are invalid", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
