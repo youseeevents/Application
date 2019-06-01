@@ -10,19 +10,20 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/colorPrimaryDark"
+        android:background="#FDFDFD"
+        android:foregroundTint="#004D1717"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
 
 
         <ImageView
-            android:layout_width="@dimen/logo_w_h"
-            android:layout_height="@dimen/logo_w_h"
+            android:layout_width="172dp"
+            android:layout_height="170dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
-            android:src="@mipmap/ic_launcher"
-            android:contentDescription="TODO" />
+            android:contentDescription="logo"
+            android:src="@mipmap/logo" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -37,7 +38,10 @@
                 android:inputType="text|textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textColor="@android:color/white"
+                android:textColor="#000000"
+                android:textColorHighlight="#00575757"
+                android:textColorLink="#000000"
+                android:textCursorDrawable="@color/input_register_hint"
                 tools:targetApi="o" />
 
         </android.support.design.widget.TextInputLayout>
@@ -50,49 +54,70 @@
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:focusableInTouchMode="true"
                 android:hint="@string/hint_password"
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textColor="@android:color/white"
-                android:autofillHints="" tools:targetApi="o" />
+                android:textColor="#000000"
+                android:textColorHighlight="#575757"
+                android:textColorLink="#000000"
+                android:textCursorDrawable="@color/input_register_hint"
+                tools:targetApi="o" />
 
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/sign_in_button"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/colorAccent"
-            android:text="@string/btn_login"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
-
-        <Button
             android:id="@+id/btn_reset_password"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:background="@null"
+            android:layout_gravity="right"
+            android:layout_marginTop="1dip"
+            android:layout_weight="0"
+            android:background="@color/white"
+            android:minHeight="12dp"
             android:text="@string/btn_forgot_password"
             android:textAllCaps="false"
-            android:textColor="@color/colorAccent" />
+            android:textColor="#A09F9F"
+            android:textSize="15sp" />
 
-        <!-- Link to Login Screen -->
 
         <Button
-            android:id="@+id/sign_up_button"
-            android:layout_width="fill_parent"
+            android:id="@+id/sign_in_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:background="@null"
-            android:text="@string/btn_link_to_register"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="0dp"
+            android:width="180dip"
+            android:background="#89d0ee"
+            android:text="Log In"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp"
+            android:background="#E9E9E9"
+            android:visibility="visible" />
+
+        <!-- Link to Login Screen -->
+        <Button
+            android:id="@+id/sign_up_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="16dip"
+            android:width="180dip"
+            android:background="#89D0EE"
+            android:text="No account? Register now"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="#FFFFFF"
             android:textSize="15sp" />
     </LinearLayout>
 

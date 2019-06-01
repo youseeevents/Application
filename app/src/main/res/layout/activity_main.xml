@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
 
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryDark"
         android:visibility="visible"
         app:itemBackground="@color/white"
         app:labelVisibilityMode="labeled"
