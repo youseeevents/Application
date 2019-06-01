@@ -8,10 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +29,7 @@ public class MyEventsFragment extends Fragment {
     private DatabaseReference mDatabase;
 
     private Button dummy_button;
+    private Button createEvent;
 
     private final static int load_incr = 20;
     static int start_ind = 0;
@@ -39,6 +42,7 @@ public class MyEventsFragment extends Fragment {
     private static DataSnapshot lastVisible;
 
     private static boolean initial_load = false;
+
 
 
     @Nullable
@@ -63,6 +67,16 @@ public class MyEventsFragment extends Fragment {
                 fillEventsArray();
             }
         });
+
+        createEvent = getView().findViewById(R.id.eventCreate);
+        createEvent.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //go to new page
+                Intent intent = new Intent(v.getContext(), CreateEventActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
+
 
         if(recyclerView == null) {
             fillEventsArray();

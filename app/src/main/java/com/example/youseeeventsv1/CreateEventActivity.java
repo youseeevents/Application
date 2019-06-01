@@ -64,10 +64,11 @@ public class CreateEventActivity extends AppCompatActivity {
                         datetime_text, datetime.getText().toString(), "0",
                         location.getText().toString(), tags.getText().toString());
 
-                databaseRef.child("new").setValue(dummy_event);
+                databaseRef.child(name_ns).setValue(dummy_event);
 
             }
         });
+
     }
 }
 
