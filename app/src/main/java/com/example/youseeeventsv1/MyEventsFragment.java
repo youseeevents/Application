@@ -115,7 +115,7 @@ public class MyEventsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    saved_events_names.add(ds.getValue(String.class));
+                    saved_events_names.add(ds.getKey());
                 }
                 // When you finish reading all the events from the user's saved events, you want to
                 // go through FirebaseDatabase and read all the events. If the event has the name of
@@ -128,17 +128,17 @@ public class MyEventsFragment extends Fragment {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     int event_ind = 0;
                                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                        if(saved_events_names.contains(ds.getKey())){
+                                        if (saved_events_names.contains(ds.getKey())) {
                                             saved_events.add(ds.getValue(Event.class));
                                             saved_events.get(event_ind).setEventId(ds.getKey());
                                             event_ind += 1;
-                                            if(saved_events.size() >= saved_events_names.size()){
-                                                initial_load = true;
-                                                mProgressBar.setVisibility(View.GONE);
-                                                recyclerView.setAdapter(myAdapter);
-                                                recyclerView.setVisibility(View.VISIBLE);
-                                            }
                                         }
+                                    }
+                                    if(saved_events.size() >= saved_events_names.size()){
+                                        initial_load = true;
+                                        mProgressBar.setVisibility(View.GONE);
+                                        recyclerView.setAdapter(myAdapter);
+                                        recyclerView.setVisibility(View.VISIBLE);
                                     }
                                 }
                                 @Override
