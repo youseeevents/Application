@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MyEventsFragment extends Fragment {
 
@@ -120,12 +121,34 @@ public class MyEventsFragment extends Fragment {
                 // When you finish reading all the events from the user's saved events, you want to
                 // go through FirebaseDatabase and read all the events. If the event has the name of
                 // a saved event, display it.
+
                 if(saved_events_names.size() >= dataSnapshot.getChildrenCount()){
                     FirebaseDatabase.getInstance().getReference("Events")
                             .orderByChild("date")
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    /* So something I want to fix is here - for displaying saved
+                                     * events, we are iterating through so many things - is there a
+                                     * way we can access our specific events without having to
+                                     * iterate through all of them?
+                                     *
+                                     * My idea was converting the datasnapshot into a hashmap and
+                                     * accessing the values at key = saved_event_name, but I couldn't
+                                     * get it to work.
+                                     */
+                                    for (String name : saved_events_names){
+                                        /* So if the saved_event_name is not in the datasnapshot,
+                                         * remove it from the list as well as from the user's field.
+                                         */
+                                        if(!dataSnapshot.hasChild(name)){
+                                            saved_events_names.remove(name);
+                                            FirebaseDatabase.getInstance().getReference("Users")
+                                                    .child(user.getDisplayName())
+                                                    .child("events").child(name)
+                                                    .removeValue();
+                                        }
+                                    }
                                     int event_ind = 0;
                                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                         if (saved_events_names.contains(ds.getKey())) {
