@@ -35,12 +35,26 @@ public class HomeFragment extends Fragment {
     static int start_ind = 0;
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter myAdapter;
+    private MyAdapter myAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private static ProgressBar mProgressBar;
     private static ArrayList<Event> events = new ArrayList<>();
+    private static ArrayList<Event> tempEvents = new ArrayList<>();
 
     private static boolean initial_load = false;
+
+    private static ArrayList<Event> arts = new ArrayList<>();
+    private static ArrayList<Event> fitness = new ArrayList<>();
+    private static ArrayList<Event> seminars = new ArrayList<>();
+    private static ArrayList<Event> community = new ArrayList<>();
+    private static ArrayList<Event> athletics = new ArrayList<>();
+    private static ArrayList<Event> weekend = new ArrayList<>();
+
+    private boolean toggleA, toggleAC, toggleFW, toggleC, toggleW, toggleS = false;
+    private Button A, AC, FW, W, C, S, CL;
+
+    private boolean filterFirstClick = false;
+
 
 
     @Nullable
@@ -54,6 +68,14 @@ public class HomeFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         databaseRef = database.getReference("Events");
         mProgressBar = getActivity().findViewById(R.id.home_progress_bar);
+
+        A = getView().findViewById(R.id.home_tag_A_button);
+        AC = getView().findViewById(R.id.home_tag_AC_button);
+        FW = getView().findViewById(R.id.home_tag_FW_button);
+        W = getView().findViewById(R.id.home_tag_W_button);
+        C = getView().findViewById(R.id.home_tag_C_button);
+        S = getView().findViewById(R.id.home_tag_S_button);
+        CL = getView().findViewById(R.id.home_tag_CL_button);
 
         if(recyclerView == null) {
             fillEventsArray();
@@ -72,6 +94,160 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        AC.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(filterFirstClick == false){
+                    filterFirstClick = true;
+                    fillEachArray();
+                    myAdapter.swap(arts);
+                    AC.setEnabled(false);
+                    int resId = R.drawable.button_border_pressed;
+                    AC.setBackgroundResource(resId);
+                }
+                else{
+                    myAdapter.append(arts);
+                    AC.setEnabled(false);
+                    int resId = R.drawable.button_border_pressed;
+                    AC.setBackgroundResource(resId);
+                }
+
+            }
+        });
+
+        FW.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(filterFirstClick == false){
+                    filterFirstClick = true;
+                    fillEachArray();
+                    myAdapter.swap(fitness);
+                    int resId = R.drawable.button_border_pressed;
+                    FW.setBackgroundResource(resId);
+                    FW.setEnabled(false);
+
+                }
+                else {
+                    myAdapter.append(fitness);
+                    int resId = R.drawable.button_border_pressed;
+                    FW.setBackgroundResource(resId);
+                    FW.setEnabled(false);
+                }
+
+            }
+        });
+
+        S.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(filterFirstClick == false){
+                    filterFirstClick = true;
+                    fillEachArray();
+                    myAdapter.swap(seminars);
+                    int resId = R.drawable.button_border_pressed;
+                    S.setBackgroundResource(resId);
+                    S.setEnabled(false);
+
+                }
+                else{
+                    myAdapter.append(seminars);
+                    int resId = R.drawable.button_border_pressed;
+                    S.setBackgroundResource(resId);
+                    S.setEnabled(false);
+
+                }
+
+
+            }
+        });
+
+        C.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(filterFirstClick == false){
+                    filterFirstClick = true;
+                    fillEachArray();
+                    myAdapter.swap(community);
+                    int resId = R.drawable.button_border_pressed;
+                    C.setBackgroundResource(resId);
+                    C.setEnabled(false);
+                }
+                else{
+                    C.setEnabled(false);
+                    myAdapter.append(community);
+                    int resId = R.drawable.button_border_pressed;
+                    C.setBackgroundResource(resId);
+
+                }
+
+            }
+        });
+
+        W.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                if(filterFirstClick == false) {
+                    filterFirstClick = true;
+                    fillEachArray();
+                    W.setEnabled(false);
+                    int resId = R.drawable.button_border_pressed;
+                    W.setBackgroundResource(resId);
+                    myAdapter.swap(weekend);
+                }
+                else {
+                    myAdapter.append(weekend);
+                    int resId = R.drawable.button_border_pressed;
+                    W.setBackgroundResource(resId);
+                    W.setEnabled(false);
+                }
+            }
+        });
+
+        A.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(filterFirstClick == false){
+                    filterFirstClick = true;
+                    fillEachArray();
+                    myAdapter.swap(athletics);
+                    int resId = R.drawable.button_border_pressed;
+                    A.setBackgroundResource(resId);
+                    A.setEnabled(false);
+
+                }
+                else {
+                    int resId = R.drawable.button_border_pressed;
+                    A.setBackgroundResource(resId);
+                    myAdapter.append(athletics);
+                    A.setEnabled(false);
+                }
+            }
+        });
+
+        CL.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int resId = R.drawable.button_border;
+                A.setBackgroundResource(resId);
+                FW.setBackgroundResource(resId);
+                AC.setBackgroundResource(resId);
+                C.setBackgroundResource(resId);
+                S.setBackgroundResource(resId);
+                W.setBackgroundResource(resId);
+
+                A.setEnabled(true);
+                AC.setEnabled(true);
+                FW.setEnabled(true);
+                S.setEnabled(true);
+                C.setEnabled(true);
+                W.setEnabled(true);
+
+                fillEventsArray();
+
+                myAdapter.swap(events);
+
+                filterFirstClick = false;
+
+
+            }
+        });
+
+
 
     }
 
@@ -106,5 +282,35 @@ public class HomeFragment extends Fragment {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
+    }
+
+    private void fillEachArray(){
+        arts.clear();
+        fitness.clear();
+        weekend.clear();
+        seminars.clear();
+        community.clear();
+        athletics.clear();
+        for(int i = 0; i < events.size(); i++) {
+            Event newEvent = events.get(i);
+            if (newEvent.tag.equals("arts & culture")) {
+                arts.add(newEvent);
+            }
+            if (newEvent.tag.equals("fitness & well-being")) {
+                fitness.add(newEvent);
+            }
+            if (newEvent.tag.equals("seminars & info-sessions")) {
+                seminars.add(newEvent);
+            }
+            if (newEvent.tag.equals("community")) {
+                community.add(newEvent);
+            }
+            if (newEvent.tag.equals("weekend event")) {
+                weekend.add(newEvent);
+            }
+            if (newEvent.tag.equals("athletics")) {
+                athletics.add(newEvent);
+            }
+        }
     }
 }

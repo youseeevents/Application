@@ -6,7 +6,7 @@ import android.os.Parcelable;
 public class Event implements Parcelable {
 
     private String eventId;
-    private String name;
+    protected String name;
     private String description;
     private int counterGoing;
     private int counterInterested;
@@ -16,7 +16,7 @@ public class Event implements Parcelable {
     private String time;
     private String location;
 
-    private String tag;
+    protected String tag;
 
     private static int eventIDCounter = 0;
 
@@ -133,7 +133,7 @@ public class Event implements Parcelable {
       PARCEABLEMETHODS
      */
 
-    public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>(){
+    public static final Creator<Event> CREATOR = new Creator<Event>(){
         public Event createFromParcel(Parcel in){
             return new Event(in);
         }

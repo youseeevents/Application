@@ -80,4 +80,26 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
         return mDataset.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    public void swap(ArrayList<Event> datas)
+    {
+        mDataset.clear();
+        mDataset.addAll(datas);
+        notifyDataSetChanged();
+    }
+
+    public void append(ArrayList<Event> data){
+        mDataset.addAll(data);
+        notifyDataSetChanged();
+    }
+
 }

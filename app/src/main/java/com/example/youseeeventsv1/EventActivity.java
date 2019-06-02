@@ -28,11 +28,13 @@ public class EventActivity extends AppCompatActivity {
     private FirebaseUser user = auth.getCurrentUser();
     private DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
     private Event event;
+    private static ToggleButton saveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+        saveButton = (ToggleButton) findViewById(R.id.saveButton);
 
         // Here, we are taking the bundle passed from MyEventFragment and creating an Event object
         // it. We do this because we cannot pass an Event object through activity creation
@@ -68,7 +70,6 @@ public class EventActivity extends AppCompatActivity {
             }
         });
 
-        ToggleButton saveButton = (ToggleButton) findViewById(R.id.saveButton);
         // check if the event is already saved under the user and set the buttons toggle
         if(user != null) {
             DatabaseReference user_events_ref = ref.child(user.getDisplayName()).child("events");
@@ -76,11 +77,12 @@ public class EventActivity extends AppCompatActivity {
             user_events_ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
-                    ToggleButton saveButton = (ToggleButton) findViewById(R.id.saveButton);
                     if (snapshot.hasChild(event.getEventId())) {
                         saveButton.setChecked(true);
+                        Toast.makeText(getApplicationContext(), "Event Saved!", Toast.LENGTH_SHORT).show();
                     } else {
                         saveButton.setChecked(false);
+                        Toast.makeText(getApplicationContext(), "Event Unsaved!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
