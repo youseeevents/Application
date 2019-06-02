@@ -121,6 +121,13 @@ public class SignUpActivity extends AppCompatActivity {
 
                                                 user.updateProfile(profileUpdates);
 
+                                                ref.child(username).child("preferences").child("ancFilter").setValue(false);
+                                                ref.child(username).child("preferences").child("fnwFilter").setValue(false);
+                                                ref.child(username).child("preferences").child("athFilter").setValue(false);
+                                                ref.child(username).child("preferences").child("semFilter").setValue(false);
+                                                ref.child(username).child("preferences").child("commFilter").setValue(false);
+                                                ref.child(username).child("preferences").child("wkndFilter").setValue(false);
+
                                                 startActivity(new Intent(SignUpActivity.this, LoginActivity
                                                         .class));
                                             }
