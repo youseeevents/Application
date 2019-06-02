@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
 
@@ -99,6 +101,24 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
 
     public void append(ArrayList<Event> data){
         mDataset.addAll(data);
+        Collections.sort(mDataset, new Comparator<Event>() {
+            @Override
+            public int compare(Event o1, Event o2) {
+                if(o1 == null){
+                    return -1;
+                }
+                if(o2 == null){
+                    return 1;
+                }
+                if(o1.getDate() == null){
+                    return -1;
+                }
+                if(o2.getDate() == null){
+                    return 1;
+                }
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        });
         notifyDataSetChanged();
     }
 
