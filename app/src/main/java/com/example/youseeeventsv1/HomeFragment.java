@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment {
         W = getView().findViewById(R.id.home_tag_W_button);
         C = getView().findViewById(R.id.home_tag_C_button);
         S = getView().findViewById(R.id.home_tag_S_button);
-        CL = getView().findViewById(R.id.home_tag_CL_button);
+        CL = getView().findViewById(R.id.home_tag_ALL_button);
 
         if(recyclerView == null) {
             fillEventsArray();
@@ -101,17 +101,12 @@ public class HomeFragment extends Fragment {
                     filterFirstClick = true;
                     fillEachArray();
                     myAdapter.swap(arts);
-                    AC.setEnabled(false);
-                    int resId = R.drawable.button_border_pressed;
-                    AC.setBackgroundResource(resId);
                 }
                 else{
                     myAdapter.append(arts);
-                    AC.setEnabled(false);
-                    int resId = R.drawable.button_border_pressed;
-                    AC.setBackgroundResource(resId);
                 }
-
+                AC.setBackgroundResource(R.drawable.button_border_pressed);
+                AC.setEnabled(false);
             }
         });
 
@@ -121,17 +116,12 @@ public class HomeFragment extends Fragment {
                     filterFirstClick = true;
                     fillEachArray();
                     myAdapter.swap(fitness);
-                    int resId = R.drawable.button_border_pressed;
-                    FW.setBackgroundResource(resId);
-                    FW.setEnabled(false);
-
                 }
                 else {
                     myAdapter.append(fitness);
-                    int resId = R.drawable.button_border_pressed;
-                    FW.setBackgroundResource(resId);
-                    FW.setEnabled(false);
                 }
+                FW.setBackgroundResource(R.drawable.button_border_pressed);
+                FW.setEnabled(false);
 
             }
         });
@@ -142,18 +132,13 @@ public class HomeFragment extends Fragment {
                     filterFirstClick = true;
                     fillEachArray();
                     myAdapter.swap(seminars);
-                    int resId = R.drawable.button_border_pressed;
-                    S.setBackgroundResource(resId);
-                    S.setEnabled(false);
-
                 }
                 else{
                     myAdapter.append(seminars);
-                    int resId = R.drawable.button_border_pressed;
-                    S.setBackgroundResource(resId);
-                    S.setEnabled(false);
 
                 }
+                S.setBackgroundResource(R.drawable.button_border_pressed);
+                S.setEnabled(false);
 
 
             }
@@ -165,18 +150,13 @@ public class HomeFragment extends Fragment {
                     filterFirstClick = true;
                     fillEachArray();
                     myAdapter.swap(community);
-                    int resId = R.drawable.button_border_pressed;
-                    C.setBackgroundResource(resId);
-                    C.setEnabled(false);
                 }
                 else{
                     C.setEnabled(false);
                     myAdapter.append(community);
-                    int resId = R.drawable.button_border_pressed;
-                    C.setBackgroundResource(resId);
-
                 }
-
+                C.setBackgroundResource(R.drawable.button_border_pressed);
+                C.setEnabled(false);
             }
         });
 
@@ -187,16 +167,12 @@ public class HomeFragment extends Fragment {
                     filterFirstClick = true;
                     fillEachArray();
                     W.setEnabled(false);
-                    int resId = R.drawable.button_border_pressed;
-                    W.setBackgroundResource(resId);
-                    myAdapter.swap(weekend);
                 }
                 else {
                     myAdapter.append(weekend);
-                    int resId = R.drawable.button_border_pressed;
-                    W.setBackgroundResource(resId);
-                    W.setEnabled(false);
                 }
+                W.setBackgroundResource(R.drawable.button_border_pressed);
+                W.setEnabled(false);
             }
         });
 
@@ -206,17 +182,12 @@ public class HomeFragment extends Fragment {
                     filterFirstClick = true;
                     fillEachArray();
                     myAdapter.swap(athletics);
-                    int resId = R.drawable.button_border_pressed;
-                    A.setBackgroundResource(resId);
-                    A.setEnabled(false);
-
                 }
                 else {
                     int resId = R.drawable.button_border_pressed;
-                    A.setBackgroundResource(resId);
-                    myAdapter.append(athletics);
-                    A.setEnabled(false);
                 }
+                A.setBackgroundResource(R.drawable.button_border_pressed);
+                A.setEnabled(false);
             }
         });
 
