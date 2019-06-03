@@ -47,9 +47,11 @@
     <string name="fragment_account">Account</string>
     <string name="fragment_search">Search</string>
     <string name="fragment_home">Home</string>
-    <string name="event_name_label">Event</string>
-    <string name="event_date_label">Date</string>
-    <string name="event_location_label">Location</string>
+    <string name="event_name_label">Event:</string>
+    <string name="event_org_label">Organizer:</string>
+    <string name="event_date_label">Date:</string>
+    <string name="event_location_label">Location:</string>
+    <string name="event_tag_label">Tag:</string>
     <string name="user_email_login">Login</string>
     <string name="title_activity_event">EventActivity</string>
     <string name="title_activity_create_event">CreateEventActivity</string>

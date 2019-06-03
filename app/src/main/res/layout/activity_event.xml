@@ -14,25 +14,8 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
-    <ToggleButton
-        android:id="@+id/saveButton"
+    <include
         style="@style/toggleButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_weight="0"
-        android:background="@drawable/ic_toggle_bg"
-        android:checked="false"
-        android:stateListAnimator="@android:anim/bounce_interpolator" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include
-            style="@style/toggleButton"
-            layout="@layout/content_event" />
-
-    </LinearLayout>
+        layout="@layout/content_event" />
 
 </android.support.design.widget.CoordinatorLayout>
