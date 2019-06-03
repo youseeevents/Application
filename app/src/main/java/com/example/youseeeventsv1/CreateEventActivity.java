@@ -1,5 +1,6 @@
 package com.example.youseeeventsv1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.security.KeyStore;
 
 public class CreateEventActivity extends AppCompatActivity {
 
@@ -34,6 +37,8 @@ public class CreateEventActivity extends AppCompatActivity {
     Spinner time_spinner1;
     Spinner time_spinner2;
     TextView organizer;
+    String[] month_array = {"Jan", "Feb", "Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+    String[] month_format_array = {"01","02","03","04","05","06","07","08","09","10","11","12"};
 
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -45,6 +50,7 @@ public class CreateEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_event);
 
         databaseRef = FirebaseDatabase.getInstance().getReference("Events");
+        databaseRefUsers = FirebaseDatabase.getInstance().getReference("Users");
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
@@ -82,29 +88,156 @@ public class CreateEventActivity extends AppCompatActivity {
         createEventImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Toast.makeText(CreateEventActivity.this, "It works", Toast.LENGTH_LONG).show();
-                System.out.println(String.valueOf(tag_spinner.getSelectedItem()));
-
+                //System.out.println(String.valueOf(tag_spinner.getSelectedItem()));
+/*
                 //create new Event
                 String name_text = name.getText().toString();
                 String name_ns = name_text.replaceAll("\\s", "");
-                //have to add 0 to day if it's less than 10
-                String datetime_text = year_spinner.getSelectedItem().toString() + "-"  + month_spinner.getSelectedItem().toString()
-                + "-" + day_spinner.getSelectedItem().toString() + "T" +"";
+                String date_month_convert = "";
+                String date_day_convert = "";
+                String time_convert = "";
+
+                //have to add 0 to month if it's less than 10
+                for(int x = 0; x < month_array.length; x++){
+                    if(month_spinner.getSelectedItem().toString().equals(month_array[x])){
+                        date_month_convert = month_format_array[x];
+                        break;
+                    }
+                }
+
+                //same for day
+                if(day_spinner.getSelectedItem().toString().length() == 1){
+                    date_day_convert = "0" + day_spinner.getSelectedItem().toString();
+                }
+
+                //time converter
+                if(time_spinner1.getSelectedItem().toString().equals("pm")){
+                    time_convert = String.valueOf(Integer.parseInt(hour1.getText().toString()) + 12);
+                }
+
+
+                String datetime_text = year_spinner.getSelectedItem().toString() + "-"  + date_month_convert
+                + "-" + date_day_convert + "T" + time_convert + ":" + minute1.getText().toString() + "00";
+
+
                 String date_readable = month_spinner.getSelectedItem().toString() + day_spinner.getSelectedItem().toString();
                 String time = hour1.getText().toString() + ":" + minute1.getText().toString() + (time_spinner1.getSelectedItem().toString()).toUpperCase() + " - "
                         + hour2.getText().toString() + ":" + minute2.getText().toString() + (time_spinner2.getSelectedItem().toString()).toUpperCase();
                 String description_text = description.getText().toString();
+                */
+                String name_text = name.getText().toString();
+                String name_ns = name_text.replaceAll("\\s", "");
 
-                Event dummy_event = new Event(name_ns + "",name_text, description_text,
-                        datetime_text, date_readable, time,
-                        location.getText().toString(), tag_spinner.getSelectedItem().toString().toLowerCase());
+                //boolean of inputs
+                boolean all_inputs = true;
 
-                if(!name_ns.equals("")) {
-                    databaseRef.child(name_ns).setValue(dummy_event);
+                //check for nonempty fields
+                if(name_ns.equals("")) {
+                    all_inputs = false;
+                }
+                if(month_spinner.getSelectedItem().toString().equals("Month")) {
+                    all_inputs = false;
+                }
+                if(day_spinner.getSelectedItem().toString().equals("Day")) {
+                    all_inputs = false;
+                }
+                if(year_spinner.getSelectedItem().toString().equals("Year")) {
+                    all_inputs = false;
+                }
+                if(!((hour1.getText().toString().length() == 2 || hour1.getText().toString().length() == 1) &&
+                        Integer.parseInt(hour1.getText().toString()) <= 12  && Integer.parseInt(hour1.getText().toString()) >= 1)) {
+                    all_inputs = false;
+                }
+                if( !(minute1.getText().toString().length() == 2 &&
+                        Integer.parseInt(minute1.getText().toString()) <= 60  && Integer.parseInt(minute1.getText().toString()) >= 0)) {
+                    all_inputs = false;
+                }
+                if(time_spinner1.getSelectedItem().toString().equals("----")) {
+                    all_inputs = false;
+                }
+                if(!((hour2.getText().toString().length() == 2 || hour2.getText().toString().length() == 1) &&
+                        Integer.parseInt(hour2.getText().toString()) <= 12  && Integer.parseInt(hour2.getText().toString()) >= 1)) {
+                    all_inputs = false;
+                }
+                if(!(minute2.getText().toString().length() == 2 &&
+                        Integer.parseInt(minute2.getText().toString()) <= 60  && Integer.parseInt(minute2.getText().toString()) >= 0)) {
+                    all_inputs = false;
+                }
+                if(time_spinner2.getSelectedItem().toString().equals("----")) {
+                    all_inputs = false;
+                }
+                if(location.getText().toString().equals("")) {
+                    all_inputs = false;
+                }
+                if(tag_spinner.getSelectedItem().toString().equals("Select Tag")) {
+                    all_inputs = false;
+                }
+                if(description.getText().toString().equals("")) {
+                    all_inputs = false;
+                }
+
+
+
+                if(all_inputs == true) {
+                    //create new Event
+                    /*String name_text = name.getText().toString();
+                    String name_ns = name_text.replaceAll("\\s", "");*/
+                    String date_month_convert = "";
+                    String date_day_convert = "";
+                    String time_convert = "";
+
+                    //have to add 0 to month if it's less than 10
+                    for(int x = 0; x < month_array.length; x++){
+                        if(month_spinner.getSelectedItem().toString().equals(month_array[x])){
+                            date_month_convert = month_format_array[x];
+                            break;
+                        }
+                    }
+
+                    //same for day
+                    if(day_spinner.getSelectedItem().toString().length() == 1){
+                        date_day_convert = "0" + day_spinner.getSelectedItem().toString();
+                    }
+
+                    //time converter
+                    if(time_spinner1.getSelectedItem().toString().equals("pm")){
+                        time_convert = String.valueOf(Integer.parseInt(hour1.getText().toString()) + 12);
+                    }
+                    else {
+                        if(hour1.getText().toString().length() == 1){
+                            time_convert = "0" + hour1.getText().toString();
+                        }
+                        else {
+                            time_convert = hour1.getText().toString();
+                        }
+
+                    }
+
+
+                    String datetime_text = year_spinner.getSelectedItem().toString() + "-"  + date_month_convert
+                            + "-" + date_day_convert + "T" + time_convert + ":" + minute1.getText().toString() + ":00";
+
+
+                    String date_readable = month_spinner.getSelectedItem().toString() + day_spinner.getSelectedItem().toString();
+                    String time = hour1.getText().toString() + ":" + minute1.getText().toString() + (time_spinner1.getSelectedItem().toString()).toUpperCase() + " - "
+                            + hour2.getText().toString() + ":" + minute2.getText().toString() + (time_spinner2.getSelectedItem().toString()).toUpperCase();
+                    String description_text = description.getText().toString();
+
+                    Event new_event = new Event(name_ns + "",name_text, description_text,
+                            datetime_text, date_readable, time,
+                            location.getText().toString(), tag_spinner.getSelectedItem().toString().toLowerCase());
+                    databaseRef.child(name_ns + date_readable).setValue(new_event);
+                    databaseRefUsers.child(user.getDisplayName()).child("Events").child(name_ns).setValue(name_text);
+
+                    System.out.println(datetime_text);
                 }
                 else{
                     Toast.makeText(CreateEventActivity.this, "Some of your fields are invalid.", Toast.LENGTH_LONG).show();
                 }
+
+                //go to new page
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                v.getContext().startActivity(intent);
             }
         });
 
