@@ -229,15 +229,16 @@ public class CreateEventActivity extends AppCompatActivity {
                     databaseRef.child(name_ns + date_readable).setValue(new_event);
                     databaseRefUsers.child(user.getDisplayName()).child("Events").child(name_ns).setValue(name_text);
 
-                    System.out.println(datetime_text);
+                    //go to new page
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    v.getContext().startActivity(intent);
+
                 }
                 else{
                     Toast.makeText(CreateEventActivity.this, "Some of your fields are invalid.", Toast.LENGTH_LONG).show();
                 }
 
-                //go to new page
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
-                v.getContext().startActivity(intent);
+
             }
         });
 
