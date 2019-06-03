@@ -9,55 +9,84 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/filterOptions"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Default Filter Options"
-            android:textSize="24sp" />
+            android:layout_margin="16dp"
+            android:background="@drawable/button_border"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-        <TextView
-            android:id="@+id/optionsDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Select one or more of the following filter options to display when you first open your home page!" />
+            <TextView
+                android:id="@+id/filterOptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Default Filter Options"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
 
-        <CheckBox
-            android:id="@+id/filterAnC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Arts and Culture" />
+            <TextView
+                android:id="@+id/optionsDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select one or more of the following filter options to display when you first open your home page!" />
 
-        <CheckBox
-            android:id="@+id/filterFnW"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Fitness and Wellbeing" />
+            <CheckBox
+                android:id="@+id/filterAthletics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:buttonTint="@android:color/black"
+                android:text="Athletics" />
 
-        <CheckBox
-            android:id="@+id/filterAthletics"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Athletics" />
+            <CheckBox
+                android:id="@+id/filterAnC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:buttonTint="@android:color/black"
+                android:text="Arts and Culture" />
 
-        <CheckBox
-            android:id="@+id/filterSeminars"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Seminars" />
+            <CheckBox
+                android:id="@+id/filterSeminars"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:buttonTint="@android:color/black"
+                android:text="Seminars" />
 
-        <CheckBox
-            android:id="@+id/filterCommunity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Community" />
+            <CheckBox
+                android:id="@+id/filterFnW"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:buttonTint="@android:color/black"
+                android:text="Fitness and Wellbeing" />
 
-        <CheckBox
-            android:id="@+id/filterWeekend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Weekend Events" />
+            <CheckBox
+                android:id="@+id/filterCommunity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:buttonTint="@android:color/black"
+                android:text="Community" />
+
+            <CheckBox
+                android:id="@+id/filterWeekend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:buttonTint="@android:color/black"
+                android:text="Weekend Events" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/logoutButton"
