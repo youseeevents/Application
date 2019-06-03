@@ -3,6 +3,7 @@ package com.example.youseeeventsv1;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private FirebaseUser user;
     private Fragment fragment = null;
     private Boolean is_organizer = false;
+    private int current_fragment_ind = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,43 +50,43 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     });
         }
 
-        loadFragment(new HomeFragment());
+        loadFragment(new HomeFragment(), 'd');
 
         BottomNavigationView bottom_navbar = (BottomNavigationView) findViewById(R.id.navigation);
         bottom_navbar.setOnNavigationItemSelectedListener(this);
 
 
     }
-
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int[] fragments = {R.id.menu_home, R.id.menu_search, R.id.menu_my_events, R.id.menu_account};
+        int prev_id = current_fragment_ind;
         switch (item.getItemId()) {
             case R.id.menu_home:
                 fragment = new HomeFragment();
                 current_page_name = ("Browse Events");
-                setTitle(current_page_name);
+                current_fragment_ind = 0;
                 break;
 
             case R.id.menu_search:
                 fragment = new SearchFragment();
                 current_page_name = ("Search Events");
-                setTitle(current_page_name);
+                current_fragment_ind = 1;
                 break;
 
             case R.id.menu_my_events:
+                current_fragment_ind = 2;
                 if(is_organizer){
                     fragment = new CreatedEventsFragment();
                     setTitle("Organized Events");
-                    setTitle(current_page_name);
                 } else {
                     fragment = new MyEventsFragment();
                     current_page_name = ("My Events");
-                    setTitle(current_page_name);
                 }
                 break;
             case R.id.menu_account:
+                current_fragment_ind = 3;
                 user = auth.getCurrentUser();
                 current_page_name = ("Account Settings");
-                setTitle(current_page_name);
                 if(user != null) {
                     fragment = new AccountFragment();
                 }
@@ -92,17 +95,32 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 }
                 break;
         }
-        System.out.println(fragment);
-        return loadFragment(fragment);
+        char tag;
+        if(prev_id - current_fragment_ind > 0){
+            // right to left
+            tag = 'r';
+        }
+        else if(prev_id - current_fragment_ind < 0){
+            // left to right
+            tag = 'l';
+        }
+        else{
+            // do nothing, same frqgment
+            return false;
+        }
+        setTitle(current_page_name);
+        return loadFragment(fragment, tag);
     }
-    private boolean loadFragment(Fragment fragment) {
+    private boolean loadFragment(Fragment fragment, char tag) {
         //switching fragment
         if (fragment != null) {
-            System.out.println(fragment);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .commit();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            if(tag == 'l')
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+            if(tag == 'r')
+                transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+            transaction.replace(R.id.fragment_container, fragment);
+            transaction.commit();
             return true;
         }
         return false;
