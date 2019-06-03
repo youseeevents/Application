@@ -18,6 +18,9 @@
             android:name=".CreateEventActivity"
             android:label="@string/title_activity_create_event" />
         <activity
+            android:name=".OrganizerSignUp"
+            android:label="OrganizerSignUp" />
+        <activity
             android:name=".EventActivity"
             android:label="@string/title_activity_event" />
         <activity
