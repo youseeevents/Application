@@ -27,7 +27,7 @@ import java.lang.reflect.Array;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword, inputUsername;
-    private Button btnSignIn, btnSignUp, btnResetPassword;
+    private Button btnSignIn, btnSignUp, btnOrgSignUp;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
     String username, password, email;
@@ -50,7 +50,14 @@ public class SignUpActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.password);
         inputUsername = (EditText) findViewById(R.id.username);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
+        btnOrgSignUp = (Button) findViewById(R.id.user_sign_up);
+
+        btnOrgSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignUpActivity.this, OrganizerSignUp.class));
+            }
+        });
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,12 +153,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        btnResetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SignUpActivity.this, ResetPasswordActivity.class));
-            }
-        });
+
     }
 
     private void pushData ( String email) {

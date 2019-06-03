@@ -31,11 +31,12 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
-    String emailUser, password;
+    String emailUser, password, username;
     //Check to see if the input is a username or email
     boolean isEmail = false;
     DatabaseReference mDatabase;
     User user;
+    boolean orgCheck;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference("Users");
 
@@ -90,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                                 return;
                             }
                             else{
+                                username = emailUser;
                                 emailUser = snapshot.child(emailUser).child("email").getValue(String.class).trim();
                                 signIn( emailUser, password );
                             }
@@ -135,6 +137,26 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                         if( task.isSuccessful()) {
+                            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child(username);
+                            rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot snapshot) {
+                                    if (false == (orgCheck = snapshot.child("isOrg").getValue(boolean.class))) {
+                                        startActivity(new Intent(com.example.youseeeventsv1.LoginActivity.this, MainActivity.class));
+                                        return;
+                                    }
+                                    else{
+                                        startActivity(new Intent(com.example.youseeeventsv1.LoginActivity.this, MainActivity.class));
+
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                             startActivity(new Intent(com.example.youseeeventsv1.LoginActivity.this, MainActivity.class));
                         }
                     }

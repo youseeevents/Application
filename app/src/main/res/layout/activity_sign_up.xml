@@ -133,6 +133,19 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/user_sign_up"
+            android:layout_width="259dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="16dip"
+            android:width="180dip"
+            android:background="#89D0EE"
+            android:text="@string/org_sign_up"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
     </LinearLayout>
 
     <ProgressBar
