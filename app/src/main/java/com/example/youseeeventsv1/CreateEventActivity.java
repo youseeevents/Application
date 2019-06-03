@@ -223,11 +223,12 @@ public class CreateEventActivity extends AppCompatActivity {
                             + hour2.getText().toString() + ":" + minute2.getText().toString() + (time_spinner2.getSelectedItem().toString()).toUpperCase();
                     String description_text = description.getText().toString();
 
-                    Event new_event = new Event(name_ns + "",name_text, description_text,
+                    Event new_event = new Event(name_ns+date_readable ,name_text, description_text,
                             datetime_text, date_readable, time,
                             location.getText().toString(), tag_spinner.getSelectedItem().toString().toLowerCase());
-                    databaseRef.child(name_ns + date_readable).setValue(new_event);
-                    databaseRefUsers.child(user.getDisplayName()).child("Events").child(name_ns).setValue(name_text);
+
+                    databaseRefUsers.child(user.getDisplayName()).child("created_events").child(new_event.getEventId()).setValue("");
+                    FirebaseDatabase.getInstance().getReference().child("Events").child(new_event.getEventId()).setValue(new_event);
 
                     //go to new page
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
