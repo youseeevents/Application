@@ -7,9 +7,10 @@
     tools:context=".CreatedEventsFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/created_events_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:background="@drawable/button_border"
         android:padding="8dp"
         android:text="Created Events:"

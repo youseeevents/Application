@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             FirebaseDatabase.getInstance().getReference()
                     .child("Users")
                     .child(username)
-                    .child("organizer")
+                    .child("isOrg")
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
