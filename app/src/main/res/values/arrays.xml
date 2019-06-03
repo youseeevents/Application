@@ -9,6 +9,17 @@
         <item>Community</item>
         <item>Weekend Events</item>
     </string-array>
+    <string-array name="sort_or_filter">
+        <item>Filter</item>
+        <item>Sort</item>
+    </string-array>
+
+    <string-array name="sort_list">
+        <item>Please select a value to sort by.</item>
+        <item>Date</item>
+        <item>Popularity</item>
+    </string-array>
+
     <string-array name="amORpm">
         <item>----</item>
         <item>am</item>

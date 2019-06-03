@@ -12,8 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -60,7 +63,9 @@ public class HomeFragment extends Fragment {
 
     private boolean filterFirstClick = false;
 
-
+    private Spinner sort_or_filter_spinner;
+    private Spinner sort_list_spinner;
+    private HorizontalScrollView home_tag_buttons;
 
     @Nullable
     @Override
@@ -75,6 +80,52 @@ public class HomeFragment extends Fragment {
         databaseRef = database.getReference("Events");
         mProgressBar = getActivity().findViewById(R.id.home_progress_bar);
 
+        sort_or_filter_spinner = getView().findViewById(R.id.sort_or_filter_spinner);
+        final String[] sort_or_filter = {"Filter", "Sort"};
+
+        home_tag_buttons = getView().findViewById(R.id.home_tag_buttons);
+        sort_list_spinner = getView().findViewById(R.id.sort_spinner);
+        final String[] sort_list = {"Please select a value to sort by.", "Date", "Popularity"};
+
+        sort_or_filter_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String choice = sort_or_filter[position];
+                switch(choice){
+                    case "Sort":
+                        home_tag_buttons.setVisibility(View.GONE);
+                        sort_list_spinner.setVisibility(View.VISIBLE);
+                        break;
+                    case "Filter":
+                        home_tag_buttons.setVisibility(View.VISIBLE);
+                        sort_list_spinner.setVisibility(View.GONE);
+                        break;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        sort_list_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String choice = sort_list[position];
+                switch(choice){
+                    case "Please select a value to sort by":
+                        break;
+                    case "Date":
+                        fillEventsArrayBySort("date");
+                    case "Popularity":
+                        fillEventsArrayBySort("eventGoing");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         A = getView().findViewById(R.id.home_tag_A_button);
         AC = getView().findViewById(R.id.home_tag_AC_button);
         FW = getView().findViewById(R.id.home_tag_FW_button);
@@ -315,6 +366,38 @@ public class HomeFragment extends Fragment {
         events.clear();
         FirebaseDatabase.getInstance().getReference("Events")
                 .orderByChild("date")
+                // startAt(0)
+                //.limitToFirst(20)
+                .addListenerForSingleValueEvent(new ValueEventListener(){
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int event_ind = 0;
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            events.add(ds.getValue(Event.class));
+                            events.get(event_ind).setEventId(ds.getKey());
+                            // event_ind fills the events array, which is passed into the recycler view
+                            event_ind = event_ind + 1;
+                        }
+                        // At this point, we have read in all the events so we need to
+                        // display the events in the view and hide the progress bar.
+                        if(events.size() >= dataSnapshot.getChildrenCount()){
+                            initial_load = true;
+                            mProgressBar.setVisibility(View.GONE);
+                            recyclerView.setAdapter(myAdapter);
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+    }
+
+    private void fillEventsArrayBySort(String sortedBy){
+        mProgressBar.setVisibility(View.VISIBLE);
+        events.clear();
+        FirebaseDatabase.getInstance().getReference("Events")
+                .orderByChild(sortedBy)
                 // startAt(0)
                 //.limitToFirst(20)
                 .addListenerForSingleValueEvent(new ValueEventListener(){
