@@ -122,10 +122,8 @@ public class SignUpActivity extends AppCompatActivity {
                                                 pushData(email);
 
                                                 FirebaseUser user = auth.getCurrentUser();
-
                                                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                         .setDisplayName(username).build();
-
                                                 user.updateProfile(profileUpdates);
 
                                                 ref.child(username).child("preferences").child("ancFilter").setValue(false);
@@ -161,6 +159,7 @@ public class SignUpActivity extends AppCompatActivity {
         user = new User(email, userId, username);
         mDatabase = ref.child(username);
         mDatabase.setValue(user);
+        mDatabase.child("isOrg").setValue(false);
         finish();
     }
 

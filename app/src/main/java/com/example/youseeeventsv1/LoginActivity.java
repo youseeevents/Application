@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -137,26 +138,6 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                         if( task.isSuccessful()) {
-                            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child(username);
-                            rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot snapshot) {
-                                    if (false == (orgCheck = snapshot.child("isOrg").getValue(boolean.class))) {
-                                        startActivity(new Intent(com.example.youseeeventsv1.LoginActivity.this, MainActivity.class));
-                                        return;
-                                    }
-                                    else{
-                                        startActivity(new Intent(com.example.youseeeventsv1.LoginActivity.this, MainActivity.class));
-
-                                    }
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
                             startActivity(new Intent(com.example.youseeeventsv1.LoginActivity.this, MainActivity.class));
                         }
                     }

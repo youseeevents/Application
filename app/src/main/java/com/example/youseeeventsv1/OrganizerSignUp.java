@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -132,6 +133,10 @@ public class OrganizerSignUp extends AppCompatActivity {
                                                             }
                                                         });
                                                 pushData(email);
+                                                FirebaseUser user = auth.getCurrentUser();
+                                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                        .setDisplayName(username).build();
+                                                user.updateProfile(profileUpdates);
                                                 startActivity(new Intent(OrganizerSignUp.this, LoginActivity
                                                         .class));
                                             }
@@ -155,6 +160,14 @@ public class OrganizerSignUp extends AppCompatActivity {
         org = new User(email, userId, username, true);
         mDatabase = ref.child(username);
         mDatabase.setValue(org);
+        // FOR NOW
+        mDatabase.child("isOrg").setValue(true);
+        mDatabase.child("preferences").child("ancFilter").setValue(false);
+        mDatabase.child("preferences").child("fnwFilter").setValue(false);
+        mDatabase.child("preferences").child("athFilter").setValue(false);
+        mDatabase.child("preferences").child("semFilter").setValue(false);
+        mDatabase.child("preferences").child("commFilter").setValue(false);
+        mDatabase.child("preferences").child("wkndFilter").setValue(false);
         finish();
     }
     @Override

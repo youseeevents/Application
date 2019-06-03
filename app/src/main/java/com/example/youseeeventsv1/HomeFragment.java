@@ -320,7 +320,6 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         int event_ind = 0;
-
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
                             events.add(ds.getValue(Event.class));
                             events.get(event_ind).setEventId(ds.getKey());
