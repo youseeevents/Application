@@ -165,7 +165,7 @@ public class HomeFragment extends Fragment {
                 if(filterFirstClick == false) {
                     filterFirstClick = true;
                     fillEachArray();
-                    W.setEnabled(false);
+                    myAdapter.swap(weekend);
                 }
                 else {
                     myAdapter.append(weekend);
