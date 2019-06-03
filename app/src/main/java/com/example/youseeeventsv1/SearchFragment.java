@@ -32,7 +32,7 @@ public class SearchFragment extends Fragment {
     RecyclerView recyclerView;
     DatabaseReference databaseReference;
     FirebaseUser firebaseUser;
-    
+
     ArrayList<Event> events;
     
     MyAdapter myAdapter;
