@@ -2,6 +2,7 @@ package com.example.youseeeventsv1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -104,78 +105,84 @@ public class HomeFragment extends Fragment {
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            boolean all_true = true;
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                if (ds.getValue().equals(false)){
+                                    all_true = false;
+                                }
+                            }
                             Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                            Iterator<DataSnapshot> it = children.iterator();
+                            if (!all_true) {
+                                Iterator<DataSnapshot> it = children.iterator();
+                                if (it.next().getValue().equals(true)) {
+                                    if (filterFirstClick == false) {
+                                        filterFirstClick = true;
+                                        fillEachArray();
+                                        myAdapter.swap(arts);
+                                    } else {
+                                        myAdapter.append(arts);
+                                    }
+                                    AC.setBackgroundResource(R.drawable.button_border_pressed);
+                                    AC.setEnabled(false);
+                                }
+                                if (it.next().getValue().equals(true)) {
+                                    if (filterFirstClick == false) {
+                                        filterFirstClick = true;
+                                        fillEachArray();
+                                        myAdapter.swap(athletics);
+                                    } else {
+                                        myAdapter.append(athletics);
+                                    }
+                                    A.setBackgroundResource(R.drawable.button_border_pressed);
+                                    A.setEnabled(false);
+                                }
+                                if (it.next().getValue().equals(true)) {
+                                    if (filterFirstClick == false) {
+                                        filterFirstClick = true;
+                                        fillEachArray();
+                                        myAdapter.swap(community);
+                                    } else {
+                                        myAdapter.append(community);
+                                    }
+                                    C.setBackgroundResource(R.drawable.button_border_pressed);
+                                    C.setEnabled(false);
+                                }
+                                if (it.next().getValue().equals(true)) {
+                                    if (filterFirstClick == false) {
+                                        filterFirstClick = true;
+                                        fillEachArray();
+                                        myAdapter.swap(fitness);
+                                    } else {
+                                        myAdapter.append(fitness);
+                                    }
+                                    FW.setBackgroundResource(R.drawable.button_border_pressed);
+                                    FW.setEnabled(false);
+                                }
+                                if (it.next().getValue().equals(true)) {
+                                    if (filterFirstClick == false) {
+                                        filterFirstClick = true;
+                                        fillEachArray();
+                                        myAdapter.swap(seminars);
+                                    } else {
+                                        myAdapter.append(seminars);
 
-                            if (it.next().getValue().equals(true)) {
-                                if (filterFirstClick == false) {
-                                    filterFirstClick = true;
-                                    fillEachArray();
-                                    myAdapter.swap(arts);
-                                } else {
-                                    myAdapter.append(arts);
+                                    }
+                                    S.setBackgroundResource(R.drawable.button_border_pressed);
+                                    S.setEnabled(false);
                                 }
-                                AC.setBackgroundResource(R.drawable.button_border_pressed);
-                                AC.setEnabled(false);
-                            }
-                            if (it.next().getValue().equals(true)) {
-                                if (filterFirstClick == false) {
-                                    filterFirstClick = true;
-                                    fillEachArray();
-                                    myAdapter.swap(athletics);
-                                } else {
-                                    myAdapter.append(athletics);
+                                if (it.next().getValue().equals(true)) {
+                                    if (filterFirstClick == false) {
+                                        filterFirstClick = true;
+                                        fillEachArray();
+                                        myAdapter.swap(weekend);
+                                    } else {
+                                        myAdapter.append(weekend);
+                                    }
+                                    W.setBackgroundResource(R.drawable.button_border_pressed);
+                                    W.setEnabled(false);
                                 }
-                                A.setBackgroundResource(R.drawable.button_border_pressed);
-                                A.setEnabled(false);
-                            }
-                            if (it.next().getValue().equals(true)) {
-                                if (filterFirstClick == false) {
-                                    filterFirstClick = true;
-                                    fillEachArray();
-                                    myAdapter.swap(community);
-                                } else {
-                                    myAdapter.append(community);
-                                }
-                                C.setBackgroundResource(R.drawable.button_border_pressed);
-                                C.setEnabled(false);
-                            }
-                            if (it.next().getValue().equals(true)) {
-                                if (filterFirstClick == false) {
-                                    filterFirstClick = true;
-                                    fillEachArray();
-                                    myAdapter.swap(fitness);
-                                } else {
-                                    myAdapter.append(fitness);
-                                }
-                                FW.setBackgroundResource(R.drawable.button_border_pressed);
-                                FW.setEnabled(false);
-                            }
-                            if (it.next().getValue().equals(true)) {
-                                if (filterFirstClick == false) {
-                                    filterFirstClick = true;
-                                    fillEachArray();
-                                    myAdapter.swap(seminars);
-                                } else {
-                                    myAdapter.append(seminars);
-
-                                }
-                                S.setBackgroundResource(R.drawable.button_border_pressed);
-                                S.setEnabled(false);
-                            }
-                            if (it.next().getValue().equals(true)) {
-                                if (filterFirstClick == false) {
-                                    filterFirstClick = true;
-                                    fillEachArray();
-                                    myAdapter.swap(weekend);
-                                } else {
-                                    myAdapter.append(weekend);
-                                }
-                                W.setBackgroundResource(R.drawable.button_border_pressed);
-                                W.setEnabled(false);
                             }
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                         }

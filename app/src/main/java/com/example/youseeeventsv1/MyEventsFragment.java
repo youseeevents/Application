@@ -8,12 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,18 +22,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class MyEventsFragment extends Fragment {
 
     private FirebaseDatabase database;
     private DatabaseReference databaseRef;
     private DatabaseReference mDatabase;
-
-
-    //private Button dummy_button;
-    private Button createEvent;
-
 
     private final static int load_incr = 20;
     static int start_ind = 0;
@@ -68,16 +59,6 @@ public class MyEventsFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
-
-        createEvent = getView().findViewById(R.id.eventCreate);
-        createEvent.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //go to new page
-                Intent intent = new Intent(v.getContext(), CreateEventActivity.class);
-                v.getContext().startActivity(intent);
-            }
-        });
-
         if (user == null){
             // Do something here, user is not logged in. Redirect to login.
         }
@@ -89,7 +70,7 @@ public class MyEventsFragment extends Fragment {
         }
 
         // Setting up the recycler view and filling it with objects in the events array.
-        recyclerView = (RecyclerView) getView().findViewById(R.id.events_recycler_view);
+        recyclerView = (RecyclerView) getView().findViewById(R.id.my_events_recycler_view);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         myAdapter = new MyAdapter(saved_events, new MyAdapter.OnItemClickListener(){

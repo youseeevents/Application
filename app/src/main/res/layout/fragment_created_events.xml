@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CreatedEventsFragment">
+
+    <TextView
+        android:id="@+id/created_events_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/text_border"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Created Events"
+        android:textSize="24dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/created_events_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.3"
+        android:visibility="visible">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/create_events_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="Create an Event!" />
+
+    <ProgressBar
+        android:id="@+id/created_progress_bar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone" />
+
+</LinearLayout>

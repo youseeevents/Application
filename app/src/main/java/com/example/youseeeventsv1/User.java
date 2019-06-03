@@ -5,6 +5,7 @@ public class User {
     private String email;
     private String uid;
     private String username;
+    private Boolean isOrg = false;
 
     public User(String e, String id, String u){
         this.email = e;
@@ -18,7 +19,7 @@ public class User {
     public String getEmail(){
         return email;
     }
-
+    private Boolean getIsOrg() { return isOrg; }
     public String getUid(){
         return uid;
     }

@@ -101,15 +101,9 @@
         </LinearLayout>
     </HorizontalScrollView>
     /?>
-    <Button
-        android:id="@+id/eventCreate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="Button" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/events_recycler_view"
+        android:id="@+id/my_events_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
