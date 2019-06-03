@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,12 +21,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Belal on 1/23/2018.
  */
 
 public class HomeFragment extends Fragment {
+    private FirebaseAuth auth;
     private FirebaseDatabase database;
     private DatabaseReference databaseRef;
     private DatabaseReference mDatabase;
@@ -65,6 +68,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
+        auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         databaseRef = database.getReference("Events");
         mProgressBar = getActivity().findViewById(R.id.home_progress_bar);
@@ -94,6 +98,93 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        String userName = auth.getCurrentUser().getDisplayName();
+        FirebaseDatabase.getInstance().getReference("Users").child(userName).child("preferences")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                        Iterator<DataSnapshot> it = children.iterator();
+
+                        if( it.next().getValue().equals(true) ) {
+                            if(filterFirstClick == false){
+                                filterFirstClick = true;
+                                fillEachArray();
+                                myAdapter.swap(arts);
+                            }
+                            else{
+                                myAdapter.append(arts);
+                            }
+                            AC.setBackgroundResource(R.drawable.button_border_pressed);
+                            AC.setEnabled(false);
+                        }
+                        if( it.next().getValue().equals(true) ) {
+                            if(filterFirstClick == false){
+                                filterFirstClick = true;
+                                fillEachArray();
+                                myAdapter.swap(athletics);
+                            }
+                            else {
+                                myAdapter.append(athletics);
+                            }
+                            A.setBackgroundResource(R.drawable.button_border_pressed);
+                            A.setEnabled(false);
+                        }
+                        if( it.next().getValue().equals(true) ) {
+                            if(filterFirstClick == false){
+                                filterFirstClick = true;
+                                fillEachArray();
+                                myAdapter.swap(community);
+                            }
+                            else{
+                                myAdapter.append(community);
+                            }
+                            C.setBackgroundResource(R.drawable.button_border_pressed);
+                            C.setEnabled(false);
+                        }
+                        if( it.next().getValue().equals(true) ) {
+                            if(filterFirstClick == false){
+                                filterFirstClick = true;
+                                fillEachArray();
+                                myAdapter.swap(fitness);
+                            }
+                            else {
+                                myAdapter.append(fitness);
+                            }
+                            FW.setBackgroundResource(R.drawable.button_border_pressed);
+                            FW.setEnabled(false);
+                        }
+                        if( it.next().getValue().equals(true) ) {
+                            if(filterFirstClick == false){
+                                filterFirstClick = true;
+                                fillEachArray();
+                                myAdapter.swap(seminars);
+                            }
+                            else{
+                                myAdapter.append(seminars);
+
+                            }
+                            S.setBackgroundResource(R.drawable.button_border_pressed);
+                            S.setEnabled(false);
+                        }
+                        if( it.next().getValue().equals(true) ) {
+                            if(filterFirstClick == false) {
+                                filterFirstClick = true;
+                                fillEachArray();
+                                myAdapter.swap(weekend);
+                            }
+                            else {
+                                myAdapter.append(weekend);
+                            }
+                            W.setBackgroundResource(R.drawable.button_border_pressed);
+                            W.setEnabled(false);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
 
         AC.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
