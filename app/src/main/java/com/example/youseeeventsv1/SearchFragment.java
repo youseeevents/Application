@@ -32,11 +32,7 @@ public class SearchFragment extends Fragment {
     RecyclerView recyclerView;
     DatabaseReference databaseReference;
     FirebaseUser firebaseUser;
-
-    ArrayList<String> eventNameList;
-    ArrayList<String> eventDateList;
-    ArrayList<String> eventLocationList;
-    ArrayList<String> eventTagList;
+    
     ArrayList<Event> events;
     
     MyAdapter myAdapter;
@@ -60,10 +56,6 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
-        eventNameList = new ArrayList<>();
-        eventDateList = new ArrayList<>();
-        eventLocationList = new ArrayList<>();
-        eventTagList = new ArrayList<>();
         events = new ArrayList<>();
 
         search_edit_text.addTextChangedListener(new TextWatcher() {
@@ -83,10 +75,7 @@ public class SearchFragment extends Fragment {
                     setAdapter(s.toString());
                 }
                 else {
-                    eventNameList.clear();
-                    eventDateList.clear();
-                    eventLocationList.clear();
-                    eventTagList.clear();
+                    events.clear();
                     recyclerView.removeAllViews();
                 }
 
@@ -99,10 +88,7 @@ public class SearchFragment extends Fragment {
         databaseReference.child("Events").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                eventNameList.clear();
-                eventDateList.clear();
-                eventLocationList.clear();
-                eventTagList.clear();
+                events.clear();
                 recyclerView.removeAllViews();
 
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
@@ -140,35 +126,24 @@ public class SearchFragment extends Fragment {
 
 
                     if(event_name.toLowerCase().contains(searchedString.toLowerCase())) {
-                        eventNameList.add(event_name);
-                        eventDateList.add(event_date);
-                        eventLocationList.add(event_location);
                         if(!event_added) {
                             events.add(new Event(eventId, event_name, event_description, event_date_full, event_date, event_time, event_location, event_tag));
                             event_added = true;
                         }
                     }
                     else if(event_date.toLowerCase().contains(searchedString.toLowerCase())) {
-                        eventNameList.add(event_name);
-                        eventDateList.add(event_date);
-                        eventLocationList.add(event_location);
                         if(!event_added) {
                             events.add(new Event(eventId, event_name, event_description, event_date_full, event_date, event_time, event_location, event_tag));
                             event_added = true;
                         }
                     }
                     else if(event_location.toLowerCase().contains(searchedString.toLowerCase())) {
-                        eventNameList.add(event_name);
-                        eventDateList.add(event_date);
-                        eventLocationList.add(event_location);
                         if(!event_added) {
                             events.add(new Event(eventId, event_name, event_description, event_date_full, event_date, event_time, event_location, event_tag));
                             event_added = true;
                         }
                     }
-                    else if(event_tag != null && event_tag.toLowerCase().contains(searchedString.toLowerCase())) {
-                        eventNameList.add(event_name);
-                        eventDateList.add(event_date);
+                    else if(event_tag.toLowerCase().contains(searchedString.toLowerCase())) {
                         if(!event_added) {
                             events.add(new Event(eventId, event_name, event_description, event_date_full, event_date, event_time, event_location, event_tag));
                             event_added = true;
