@@ -1,22 +1,16 @@
 package com.example.youseeeventsv1;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.Date;
 
 public class CreateEventActivity extends AppCompatActivity {
 
@@ -26,7 +20,8 @@ public class CreateEventActivity extends AppCompatActivity {
     EditText description;
     EditText datetime;
     EditText location;
-    EditText tags;
+    Spinner tag_spinner;
+
 
 
     @Override
@@ -43,14 +38,18 @@ public class CreateEventActivity extends AppCompatActivity {
         description = findViewById(R.id.description);
         datetime = findViewById(R.id.DateTime);
         location = findViewById(R.id.location);
-        tags = findViewById(R.id.tags);
+
+        tag_spinner = findViewById(R.id.tag_spinner);
+        ArrayAdapter<CharSequence> tag_adapter = ArrayAdapter.createFromResource(this, R.array.tag_array, R.layout.support_simple_spinner_dropdown_item);
+        tag_adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        tag_spinner.setAdapter(tag_adapter);
 
         createEventImageButton = (ImageButton) findViewById(R.id.image_createEvent);
 
         createEventImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Toast.makeText(CreateEventActivity.this, "It works", Toast.LENGTH_LONG).show();
-
+                System.out.println(String.valueOf(tag_spinner.getSelectedItem()));
                 //create new Event
                 String name_text = name.getText().toString();
                 String name_ns = name_text.replaceAll("\\s", "");
@@ -59,7 +58,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 String description_text = description.getText().toString();
                 Event dummy_event = new Event(name_ns + "",name_text, description_text,
                         datetime_text, datetime.getText().toString(), "0",
-                        location.getText().toString(), tags.getText().toString());
+                        location.getText().toString(), String.valueOf(tag_spinner.getSelectedItem()));
 
                 if(!name_ns.equals("")) {
                     databaseRef.child(name_ns).setValue(dummy_event);

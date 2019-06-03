@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string-array name="tag_array">
+        <item>Arts and Culture</item>
+        <item>Fitness and Wellbeing</item>
+        <item>Athletics</item>
+        <item>Seminars</item>
+        <item>Community</item>
+        <item>Weekend Events</item>
+    </string-array>
+</resources>

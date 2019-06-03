@@ -79,10 +79,8 @@ public class EventActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot snapshot) {
                     if (snapshot.hasChild(event.getEventId())) {
                         saveButton.setChecked(true);
-                        Toast.makeText(getApplicationContext(), "Event Saved!", Toast.LENGTH_SHORT).show();
                     } else {
                         saveButton.setChecked(false);
-                        Toast.makeText(getApplicationContext(), "Event Unsaved!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -101,6 +99,7 @@ public class EventActivity extends AppCompatActivity {
                         DatabaseReference user_events_ref = ref.child(user.getDisplayName()).child("events");
                         // user is logged in
                         user_events_ref.child(event.getEventId()).setValue("");
+                        Toast.makeText(getApplicationContext(), "Event Saved!", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         // user is not logged in
@@ -116,6 +115,7 @@ public class EventActivity extends AppCompatActivity {
                             ToggleButton saveButton = (ToggleButton) findViewById(R.id.saveButton);
                             if (snapshot.hasChild(event.getEventId())) {
                                 user_events_ref.child(event.getEventId()).removeValue();
+                                Toast.makeText(getApplicationContext(), "Event Unsaved!", Toast.LENGTH_SHORT).show();
                             }
                         }
 

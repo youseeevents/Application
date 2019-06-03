@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
         auth = FirebaseAuth.getInstance();
-
         loadFragment(new HomeFragment());
 
         BottomNavigationView bottom_navbar = (BottomNavigationView) findViewById(R.id.navigation);

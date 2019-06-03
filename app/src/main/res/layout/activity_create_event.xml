@@ -15,138 +15,157 @@
             android:layout_height="752dp"
             android:orientation="vertical">
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/constraintLayout"
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/event_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/text_border"
+                    android:gravity="center_horizontal"
+                    android:hint='Event Title'
+                    android:textColor="#000000"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".CreateEventActivity">
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/event_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:hint='Event Title'
-                            android:textColor="#000000"
-                            android:textSize="36sp"
-                            android:textStyle="bold" />
-                    </android.support.design.widget.TextInputLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/organizedBy"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Organized By:"
-                            android:textSize="24sp" />
-
-                        <TextView
-                            android:id="@+id/organizerName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:hint='Organization Name'
-                            android:textSize="28sp" />
-
-                        <android.support.design.widget.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <android.support.design.widget.TextInputEditText
-                                android:id="@+id/DateTime"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:hint='Date and Time'
-                                android:textSize="24sp" />
-                        </android.support.design.widget.TextInputLayout>
-
-                        <android.support.design.widget.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <android.support.design.widget.TextInputEditText
-                                android:id="@+id/location"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:hint="Location"
-                                android:textSize="24sp" />
-                        </android.support.design.widget.TextInputLayout>
-
-                        <android.support.design.widget.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <android.support.design.widget.TextInputEditText
-                                android:id="@+id/tags"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:hint="TAG 1, TAG 2, TAG 3, ..."
-                                android:textSize="24sp" />
-
-                        </android.support.design.widget.TextInputLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </android.support.constraint.ConstraintLayout>
-
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="328dp">
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/textInputLayout"
+                <TextView
+                    android:id="@+id/organizedBy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:paddingLeft="8dp"
+                    android:paddingRight="16dp"
+                    android:text="Organizer"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:height="150dp"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:hint="Event Description Goes Here"
-                        android:maxHeight="150dp"
-                        android:textSize="24sp" />
-
-                </android.support.design.widget.TextInputLayout>
-
-                <ImageButton
-                    android:id="@+id/image_createEvent"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/organizerName"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="93dp"
-                    android:layout_marginEnd="94dp"
-                    android:contentDescription="CreateEvent button"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.492"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-                    app:layout_constraintVertical_bias="0.357"
-                    app:srcCompat="@drawable/createeventbutton" />
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/text_border"
+                    android:gravity="left|center_vertical"
+                    android:hint='Organization Name'
+                    android:paddingLeft="8dp"
+                    android:textSize="28sp" />
 
-            </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="16dp"
+                    android:text="@string/event_date_label"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/DateTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/text_border"
+                    android:gravity="left|center_vertical"
+                    android:hint='Date and Time'
+                    android:paddingLeft="8dp"
+                    android:textSize="24sp" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <Spinner
+                        android:id="@+id/spinner2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Spinner
+                        android:id="@+id/spinner3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Spinner
+                        android:id="@+id/spinner4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </TableRow>
+
+                <TextView
+                    android:id="@+id/location_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="16dp"
+                    android:text="@string/event_location_label"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/text_border"
+                    android:gravity="left|center_vertical"
+                    android:hint="Location"
+                    android:paddingLeft="8dp"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/tag_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="16dp"
+                    android:text="Please select a tag that best represents your event."
+                    android:textColor="@android:color/black" />
+
+                <Spinner
+                    android:id="@+id/tag_spinner"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:background="@drawable/text_border"
+                    android:entries="@array/tag_array"
+                    android:spinnerMode="dropdown" />
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:height="150dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:hint="Event Description Goes Here"
+                    android:maxHeight="150dp"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/image_createEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="93dp"
+                android:layout_marginEnd="94dp"
+                android:contentDescription="CreateEvent button"
+                android:visibility="visible"
+                app:srcCompat="@drawable/createeventbutton" />
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
