@@ -13,6 +13,13 @@ public class User {
         this.username = u;
     }
 
+    public User(String e, String id, String u, boolean org){
+        this.email = e;
+        this.uid = id;
+        this.username = u;
+        this.isOrg = org;
+    }
+    
     public String getUsername(){
         return username;
     }
