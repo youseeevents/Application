@@ -152,7 +152,6 @@ public class HomeFragment extends Fragment {
                     myAdapter.swap(community);
                 }
                 else{
-                    C.setEnabled(false);
                     myAdapter.append(community);
                 }
                 C.setBackgroundResource(R.drawable.button_border_pressed);
@@ -184,7 +183,7 @@ public class HomeFragment extends Fragment {
                     myAdapter.swap(athletics);
                 }
                 else {
-                    int resId = R.drawable.button_border_pressed;
+                    myAdapter.append(athletics);
                 }
                 A.setBackgroundResource(R.drawable.button_border_pressed);
                 A.setEnabled(false);
@@ -211,15 +210,9 @@ public class HomeFragment extends Fragment {
                 fillEventsArray();
 
                 myAdapter.swap(events);
-
                 filterFirstClick = false;
-
-
             }
         });
-
-
-
     }
 
     private void fillEventsArray(){

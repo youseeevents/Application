@@ -78,7 +78,6 @@ public class MyEventsFragment extends Fragment {
             }
         });
 
-
         if (user == null){
             // Do something here, user is not logged in. Redirect to login.
         }

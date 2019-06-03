@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:visibility="gone" />
-
+    <?ignore
     <HorizontalScrollView
         android:id="@+id/event_tag_buttons"
         android:layout_width="match_parent"
@@ -100,18 +100,18 @@
                 android:textSize="10sp" />
         </LinearLayout>
     </HorizontalScrollView>
-
+    /?>
     <Button
         android:id="@+id/eventCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:text="Button" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/events_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/event_tag_buttons">
+        android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
 
