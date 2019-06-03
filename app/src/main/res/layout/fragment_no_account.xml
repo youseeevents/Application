@@ -1,74 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FC181515">
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:visibility="visible">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="172dp"
+        android:layout_height="170dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="30dp"
+        android:contentDescription="logo"
+        android:src="@mipmap/logo" />
 
-        <Button
-            android:id="@+id/registerButton"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="55dp"
-            android:layout_marginEnd="56dp"
-            android:layout_marginBottom="50dp"
-            android:background="#00BCD4"
-            android:text="Register"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+    <Button
+        android:id="@+id/loginButton"
+        style="?android:textAppearanceSmall"
+        android:layout_width="168dp"
+        android:layout_height="49dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="0dp"
+        android:width="180dip"
+        android:background="#89d0ee"
+        android:text="Log In"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:layout_marginBottom="44dp"
-            android:gravity="center"
-            android:text="Don't have an account?                                       Signup Below!"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/registerButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+    <View
+        android:id="@+id/divider"
+        android:layout_width="356dp"
+        android:layout_height="9dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="20dp"
+        android:background="#E9E9E9"
+        android:visibility="visible" />
 
-        <Button
-            android:id="@+id/loginButton"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="55dp"
-            android:layout_marginTop="250dp"
-            android:layout_marginEnd="56dp"
-            android:background="#36A6FA"
-            android:text="Login"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="No account? Sign up below!"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#A9000000"
+        android:textSize="20sp" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="164dp"
-            android:layout_height="154dp"
-            android:layout_marginStart="98dp"
-            android:layout_marginEnd="98dp"
-            android:layout_marginBottom="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/loginButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/logo" />
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="168dp"
+        android:layout_height="49dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="20dp"
+        android:width="180dip"
+        android:background="#89D0EE"
+        android:text="REGISTER"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
-    </android.support.constraint.ConstraintLayout>
-
-</RelativeLayout>
+</LinearLayout>

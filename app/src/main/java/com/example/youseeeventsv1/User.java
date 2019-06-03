@@ -6,6 +6,7 @@ public class User {
     private String uid;
     private String username;
     private Boolean isOrg = false;
+    private Boolean[] preferences;
 
     public User(String e, String id, String u){
         this.email = e;

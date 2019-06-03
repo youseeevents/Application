@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+
         if(user != null){
             String username = user.getDisplayName();
             FirebaseDatabase.getInstance().getReference()

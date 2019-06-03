@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,11 +32,12 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
-    String emailUser, password;
+    String emailUser, password, username;
     //Check to see if the input is a username or email
     boolean isEmail = false;
     DatabaseReference mDatabase;
     User user;
+    boolean orgCheck;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference("Users");
 
@@ -90,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                                 return;
                             }
                             else{
+                                username = emailUser;
                                 emailUser = snapshot.child(emailUser).child("email").getValue(String.class).trim();
                                 signIn( emailUser, password );
                             }
