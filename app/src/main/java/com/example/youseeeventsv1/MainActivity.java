@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+    private String current_page_name = "Browse Events";
     private FirebaseAuth auth;
     private FirebaseUser user;
     private Fragment fragment = null;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-
+        setTitle(current_page_name);
         if(user != null){
             String username = user.getDisplayName();
             FirebaseDatabase.getInstance().getReference()
@@ -58,26 +59,31 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.menu_home:
                 fragment = new HomeFragment();
-                setTitle("Home");
+                current_page_name = ("Browse Events");
+                setTitle(current_page_name);
                 break;
 
             case R.id.menu_search:
                 fragment = new SearchFragment();
-                setTitle("Search");
+                current_page_name = ("Search Events");
+                setTitle(current_page_name);
                 break;
 
             case R.id.menu_my_events:
                 if(is_organizer){
                     fragment = new CreatedEventsFragment();
                     setTitle("Organized Events");
+                    setTitle(current_page_name);
                 } else {
                     fragment = new MyEventsFragment();
-                    setTitle("My Events");
+                    current_page_name = ("My Events");
+                    setTitle(current_page_name);
                 }
                 break;
             case R.id.menu_account:
                 user = auth.getCurrentUser();
-                setTitle("Account");
+                current_page_name = ("Account Settings");
+                setTitle(current_page_name);
                 if(user != null) {
                     fragment = new AccountFragment();
                 }

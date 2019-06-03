@@ -8,7 +8,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
 import android.view.View;
+import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,7 @@ public class EventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_event);
         saveButton = (ToggleButton) findViewById(R.id.saveButton);
 
@@ -50,6 +53,12 @@ public class EventActivity extends AppCompatActivity {
         // This sets the text fields on the EventActivity page.
         TextView title = findViewById(R.id.event_title);
         title.setText(event.getName());
+
+        TextView organizer = findViewById(R.id.event_organizer);
+        organizer.setText("Not implemented.");
+
+        TextView tag = findViewById(R.id.event_tag);
+        tag.setText(event.getTag());
 
         TextView date = findViewById(R.id.event_datetime);
         date.setText(event.getDate());

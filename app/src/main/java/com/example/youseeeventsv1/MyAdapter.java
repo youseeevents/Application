@@ -69,9 +69,21 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         if(mDataset.get(position)!=null) {
-            ((MyViewHolder) holder).e_name.setText(mDataset.get(position).getName());
-            ((MyViewHolder) holder).e_date.setText(mDataset.get(position).getDate_readable());
-            ((MyViewHolder) holder).e_location.setText(mDataset.get(position).getLocation());
+            String name = mDataset.get(position).getName();
+            String date = mDataset.get(position).getDate_readable();
+            String location = mDataset.get(position).getLocation();
+            if(name.length() > 34){
+                name = name.substring(0, 30) + "...";
+            }
+            if(date.length() > 34){
+                date = date.substring(0, 30) + "...";
+            }
+            if(location.length() > 34){
+                location = location.substring(0, 30) + "...";
+            }
+            ((MyViewHolder) holder).e_name.setText(name);
+            ((MyViewHolder) holder).e_date.setText(date);
+            ((MyViewHolder) holder).e_location.setText(location);
         }
         ((MyViewHolder)holder).bind(mDataset.get(position), listener);
     }

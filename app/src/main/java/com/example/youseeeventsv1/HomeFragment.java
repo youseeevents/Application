@@ -1,5 +1,6 @@
 package com.example.youseeeventsv1;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -68,7 +69,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState){
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         databaseRef = database.getReference("Events");
@@ -92,11 +93,11 @@ public class HomeFragment extends Fragment {
         myAdapter = new MyAdapter(events, new MyAdapter.OnItemClickListener(){
             @Override public void onItemClick(Event event){
                 // event -> EventActivity
-                Intent intent = new Intent(getContext(), EventActivity.class);
+                Intent event_info_intent = new Intent(getContext(), EventActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("Event", event);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                event_info_intent.putExtras(bundle);
+                startActivity(event_info_intent);
             }
         });
         if(auth.getCurrentUser() != null) {

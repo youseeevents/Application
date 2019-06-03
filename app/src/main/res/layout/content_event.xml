@@ -25,6 +25,7 @@
 
             <TextView
                 android:id="@+id/event_title"
+                android:transitionName="event_transition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -117,6 +118,7 @@
 
                     <TextView
                         android:id="@+id/event_datetime"
+                        android:transitionName="event_transition"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
@@ -149,6 +151,7 @@
 
                     <TextView
                         android:id="@+id/event_location"
+                        android:transitionName="event_transition"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
