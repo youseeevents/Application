@@ -11,9 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:background="@drawable/button_border"
+        android:background="@drawable/text_border"
+        android:gravity="center"
         android:padding="8dp"
-        android:text="Created Events:"
+        android:text="Created Events"
         android:textSize="24dp" />
 
     <android.support.v7.widget.RecyclerView
