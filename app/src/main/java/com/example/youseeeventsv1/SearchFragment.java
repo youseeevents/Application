@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,7 +46,7 @@ public class SearchFragment extends Fragment {
     public void onViewCreated (View view, @Nullable Bundle savedInstanceState) {
 
         search_edit_text = (EditText) getActivity().findViewById(R.id.search_edit_text);
-        recyclerView = (RecyclerView) getActivity().findViewById(R.id.searchRecyclerView);
+        recyclerView = (RecyclerView) getActivity().findViewById(R.id.search_recycler_view);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
