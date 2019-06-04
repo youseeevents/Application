@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 current_fragment_ind = 2;
                 if(is_organizer){
                     fragment = new CreatedEventsFragment();
-                    setTitle("Organized Events");
+                    current_page_name = ("Organized Events");
                 } else {
                     fragment = new MyEventsFragment();
                     current_page_name = ("My Events");
@@ -115,10 +115,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //switching fragment
         if (fragment != null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            /* Transitions
             if(tag == 'l')
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
             if(tag == 'r')
                 transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+            */
             transaction.replace(R.id.fragment_container, fragment);
             transaction.commit();
             return true;
