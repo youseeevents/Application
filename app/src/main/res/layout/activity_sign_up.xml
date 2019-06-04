@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#FDFDFD"
+        android:background="#EEEEEE"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
@@ -118,7 +118,7 @@
             android:layout_height="5dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
-            android:background="#E9E9E9"
+            android:background="#AAAAAA"
             android:visibility="visible" />
 
         <Button
