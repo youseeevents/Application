@@ -40,13 +40,17 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
     private OnItemLongClickListener listenerLong;
 
     /**
-     * Constructor
+     * Constructor with click listener
      */
     public MyAdapter(ArrayList<Event> myDataset, OnItemClickListener listener) {
         mDataset = myDataset;
         this.listener = listener;
         this.listenerLong = null;
     }
+
+    /**
+     * Constructor with click and long click listener
+     */
     public MyAdapter(ArrayList<Event> myDataset, OnItemClickListener listener, OnItemLongClickListener listenerLong) {
         mDataset = myDataset;
         this.listener = listener;
@@ -87,7 +91,6 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
-                    System.out.println("Short click");
                     listener.onItemClick(item);
                 }
             });
@@ -97,6 +100,7 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
                 @Override
                 public boolean onLongClick(View v) {
                     organizer_buttons.setVisibility(View.VISIBLE);
+                    // Delete Button Functionality
                     delete_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -115,6 +119,7 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
                             itemView.setVisibility(View.GONE);
                         }
                     });
+                    // Edit Button Functionality
                     edit_button.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
@@ -125,6 +130,7 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
                             v.getContext().startActivity(event_info_intent);
                         }
                     });
+                    // Cancel Button Functionality
                     cancel_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

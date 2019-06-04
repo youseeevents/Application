@@ -18,7 +18,9 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="4dp"
             android:background="@drawable/filtericon"
-            android:entries="@array/sort_or_filter" />
+            android:entries="@array/sort_or_filter"
+            android:popupBackground="@drawable/spinner_border"
+            android:spinnerMode="dropdown" />
 
         <Spinner
             android:id="@+id/sort_spinner"
@@ -28,6 +30,8 @@
             android:layout_weight="0"
             android:background="@drawable/button_border"
             android:entries="@array/sort_list"
+            android:popupBackground="@drawable/spinner_border"
+            android:spinnerMode="dropdown"
             android:visibility="gone" />
 
         <HorizontalScrollView
