@@ -48,6 +48,8 @@ public class EditEventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //will need to change to activity_edit_event
         setContentView(R.layout.activity_create_event);
 
         databaseRef = FirebaseDatabase.getInstance().getReference("Events");
@@ -81,7 +83,7 @@ public class EditEventActivity extends AppCompatActivity {
         minute1 = findViewById(R.id.min1);
         minute2 = findViewById(R.id.min2);
 
-        //set organizer name
+        //set organizer name and other fields
         organizer.setText(user.getDisplayName());
         name.setText(event.getName());
         location.setText(event.getLocation());
@@ -158,8 +160,6 @@ public class EditEventActivity extends AppCompatActivity {
 
                 if(all_inputs == true) {
                     //create new Event
-                    /*String name_text = name.getText().toString();
-                    String name_ns = name_text.replaceAll("\\s", "");*/
                     String date_month_convert = "";
                     String date_day_convert = "";
                     String time_convert = "";
@@ -199,11 +199,13 @@ public class EditEventActivity extends AppCompatActivity {
                     String date_readable = month_spinner.getSelectedItem().toString() + day_spinner.getSelectedItem().toString();
                     String time = hour1.getText().toString() + ":" + minute1.getText().toString() + (time_spinner1.getSelectedItem().toString()).toUpperCase() + " - "
                             + hour2.getText().toString() + ":" + minute2.getText().toString() + (time_spinner2.getSelectedItem().toString()).toUpperCase();
-                    String description_text = description.getText().toString();
+                    String description_text = description.getText().toString().trim();
+                    String location_text = location.getText().toString().trim();
+                    String selected_tag = tag_spinner.getSelectedItem().toString().toLowerCase();
 
-                    Event new_event = new Event(name_ns+date_readable ,name_text, description_text,
+                    Event new_event = new Event(name_ns + date_readable ,name_text, description_text,
                             datetime_text, date_readable, time,
-                            location.getText().toString(), tag_spinner.getSelectedItem().toString().toLowerCase());
+                            location_text, selected_tag);
 
                     databaseRefUsers.child(user.getDisplayName()).child("created_events").child(event.getEventId()).setValue(null);
                     FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).setValue(null);
