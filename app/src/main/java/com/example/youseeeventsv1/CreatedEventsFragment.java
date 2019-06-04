@@ -93,6 +93,11 @@ public class CreatedEventsFragment extends Fragment {
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
+        }, new MyAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(Event v) {
+                return true;
+            }
         });
 
     }

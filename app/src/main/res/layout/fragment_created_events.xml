@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,7 +21,7 @@
         android:id="@+id/created_events_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.3"
+        android:layout_below="@id/created_events_title"
         android:visibility="visible">
 
     </android.support.v7.widget.RecyclerView>
@@ -30,7 +30,7 @@
         android:id="@+id/create_events_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
+        android:layout_alignBottom="@id/created_events_recycler_view"
         android:text="Create an Event!" />
 
     <ProgressBar
@@ -42,4 +42,4 @@
         android:layout_marginBottom="20dp"
         android:visibility="gone" />
 
-</LinearLayout>
+</RelativeLayout>

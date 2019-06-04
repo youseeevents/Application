@@ -6,6 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,16 +19,27 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
 
     private ArrayList<Event> mDataset;
     private OnItemClickListener listener;
+    private OnItemLongClickListener listenerLong;
+
     /**
      * Constructor
      */
     public MyAdapter(ArrayList<Event> myDataset, OnItemClickListener listener) {
         mDataset = myDataset;
         this.listener = listener;
+        this.listenerLong = null;
+    }
+    public MyAdapter(ArrayList<Event> myDataset, OnItemClickListener listener, OnItemLongClickListener listenerLong) {
+        mDataset = myDataset;
+        this.listener = listener;
+        this.listenerLong = listenerLong;
     }
 
     public interface OnItemClickListener {
         void onItemClick(Event v);
+    }
+    public interface OnItemLongClickListener {
+        boolean onItemLongClick(Event v);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -33,6 +47,10 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
         public TextView e_name;
         public TextView e_date;
         public TextView e_location;
+        public LinearLayout organizer_buttons;
+        public Button delete_button;
+        public Button edit_button;
+        public Button cancel_button;
 
         public MyViewHolder(@NonNull ConstraintLayout v) {
             super(v);
@@ -40,13 +58,49 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             e_name = view.findViewById(R.id.event_name_text);
             e_date = view.findViewById(R.id.event_date_text);
             e_location = view.findViewById(R.id.event_location_text);
+
+            organizer_buttons = view.findViewById(R.id.org_buttons);
+            delete_button = view.findViewById(R.id.delete_button);
+            edit_button = view.findViewById(R.id.edit_button);
+            cancel_button = view.findViewById(R.id.cancel_button);
+
+            delete_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+            edit_button.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+            cancel_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    organizer_buttons.setVisibility(View.GONE);
+                }
+            });
         }
 
         public void bind(final Event item, final OnItemClickListener listener){
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
+                    System.out.println("Short click");
                     listener.onItemClick(item);
+                }
+            });
+        }
+        public void bind(final Event item, final OnItemLongClickListener listenerLong){
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    organizer_buttons.setVisibility(View.VISIBLE);
+                    return listenerLong.onItemLongClick(item);
                 }
             });
         }
@@ -86,6 +140,8 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             ((MyViewHolder) holder).e_location.setText(location);
         }
         ((MyViewHolder)holder).bind(mDataset.get(position), listener);
+        if(listenerLong != null)
+            ((MyViewHolder)holder).bind(mDataset.get(position), listenerLong);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

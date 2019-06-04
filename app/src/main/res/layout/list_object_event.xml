@@ -5,118 +5,165 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
     android:elevation="2dp"
     android:paddingLeft="5dp"
     android:paddingTop="2.5dp"
     android:paddingRight="5dp"
     android:paddingBottom="2.5dp">
 
-    <TableLayout
-        android:id="@+id/event_container"
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/event_border"
-        android:padding="2dp"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="5dp">
+        android:layout_height="match_parent">
 
-        <TableRow
+        <LinearLayout
+            android:id="@+id/org_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/delete_button"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/trashcan_icon" />
+
+            <Button
+                android:id="@+id/edit_button"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/edit_icon" />
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/cancel2_icon" />
+        </LinearLayout>
+
+        <TableLayout
+            android:id="@+id/event_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp">
+            android:layout_height="100dp"
+            android:background="@drawable/event_border"
+            android:padding="2dp">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                app:srcCompat="@drawable/calendar_fg" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
 
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_weight="0.7"
-                android:orientation="vertical"
-                android:visibility="visible">
-
-                <TableRow
-                    android:id="@+id/event_name_row"
-                    android:transitionName="event_transition"
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/event_img"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="4dp">
+                    android:layout_weight="0"
+                    app:srcCompat="@drawable/calendar_fg" />
 
-                    <ImageView
-                        android:id="@+id/organizerimg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:src="@drawable/ic_group_black_24dp" />
-
-                    <TextView
-                        android:id="@+id/event_name_text"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.7"
-                        android:maxLines="1"
-                        android:paddingRight="10dp"
-                        android:text="@null"
-                        android:textColor="@android:color/black" />
-
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/event_date_row"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/dateimg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:src="@drawable/ic_event_note_black_24dp" />
-
-                    <TextView
-                        android:id="@+id/event_date_text"
-                        android:transitionName="event_transition"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.7"
-                        android:maxLines="1"
-                        android:paddingRight="10dp"
-                        android:text="@null"
-                        android:textColor="@android:color/black" />
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/event_location_row"
-                    android:layout_width="match_parent"
+                <LinearLayout
                     android:layout_height="wrap_content"
-                    android:paddingBottom="4dp">
+                    android:layout_weight="0.7"
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
-                    <ImageView
-                        android:id="@+id/locationimg"
-                        android:layout_width="wrap_content"
+                    <TableRow
+                        android:id="@+id/event_name_row"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:src="@drawable/ic_place_black_24dp" />
+                        android:paddingTop="4dp"
+                        android:transitionName="event_transition">
 
-                    <TextView
-                        android:id="@+id/event_location_text"
-                        android:transitionName="event_transition"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.7"
-                        android:maxLines="1"
-                        android:paddingRight="10dp"
-                        android:text="@null"
-                        android:textColor="@android:color/black" />
-                </TableRow>
-            </LinearLayout>
+                        <ImageView
+                            android:id="@+id/organizerimg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/ic_group_black_24dp"
+                            android:visibility="gone" />
 
-        </TableRow>
+                        <TextView
+                            android:id="@+id/event_name_text"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7"
+                            android:maxLines="1"
+                            android:paddingRight="10dp"
+                            android:text="@null"
+                            android:textColor="@android:color/black" />
 
-    </TableLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/event_date_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/dateimg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/ic_event_note_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/event_date_text"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7"
+                            android:maxLines="1"
+                            android:paddingRight="10dp"
+                            android:text="@null"
+                            android:textColor="@android:color/black"
+                            android:transitionName="event_transition" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/event_location_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="4dp">
+
+                        <ImageView
+                            android:id="@+id/locationimg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/ic_place_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/event_location_text"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7"
+                            android:maxLines="1"
+                            android:paddingRight="10dp"
+                            android:text="@null"
+                            android:textColor="@android:color/black"
+                            android:transitionName="event_transition" />
+                    </TableRow>
+                </LinearLayout>
+
+            </TableRow>
+
+        </TableLayout>
+    </TableRow>
 
 </android.support.constraint.ConstraintLayout>
