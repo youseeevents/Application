@@ -58,4 +58,5 @@
     <string name="search_hint">Search here...</string>
     <string name="org_sign_up">Organizations Click here to Sign Up</string>
     <string name="user_sign_up">UCSD Students Click here to Sign Up</string>
+    <string name="title_activity_edit_event">EditEventActivity</string>
 </resources>
