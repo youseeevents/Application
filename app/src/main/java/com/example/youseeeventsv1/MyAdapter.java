@@ -21,6 +21,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
 
@@ -107,6 +118,11 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
                     edit_button.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
+                            Intent event_info_intent = new Intent(v.getContext(), EditEventActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("Event", item);
+                            event_info_intent.putExtras(bundle);
+                            v.getContext().startActivity(event_info_intent);
                         }
                     });
                     cancel_button.setOnClickListener(new View.OnClickListener() {

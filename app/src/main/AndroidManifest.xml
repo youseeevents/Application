@@ -15,6 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/CustomActionBarTheme">
         <activity
+            android:name=".EditEventActivity"
+            android:label="@string/title_activity_edit_event"
+            android:theme="@style/CustomActionBarTheme.NoActionBar"></activity>
+        <activity
             android:name=".CreateEventActivity"
             android:label="@string/title_activity_create_event" />
         <activity
