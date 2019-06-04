@@ -77,54 +77,12 @@ public class CreateEventActivity extends AppCompatActivity {
         organizer.setText(user.getDisplayName());
 
 
-        /*ArrayAdapter<CharSequence> tag_adapter = ArrayAdapter.createFromResource(this, R.array.tag_array, R.layout.support_simple_spinner_dropdown_item);
-        tag_adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        tag_spinner.setAdapter(tag_adapter);*/
-
-
         //create event button
         createEventImageButton = (ImageButton) findViewById(R.id.image_createEvent);
 
         createEventImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Toast.makeText(CreateEventActivity.this, "It works", Toast.LENGTH_LONG).show();
-                //System.out.println(String.valueOf(tag_spinner.getSelectedItem()));
-/*
-                //create new Event
-                String name_text = name.getText().toString();
-                String name_ns = name_text.replaceAll("\\s", "");
-                String date_month_convert = "";
-                String date_day_convert = "";
-                String time_convert = "";
 
-                //have to add 0 to month if it's less than 10
-                for(int x = 0; x < month_array.length; x++){
-                    if(month_spinner.getSelectedItem().toString().equals(month_array[x])){
-                        date_month_convert = month_format_array[x];
-                        break;
-                    }
-                }
-
-                //same for day
-                if(day_spinner.getSelectedItem().toString().length() == 1){
-                    date_day_convert = "0" + day_spinner.getSelectedItem().toString();
-                }
-
-                //time converter
-                if(time_spinner1.getSelectedItem().toString().equals("pm")){
-                    time_convert = String.valueOf(Integer.parseInt(hour1.getText().toString()) + 12);
-                }
-
-
-                String datetime_text = year_spinner.getSelectedItem().toString() + "-"  + date_month_convert
-                + "-" + date_day_convert + "T" + time_convert + ":" + minute1.getText().toString() + "00";
-
-
-                String date_readable = month_spinner.getSelectedItem().toString() + day_spinner.getSelectedItem().toString();
-                String time = hour1.getText().toString() + ":" + minute1.getText().toString() + (time_spinner1.getSelectedItem().toString()).toUpperCase() + " - "
-                        + hour2.getText().toString() + ":" + minute2.getText().toString() + (time_spinner2.getSelectedItem().toString()).toUpperCase();
-                String description_text = description.getText().toString();
-                */
                 String name_text = name.getText().toString();
                 String name_ns = name_text.replaceAll("\\s", "");
 
@@ -180,8 +138,6 @@ public class CreateEventActivity extends AppCompatActivity {
 
                 if(all_inputs == true) {
                     //create new Event
-                    /*String name_text = name.getText().toString();
-                    String name_ns = name_text.replaceAll("\\s", "");*/
                     String date_month_convert = "";
                     String date_day_convert = "";
                     String time_convert = "";
@@ -221,11 +177,13 @@ public class CreateEventActivity extends AppCompatActivity {
                     String date_readable = month_spinner.getSelectedItem().toString() + day_spinner.getSelectedItem().toString();
                     String time = hour1.getText().toString() + ":" + minute1.getText().toString() + (time_spinner1.getSelectedItem().toString()).toUpperCase() + " - "
                             + hour2.getText().toString() + ":" + minute2.getText().toString() + (time_spinner2.getSelectedItem().toString()).toUpperCase();
-                    String description_text = description.getText().toString();
+                    String description_text = description.getText().toString().trim();
+                    String location_text = location.getText().toString().trim();
+                    String selected_tag = tag_spinner.getSelectedItem().toString().toLowerCase();
 
-                    Event new_event = new Event(name_ns+date_readable ,name_text, description_text,
+                    Event new_event = new Event(name_ns + date_readable ,name_text, description_text,
                             datetime_text, date_readable, time,
-                            location.getText().toString(), tag_spinner.getSelectedItem().toString().toLowerCase());
+                            location_text, selected_tag);
 
                     databaseRefUsers.child(user.getDisplayName()).child("created_events").child(new_event.getEventId()).setValue("");
                     FirebaseDatabase.getInstance().getReference().child("Events").child(new_event.getEventId()).setValue(new_event);
@@ -246,9 +204,7 @@ public class CreateEventActivity extends AppCompatActivity {
     }
 }
 
-
     /*
-
     --side note, we have to figure out what to do with the tags(as it won't just be one string), and
     I believe the date and time text inputs should be seperate in the xml
 
@@ -270,11 +226,6 @@ public class CreateEventActivity extends AppCompatActivity {
                 v.getContext().startActivity(intent);
             }
         });
-
-
-
-
-
      */
 
 
