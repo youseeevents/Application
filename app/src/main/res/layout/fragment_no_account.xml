@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#EEEEEE"
     android:orientation="vertical"
     android:visibility="visible">
 
@@ -14,6 +14,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="80dp"
         android:layout_marginBottom="30dp"
+        android:background="@android:color/transparent"
         android:contentDescription="logo"
         android:src="@mipmap/logo" />
 
@@ -39,7 +40,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="20dp"
-        android:background="#E9E9E9"
+        android:background="#AAAAAA"
         android:visibility="visible" />
 
     <TextView

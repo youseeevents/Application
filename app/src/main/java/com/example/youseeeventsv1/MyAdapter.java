@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -40,13 +42,17 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
     private OnItemLongClickListener listenerLong;
 
     /**
-     * Constructor
+     * Constructor with click listener
      */
     public MyAdapter(ArrayList<Event> myDataset, OnItemClickListener listener) {
         mDataset = myDataset;
         this.listener = listener;
         this.listenerLong = null;
     }
+
+    /**
+     * Constructor with click and long click listener
+     */
     public MyAdapter(ArrayList<Event> myDataset, OnItemClickListener listener, OnItemLongClickListener listenerLong) {
         mDataset = myDataset;
         this.listener = listener;
@@ -87,7 +93,6 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
-                    System.out.println("Short click");
                     listener.onItemClick(item);
                 }
             });
@@ -96,7 +101,10 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    organizer_buttons.setVisibility(View.VISIBLE);
+
+                    //slide_views_from_left(v, organizer_buttons);
+                    view.animate().translationX(view.getX() + organizer_buttons.getWidth()).start();
+                    // Delete Button Functionality
                     delete_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -111,10 +119,11 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
                                     .child("created_events")
                                     .child(item.getEventId())
                                     .removeValue();
-                            organizer_buttons.setVisibility(View.GONE);
+                            view.animate().translationX(view.getX() - organizer_buttons.getWidth()).start();
                             itemView.setVisibility(View.GONE);
                         }
                     });
+                    // Edit Button Functionality
                     edit_button.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
@@ -125,10 +134,12 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
                             v.getContext().startActivity(event_info_intent);
                         }
                     });
+                    // Cancel Button Functionality
                     cancel_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            organizer_buttons.setVisibility(View.GONE);
+                            //slide_views_from_right(v, organizer_buttons);
+                            view.animate().translationX(view.getX() - organizer_buttons.getWidth()).start();
                         }
                     });
                     return listenerLong.onItemLongClick(item);
@@ -220,5 +231,4 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
         });
         notifyDataSetChanged();
     }
-
 }
