@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ArrayAdapter;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,6 +40,11 @@ public class EditEventActivity extends AppCompatActivity {
     TextView organizer;
     String[] month_array = {"Jan", "Feb", "Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
     String[] month_format_array = {"01","02","03","04","05","06","07","08","09","10","11","12"};
+    String[] event_Tags_arr = {"Select Tag","Arts and Culture","Fitness and Wellbeing","Athletics","Seminars","Community","Weekend Events"};
+    String[] event_Years_arr = {"Year", "2019", "2020"};
+    String[] event_Month_arr = {"Month", "Jan", "Feb", "Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+    String[] event_Day_arr = {"Day", "1", "2", "3", "4", "5", "6", "7", "8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+    String[] AMorPM_arr = {"----", "am", "pm"};
 
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -66,19 +72,19 @@ public class EditEventActivity extends AppCompatActivity {
 
 
         //get all the input
-        name = findViewById(R.id.event_title);
-        description = findViewById(R.id.description);
-        location = findViewById(R.id.location);
-        organizer = findViewById(R.id.organizerName);
-        tag_spinner = findViewById(R.id.tag_spinner);
-        month_spinner = findViewById(R.id.spin_month);
-        day_spinner = findViewById(R.id.spin_day);
-        year_spinner = findViewById(R.id.spin_year);
-        time_spinner1 = findViewById(R.id.amORpm1);
+        name = findViewById(R.id.event_title);           //done
+        description = findViewById(R.id.description);    //done
+        location = findViewById(R.id.location);          //done
+        organizer = findViewById(R.id.organizerName);    //done
+        tag_spinner = findViewById(R.id.tag_spinner);    //done
+        month_spinner = findViewById(R.id.spin_month);   //done
+        day_spinner = findViewById(R.id.spin_day);       //done
+        year_spinner = findViewById(R.id.spin_year);     //done
+        time_spinner1 = findViewById(R.id.amORpm1);      //done
         time_spinner2 = findViewById(R.id.amORpm2);
-        hour1 = findViewById(R.id.hour1);
+        hour1 = findViewById(R.id.hour1);                //done
         hour2 = findViewById(R.id.hour2);
-        minute1 = findViewById(R.id.min1);
+        minute1 = findViewById(R.id.min1);               //done
         minute2 = findViewById(R.id.min2);
 
         //set organizer name
@@ -88,15 +94,97 @@ public class EditEventActivity extends AppCompatActivity {
         description.setText(event.getDescription());
 
         String eventTime = event.getDate();
-        System.out.println("THIS IS THE TIME" + eventTime);
         String eventYear = eventTime.substring(0,4);
         String eventDay = eventTime.substring(5,7);
         String eventHour = eventTime.substring(11,13);
         String eventMin = eventTime.substring(14,16);
 
-        hour1.setText(eventHour);
+        int eventHourNum = Integer.parseInt(eventHour);
+        if(eventHourNum > 12)
+        {
+            eventHourNum = eventHourNum - 12;
+            eventHour = Integer.toString(eventHourNum);
+            hour1.setText(eventHour);
+            time_spinner1.setSelection(2);
+        }
+        else
+        {
+            hour1.setText(eventHour);
+            time_spinner1.setSelection(1);
+        }
+
         minute1.setText(eventMin);
 
+        String eventTag = event.getTag();
+        int eventTagIndex = 0;
+        while(eventTagIndex < event_Tags_arr.length)
+        {
+            if((event_Tags_arr[eventTagIndex].toLowerCase()).equals(eventTag))
+            {
+                break;
+            }
+            eventTagIndex++;
+        }
+        tag_spinner.setSelection(eventTagIndex);
+
+        int eventYearIndex = 0;
+        while(eventYearIndex < event_Years_arr.length)
+        {
+            if((event_Years_arr[eventYearIndex]).equals(eventYear))
+            {
+                break;
+            }
+            eventYearIndex++;
+        }
+        year_spinner.setSelection(eventYearIndex);
+
+        String eventMonth = event.getDate_readable().substring(0,3);
+        int eventMonthIndex = 0;
+        while(eventMonthIndex < event_Month_arr.length)
+        {
+            if((event_Month_arr[eventMonthIndex]).equals(eventMonth))
+            {
+                break;
+            }
+            eventMonthIndex++;
+        }
+        month_spinner.setSelection(eventMonthIndex);
+
+        String eventDayRead = event.getDate_readable().substring(3);
+        int eventDayIndex = 0;
+        while(eventDayIndex < event_Day_arr.length)
+        {
+            if((event_Day_arr[eventDayIndex]).equals(eventDayRead))
+            {
+                break;
+            }
+            eventDayIndex++;
+        }
+        day_spinner.setSelection(eventDayIndex);
+
+        String eventTime2 = event.getTime();
+
+        int hifenIndex = eventTime2.indexOf('-');
+
+        int colonIndex = eventTime2.indexOf(':', (hifenIndex + 1));
+        String eventhour2 = eventTime2.substring(hifenIndex +1, colonIndex).trim();
+        String min2 = eventTime2.substring((colonIndex+1),(colonIndex+3));
+        String amOrPm2 = eventTime2.substring(colonIndex+3).toLowerCase();
+        hour2.setText(eventhour2);
+        minute2.setText(min2);
+
+        int amOrpmIndex = 0;
+        while(amOrpmIndex < AMorPM_arr.length)
+        {
+            if(AMorPM_arr[amOrpmIndex].equals(amOrPm2))
+            {
+                break;
+            }
+            amOrpmIndex++;
+        }
+
+        time_spinner2.setSelection(amOrpmIndex);
+        
         //create event button
         editEventImageButton = findViewById(R.id.image_createEvent);
 
