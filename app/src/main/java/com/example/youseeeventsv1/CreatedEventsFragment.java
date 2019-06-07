@@ -102,6 +102,7 @@ public class CreatedEventsFragment extends Fragment {
 
     }
 
+
     private void fillSavedEvents(String username){
         mProgressBar.setVisibility(View.VISIBLE);
         created_events_names.clear();
