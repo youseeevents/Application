@@ -11,10 +11,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.security.KeyStore;
 
@@ -39,6 +43,8 @@ public class CreateEventActivity extends AppCompatActivity {
     TextView organizer;
     String[] month_array = {"Jan", "Feb", "Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
     String[] month_format_array = {"01","02","03","04","05","06","07","08","09","10","11","12"};
+    String name_ns;
+    String date_readable;
 
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -73,6 +79,7 @@ public class CreateEventActivity extends AppCompatActivity {
         minute1 = findViewById(R.id.min1);
         minute2 = findViewById(R.id.min2);
 
+
         //set organizer name
         organizer.setText(user.getDisplayName());
 
@@ -84,7 +91,7 @@ public class CreateEventActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String name_text = name.getText().toString();
-                String name_ns = name_text.replaceAll("\\s", "");
+                name_ns = name_text.replaceAll("\\s", "");
 
                 //boolean of inputs
                 boolean all_inputs = true;
@@ -174,14 +181,34 @@ public class CreateEventActivity extends AppCompatActivity {
                             + "-" + date_day_convert + "T" + time_convert + ":" + minute1.getText().toString() + ":00";
 
 
-                    String date_readable = month_spinner.getSelectedItem().toString() + day_spinner.getSelectedItem().toString();
+                    date_readable = month_spinner.getSelectedItem().toString() + day_spinner.getSelectedItem().toString();
                     String time = hour1.getText().toString() + ":" + minute1.getText().toString() + (time_spinner1.getSelectedItem().toString()).toUpperCase() + " - "
                             + hour2.getText().toString() + ":" + minute2.getText().toString() + (time_spinner2.getSelectedItem().toString()).toUpperCase();
                     String description_text = description.getText().toString().trim();
                     String location_text = location.getText().toString().trim();
                     String selected_tag = tag_spinner.getSelectedItem().toString().toLowerCase();
 
-                    Event new_event = new Event(name_ns + date_readable ,name_text, description_text,
+                    //same name check
+                    databaseRef.child(name_ns + date_readable).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            if (snapshot.getValue() != null) {
+                                Event f = snapshot.getValue(Event.class);
+                                //user exists, do something
+                                System.out.println("I already exist" + f.getDate());
+                                //add another read to check for year
+
+                            } else {
+                                //user does not exist, do something else
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                        }
+                    });
+
+
+                   /* Event new_event = new Event(name_ns + date_readable ,name_text, description_text,
                             datetime_text, date_readable, time,
                             location_text, selected_tag);
 
@@ -190,7 +217,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
                     //go to new page
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    v.getContext().startActivity(intent);
+                    v.getContext().startActivity(intent);*/
 
                 }
                 else{
