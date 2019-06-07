@@ -186,7 +186,7 @@ public class EditEventActivity extends AppCompatActivity {
         }
 
         time_spinner2.setSelection(amOrpmIndex);
-        
+
         //create event button
         editEventImageButton = findViewById(R.id.image_createEvent);
 
@@ -331,20 +331,14 @@ public class EditEventActivity extends AppCompatActivity {
 
 
     /*
-
     --side note, we have to figure out what to do with the tags(as it won't just be one string), and
     I believe the date and time text inputs should be seperate in the xml
-
-
         1. Create the create event button in the correct xml with the id(i used id:eventCreate in
         the code below
-
        2. //declare this above the onCreate function in whichever file we are putting it in
        Button createEvent;
-
        3.//so the code below works when placed in an onCreate function for a specific class,
        this is what leads us to the activity_create_event.xml
-
         createEvent = findViewById(R.id.eventCreate);
         createEvent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -353,9 +347,4 @@ public class EditEventActivity extends AppCompatActivity {
                 v.getContext().startActivity(intent);
             }
         });
-
-
-
-
-
      */

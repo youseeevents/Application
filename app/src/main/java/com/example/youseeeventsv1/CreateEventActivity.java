@@ -147,7 +147,7 @@ public class CreateEventActivity extends AppCompatActivity {
                     error_message += "\n-Ending Hour";
                 }
                 if(!(minute2.getText().toString().length() == 2 &&
-                        Integer.parseInt(minute2.getText().toString()) <= 60  && Integer.parseInt(minute2.getText().toString()) >= 0)) {
+                        Integer.parseInt(minute2.getText().toString()) < 60  && Integer.parseInt(minute2.getText().toString()) >= 0)) {
                     all_inputs = false;
                     error_message += "\n-Ending Minute";
                 }
