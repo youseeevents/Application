@@ -75,6 +75,7 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
         public Button delete_button;
         public Button edit_button;
         public Button cancel_button;
+        private boolean pushed_up = false;
 
         public MyViewHolder(@NonNull ConstraintLayout v) {
             super(v);
@@ -103,7 +104,10 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
                 public boolean onLongClick(View v) {
 
                     //slide_views_from_left(v, organizer_buttons);
-                    view.animate().translationX(view.getX() + organizer_buttons.getWidth()).start();
+                    if(!pushed_up) {
+                        view.animate().translationX(view.getX() + organizer_buttons.getWidth()).start();
+                        pushed_up = true;
+                    }
                     // Delete Button Functionality
                     delete_button.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -120,6 +124,7 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
                                     .child(item.getEventId())
                                     .removeValue();
                             view.animate().translationX(view.getX() - organizer_buttons.getWidth()).start();
+                            pushed_up = false;
                             itemView.setVisibility(View.GONE);
                         }
                     });
@@ -140,6 +145,7 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
                         public void onClick(View v) {
                             //slide_views_from_right(v, organizer_buttons);
                             view.animate().translationX(view.getX() - organizer_buttons.getWidth()).start();
+                            pushed_up = false;
                         }
                     });
                     return listenerLong.onItemLongClick(item);
