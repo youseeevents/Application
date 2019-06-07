@@ -295,12 +295,23 @@ public class EditEventActivity extends AppCompatActivity {
                             datetime_text, date_readable, time,
                             location_text, selected_tag);
 
-                    databaseRefUsers.child(user.getDisplayName()).child("created_events").child(event.getEventId()).setValue(null);
-                    FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).setValue(null);
+                    //databaseRefUsers.child(user.getDisplayName()).child("created_events").child(event.getEventId()).setValue(null);
+                    FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("date").setValue(datetime_text);
+                    FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("date_readable").setValue(date_readable);
+                    FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("description").setValue(description_text);
+                    FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("location").setValue(location_text);
+                    FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("name").setValue(name_text);
+                    FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("tag").setValue(selected_tag);
+                    FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("time").setValue(time);
 
 
-                    databaseRefUsers.child(user.getDisplayName()).child("created_events").child(new_event.getEventId()).setValue("");
-                    FirebaseDatabase.getInstance().getReference().child("Events").child(new_event.getEventId()).setValue(new_event);
+
+
+
+
+
+                    //databaseRefUsers.child(user.getDisplayName()).child("created_events").child(new_event.getEventId()).setValue("");
+                    //FirebaseDatabase.getInstance().getReference().child("Events").child(new_event.getEventId()).setValue(new_event);
 
                     //go to new page
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
