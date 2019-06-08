@@ -133,7 +133,7 @@ public class CreateEventActivity extends AppCompatActivity {
                     error_message += "\n-Starting Hour";
                 }
                 if( !(minute1.getText().toString().length() == 2 &&
-                        Integer.parseInt(minute1.getText().toString()) <= 60  && Integer.parseInt(minute1.getText().toString()) >= 0)) {
+                        Integer.parseInt(minute1.getText().toString()) < 60  && Integer.parseInt(minute1.getText().toString()) >= 0)) {
                     all_inputs = false;
                     error_message += "\n-Starting Minute";
                 }
@@ -215,24 +215,49 @@ public class CreateEventActivity extends AppCompatActivity {
                     selected_tag = tag_spinner.getSelectedItem().toString().toLowerCase();
                     event_Id = name_ns + date_readable + year_spinner.getSelectedItem().toString();
 
-                    //same name check
-                    databaseRef.child(event_Id).addListenerForSingleValueEvent(new ValueEventListener() {
+                    //same event check
+                    databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
-                            if (snapshot.getValue() != null) {
-                                //Event f = snapshot.getValue(Event.class);
-                                //user exists, do something
-                                //System.out.println("I already exist" + f.getDate());
-                                //add another read to check for year
-                                System.out.println("I already exist");
+                            boolean add_created_event = true;
+                            String former_id = "";
+                            String year_convert = "";
 
+                            //set error message
+                            error_message = "An event with this title already exists on this day. Please change the event title.";
 
-                                //set error message
-                                error_message = "An event with this title already exists on this day. Please change the event title";
+                            //System.out.println("Before check");
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                Event check_event = ds.getValue(Event.class);
+                                //get year
+                                if(check_event.getDate() != null && check_event.getDate().length() >= 4) {
+                                    year_convert = check_event.getDate().substring(0, 4);
+                                    System.out.println(year_convert);
+                                }
 
-                                Toast.makeText(CreateEventActivity.this, error_message, Toast.LENGTH_LONG).show();
-                            } else {
-                                //doesn't exist, push event
+                                //set up new event_Id
+                                if(check_event.getEventId().equals(event_Id)){
+                                    event_Id = event_Id + "*";
+                                }
+
+                                //check if an event exists in firebase, this checks the actual fields and not the firebase classification eventId
+                                if(check_event.getName().equals(name_text) && check_event.getDate_readable().equals(date_readable)
+                                        && year_convert.equals(year_spinner.getSelectedItem().toString())){
+                                    Toast.makeText(CreateEventActivity.this, error_message, Toast.LENGTH_LONG).show();
+                                    //former_id = check_event.getEventId();
+
+                                    add_created_event = false;
+                                    System.out.println("I already exist");
+                                    break;
+
+                                }
+                            }
+
+                            //if not found, then add event
+                            if(add_created_event == true) {
+
+                                /*System.out.println("ready to add event");
+                                create new event and push to events and the user's created events*/
                                 Event new_event = new Event(event_Id, name_text, description_text,
                                         datetime_text, date_readable, time,
                                         location_text, selected_tag);
@@ -240,12 +265,7 @@ public class CreateEventActivity extends AppCompatActivity {
                                 databaseRefUsers.child(user.getDisplayName()).child("created_events").child(new_event.getEventId()).setValue("");
                                 FirebaseDatabase.getInstance().getReference().child("Events").child(new_event.getEventId()).setValue(new_event);
 
-                                /*go to new page
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent);*/
-                                //getFragmentManager().beginTransaction().detach().attach(CreatedEventsFragment).commit();
-                                //getSupportFragmentManager().beginTransaction().replace(R.id.container, CreatedEventsFragment.newInstance()).commit();
-                                //new CreatedEventsFragment();
+                                //go to created events page **still have to implement**
                                 finish();
                             }
                         }
@@ -266,28 +286,6 @@ public class CreateEventActivity extends AppCompatActivity {
     }
 }
 
-    /*
-    --side note, we have to figure out what to do with the tags(as it won't just be one string), and
-    I believe the date and time text inputs should be seperate in the xml
-
-
-        1. Create the create event button in the correct xml with the id(i used id:eventCreate in
-        the code below
-
-       2. //declare this above the onCreate function in whichever file we are putting it in
-       Button createEvent;
-
-       3.//so the code below works when placed in an onCreate function for a specific class,
-       this is what leads us to the activity_create_event.xml
-
-        createEvent = findViewById(R.id.eventCreate);
-        createEvent.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //go to new page
-                Intent intent = new Intent(v.getContext(), CreateEventActivity.class);
-                v.getContext().startActivity(intent);
-            }
-        });
-     */
+    
 
 
