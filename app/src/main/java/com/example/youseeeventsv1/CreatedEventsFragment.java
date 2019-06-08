@@ -50,6 +50,9 @@ public class CreatedEventsFragment extends Fragment {
     private FirebaseAuth auth;
     private FirebaseUser user;
 
+    private boolean refresh_on_resume = false;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -173,4 +176,21 @@ public class CreatedEventsFragment extends Fragment {
                 });
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Check should we need to refresh the fragment
+        if(refresh_on_resume){
+            // refresh fragment
+            String display_name = user.getDisplayName();
+            fillSavedEvents(display_name);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        refresh_on_resume = true;
+    }
+
 }

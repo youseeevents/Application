@@ -329,10 +329,8 @@ public class EditEventActivity extends AppCompatActivity {
                     FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("tag").setValue(selected_tag);
                     FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("time").setValue(time);
 
-
-                    //go to new page
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    v.getContext().startActivity(intent);
+                    //end activity
+                    finish();
 
                 }
                 else{

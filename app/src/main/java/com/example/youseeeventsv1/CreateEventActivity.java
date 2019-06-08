@@ -1,8 +1,8 @@
 package com.example.youseeeventsv1;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -265,8 +265,9 @@ public class CreateEventActivity extends AppCompatActivity {
                                 databaseRefUsers.child(user.getDisplayName()).child("created_events").child(new_event.getEventId()).setValue("");
                                 FirebaseDatabase.getInstance().getReference().child("Events").child(new_event.getEventId()).setValue(new_event);
 
-                                //go to created events page **still have to implement**
+                                //end activity
                                 finish();
+
                             }
                         }
                         @Override
@@ -286,6 +287,6 @@ public class CreateEventActivity extends AppCompatActivity {
     }
 }
 
-    
+
 
 
