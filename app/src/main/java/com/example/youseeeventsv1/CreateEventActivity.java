@@ -1,7 +1,9 @@
 package com.example.youseeeventsv1;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,10 +13,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.dynamic.SupportFragmentWrapper;
+import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.security.KeyStore;
 
@@ -39,6 +46,16 @@ public class CreateEventActivity extends AppCompatActivity {
     TextView organizer;
     String[] month_array = {"Jan", "Feb", "Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
     String[] month_format_array = {"01","02","03","04","05","06","07","08","09","10","11","12"};
+    String error_message;
+    private String name_text;
+    private String datetime_text;
+    private String date_readable;
+    private String time;
+    private String description_text;
+    private String location_text;
+    private String selected_tag;
+    private String event_Id;
+
 
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -53,7 +70,6 @@ public class CreateEventActivity extends AppCompatActivity {
         databaseRefUsers = FirebaseDatabase.getInstance().getReference("Users");
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-
 
 
 
@@ -73,6 +89,7 @@ public class CreateEventActivity extends AppCompatActivity {
         minute1 = findViewById(R.id.min1);
         minute2 = findViewById(R.id.min2);
 
+
         //set organizer name
         organizer.setText(user.getDisplayName());
 
@@ -82,56 +99,73 @@ public class CreateEventActivity extends AppCompatActivity {
 
         createEventImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                //reset error message
+                error_message = "The following fields are invalid:";
 
-                String name_text = name.getText().toString();
+
+                name_text = name.getText().toString();
                 String name_ns = name_text.replaceAll("\\s", "");
+
 
                 //boolean of inputs
                 boolean all_inputs = true;
 
-                //check for nonempty fields
+                //check for nonempty fields and error checking
                 if(name_ns.equals("")) {
                     all_inputs = false;
+                    error_message += "\n-Event Title";
                 }
                 if(month_spinner.getSelectedItem().toString().equals("Month")) {
                     all_inputs = false;
+                    error_message += "\n-Month";
                 }
                 if(day_spinner.getSelectedItem().toString().equals("Day")) {
                     all_inputs = false;
+                    error_message += "\n-Day";
                 }
                 if(year_spinner.getSelectedItem().toString().equals("Year")) {
                     all_inputs = false;
+                    error_message += "\n-Year";
                 }
                 if(!((hour1.getText().toString().length() == 2 || hour1.getText().toString().length() == 1) &&
                         Integer.parseInt(hour1.getText().toString()) <= 12  && Integer.parseInt(hour1.getText().toString()) >= 1)) {
                     all_inputs = false;
+                    error_message += "\n-Starting Hour";
                 }
                 if( !(minute1.getText().toString().length() == 2 &&
                         Integer.parseInt(minute1.getText().toString()) <= 60  && Integer.parseInt(minute1.getText().toString()) >= 0)) {
                     all_inputs = false;
+                    error_message += "\n-Starting Minute";
                 }
                 if(time_spinner1.getSelectedItem().toString().equals("----")) {
                     all_inputs = false;
+                    error_message += "\n-Starting AM or PM";
                 }
                 if(!((hour2.getText().toString().length() == 2 || hour2.getText().toString().length() == 1) &&
                         Integer.parseInt(hour2.getText().toString()) <= 12  && Integer.parseInt(hour2.getText().toString()) >= 1)) {
                     all_inputs = false;
+                    error_message += "\n-Ending Hour";
                 }
                 if(!(minute2.getText().toString().length() == 2 &&
-                        Integer.parseInt(minute2.getText().toString()) <= 60  && Integer.parseInt(minute2.getText().toString()) >= 0)) {
+                        Integer.parseInt(minute2.getText().toString()) < 60  && Integer.parseInt(minute2.getText().toString()) >= 0)) {
                     all_inputs = false;
+                    error_message += "\n-Ending Minute";
                 }
                 if(time_spinner2.getSelectedItem().toString().equals("----")) {
                     all_inputs = false;
+                    error_message += "\n-Ending AM or PM";
                 }
                 if(location.getText().toString().equals("")) {
                     all_inputs = false;
+                    error_message += "\n-Location";
                 }
                 if(tag_spinner.getSelectedItem().toString().equals("Select Tag")) {
                     all_inputs = false;
+                    error_message += "\n-Tag";
                 }
                 if(description.getText().toString().equals("")) {
                     all_inputs = false;
+                    error_message += "\n-Description";
                 }
 
 
@@ -169,32 +203,60 @@ public class CreateEventActivity extends AppCompatActivity {
 
                     }
 
-
-                    String datetime_text = year_spinner.getSelectedItem().toString() + "-"  + date_month_convert
+                    datetime_text = year_spinner.getSelectedItem().toString() + "-"  + date_month_convert
                             + "-" + date_day_convert + "T" + time_convert + ":" + minute1.getText().toString() + ":00";
 
 
-                    String date_readable = month_spinner.getSelectedItem().toString() + day_spinner.getSelectedItem().toString();
-                    String time = hour1.getText().toString() + ":" + minute1.getText().toString() + (time_spinner1.getSelectedItem().toString()).toUpperCase() + " - "
+                    date_readable = month_spinner.getSelectedItem().toString() + day_spinner.getSelectedItem().toString();
+                    time = hour1.getText().toString() + ":" + minute1.getText().toString() + (time_spinner1.getSelectedItem().toString()).toUpperCase() + " - "
                             + hour2.getText().toString() + ":" + minute2.getText().toString() + (time_spinner2.getSelectedItem().toString()).toUpperCase();
-                    String description_text = description.getText().toString().trim();
-                    String location_text = location.getText().toString().trim();
-                    String selected_tag = tag_spinner.getSelectedItem().toString().toLowerCase();
+                    description_text = description.getText().toString().trim();
+                    location_text = location.getText().toString().trim();
+                    selected_tag = tag_spinner.getSelectedItem().toString().toLowerCase();
+                    event_Id = name_ns + date_readable + year_spinner.getSelectedItem().toString();
 
-                    Event new_event = new Event(name_ns + date_readable ,name_text, description_text,
-                            datetime_text, date_readable, time,
-                            location_text, selected_tag);
+                    //same name check
+                    databaseRef.child(event_Id).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            if (snapshot.getValue() != null) {
+                                //Event f = snapshot.getValue(Event.class);
+                                //user exists, do something
+                                //System.out.println("I already exist" + f.getDate());
+                                //add another read to check for year
+                                System.out.println("I already exist");
 
-                    databaseRefUsers.child(user.getDisplayName()).child("created_events").child(new_event.getEventId()).setValue("");
-                    FirebaseDatabase.getInstance().getReference().child("Events").child(new_event.getEventId()).setValue(new_event);
 
-                    //go to new page
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    v.getContext().startActivity(intent);
+                                //set error message
+                                error_message = "An event with this title already exists on this day. Please change the event title";
+
+                                Toast.makeText(CreateEventActivity.this, error_message, Toast.LENGTH_LONG).show();
+                            } else {
+                                //doesn't exist, push event
+                                Event new_event = new Event(event_Id, name_text, description_text,
+                                        datetime_text, date_readable, time,
+                                        location_text, selected_tag);
+
+                                databaseRefUsers.child(user.getDisplayName()).child("created_events").child(new_event.getEventId()).setValue("");
+                                FirebaseDatabase.getInstance().getReference().child("Events").child(new_event.getEventId()).setValue(new_event);
+
+                                /*go to new page
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);*/
+                                //getFragmentManager().beginTransaction().detach().attach(CreatedEventsFragment).commit();
+                                //getSupportFragmentManager().beginTransaction().replace(R.id.container, CreatedEventsFragment.newInstance()).commit();
+                                //new CreatedEventsFragment();
+                                finish();
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                        }
+                    });
 
                 }
                 else{
-                    Toast.makeText(CreateEventActivity.this, "Some of your fields are invalid.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CreateEventActivity.this, error_message, Toast.LENGTH_LONG).show();
                 }
 
 
