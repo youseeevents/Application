@@ -9,13 +9,22 @@ You See Events aims to solve this problem by presenting all of the events on cam
 
 For testing non-organizer accounts, create an account and login.
 
-For testing organizer account access,   *Edward will give a valid organizer account username and password, also can you make sure that this account creates events and does everything organizer-wise perfect, cause this will be the account that's tested*
+For testing organizer account access this organizer account
+User: test_organizer
+Pw: password
 
 **Requrements:**
 
 Minimum Requirements: Andoird OS V.4.4 (KitKat)
 
 **Installation Instruction:**
+
+To get the apk:
+-Through github:
+In the youseeevents/Application repository, the apk is located in the root of the repository.
+-Through goole drive:
+We also included an easy to download link through our website 
+http://youseeevents.github.io
 
 To download the app on an Android Device:
 1. Download the apk onto your device. 
