@@ -45,6 +45,8 @@ public class EditEventActivity extends AppCompatActivity {
     String[] event_Month_arr = {"Month", "Jan", "Feb", "Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
     String[] event_Day_arr = {"Day", "1", "2", "3", "4", "5", "6", "7", "8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
     String[] AMorPM_arr = {"----", "am", "pm"};
+    String error_message;
+    private String name_text;
 
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -83,11 +85,11 @@ public class EditEventActivity extends AppCompatActivity {
         day_spinner = findViewById(R.id.spin_day);       //done
         year_spinner = findViewById(R.id.spin_year);     //done
         time_spinner1 = findViewById(R.id.amORpm1);      //done
-        time_spinner2 = findViewById(R.id.amORpm2);
+        time_spinner2 = findViewById(R.id.amORpm2);      //done
         hour1 = findViewById(R.id.hour1);                //done
-        hour2 = findViewById(R.id.hour2);
+        hour2 = findViewById(R.id.hour2);                //done
         minute1 = findViewById(R.id.min1);               //done
-        minute2 = findViewById(R.id.min2);
+        minute2 = findViewById(R.id.min2);               //done
 
         //set organizer name and other fields
         organizer.setText(user.getDisplayName());
@@ -102,16 +104,25 @@ public class EditEventActivity extends AppCompatActivity {
         String eventMin = eventTime.substring(14,16);
 
         int eventHourNum = Integer.parseInt(eventHour);
+        //in pm
         if(eventHourNum > 12)
         {
             eventHourNum = eventHourNum - 12;
-            eventHour = Integer.toString(eventHourNum);
-            hour1.setText(eventHour);
+            hour1.setText(String.valueOf(eventHourNum));
+
+            /*eventHour = Integer.toString(eventHourNum);
+            hour1.setText(eventHour);*/
+
             time_spinner1.setSelection(2);
         }
-        else
-        {
-            hour1.setText(eventHour);
+        else{
+            //in am
+            if(eventHourNum < 10) {
+                hour1.setText(String.valueOf(eventHourNum));
+            }
+            else{
+                hour1.setText(eventHour);
+            }
             time_spinner1.setSelection(1);
         }
 
@@ -193,55 +204,73 @@ public class EditEventActivity extends AppCompatActivity {
         editEventImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                String name_text = name.getText().toString();
+                //reset error message
+                error_message = "The following fields are invalid:";
+
+
+                name_text = name.getText().toString();
                 String name_ns = name_text.replaceAll("\\s", "");
+
 
                 //boolean of inputs
                 boolean all_inputs = true;
 
-                //check for nonempty fields
+                //check for nonempty fields and error checking
                 if(name_ns.equals("")) {
                     all_inputs = false;
+                    error_message += "\n-Event Title";
                 }
                 if(month_spinner.getSelectedItem().toString().equals("Month")) {
                     all_inputs = false;
+                    error_message += "\n-Month";
                 }
                 if(day_spinner.getSelectedItem().toString().equals("Day")) {
                     all_inputs = false;
+                    error_message += "\n-Day";
                 }
                 if(year_spinner.getSelectedItem().toString().equals("Year")) {
                     all_inputs = false;
+                    error_message += "\n-Year";
                 }
                 if(!((hour1.getText().toString().length() == 2 || hour1.getText().toString().length() == 1) &&
                         Integer.parseInt(hour1.getText().toString()) <= 12  && Integer.parseInt(hour1.getText().toString()) >= 1)) {
                     all_inputs = false;
+                    error_message += "\n-Starting Hour";
                 }
                 if( !(minute1.getText().toString().length() == 2 &&
-                        Integer.parseInt(minute1.getText().toString()) <= 60  && Integer.parseInt(minute1.getText().toString()) >= 0)) {
+                        Integer.parseInt(minute1.getText().toString()) < 60  && Integer.parseInt(minute1.getText().toString()) >= 0)) {
                     all_inputs = false;
+                    error_message += "\n-Starting Minute";
                 }
                 if(time_spinner1.getSelectedItem().toString().equals("----")) {
                     all_inputs = false;
+                    error_message += "\n-Starting AM or PM";
                 }
                 if(!((hour2.getText().toString().length() == 2 || hour2.getText().toString().length() == 1) &&
                         Integer.parseInt(hour2.getText().toString()) <= 12  && Integer.parseInt(hour2.getText().toString()) >= 1)) {
                     all_inputs = false;
+                    error_message += "\n-Ending Hour";
                 }
                 if(!(minute2.getText().toString().length() == 2 &&
-                        Integer.parseInt(minute2.getText().toString()) <= 60  && Integer.parseInt(minute2.getText().toString()) >= 0)) {
+                        Integer.parseInt(minute2.getText().toString()) < 60  && Integer.parseInt(minute2.getText().toString()) >= 0)) {
                     all_inputs = false;
+                    error_message += "\n-Ending Minute";
                 }
                 if(time_spinner2.getSelectedItem().toString().equals("----")) {
                     all_inputs = false;
+                    error_message += "\n-Ending AM or PM";
                 }
                 if(location.getText().toString().equals("")) {
                     all_inputs = false;
+                    error_message += "\n-Location";
                 }
                 if(tag_spinner.getSelectedItem().toString().equals("Select Tag")) {
                     all_inputs = false;
+                    error_message += "\n-Tag";
                 }
                 if(description.getText().toString().equals("")) {
                     all_inputs = false;
+                    error_message += "\n-Description";
                 }
 
 
@@ -291,11 +320,7 @@ public class EditEventActivity extends AppCompatActivity {
                     String location_text = location.getText().toString().trim();
                     String selected_tag = tag_spinner.getSelectedItem().toString().toLowerCase();
 
-                    Event new_event = new Event(name_ns + date_readable ,name_text, description_text,
-                            datetime_text, date_readable, time,
-                            location_text, selected_tag);
-
-                    //databaseRefUsers.child(user.getDisplayName()).child("created_events").child(event.getEventId()).setValue(null);
+                    //make the changes
                     FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("date").setValue(datetime_text);
                     FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("date_readable").setValue(date_readable);
                     FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("description").setValue(description_text);
@@ -304,22 +329,12 @@ public class EditEventActivity extends AppCompatActivity {
                     FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("tag").setValue(selected_tag);
                     FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("time").setValue(time);
 
-
-
-
-
-
-
-                    //databaseRefUsers.child(user.getDisplayName()).child("created_events").child(new_event.getEventId()).setValue("");
-                    //FirebaseDatabase.getInstance().getReference().child("Events").child(new_event.getEventId()).setValue(new_event);
-
-                    //go to new page
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    v.getContext().startActivity(intent);
+                    //end activity
+                    finish();
 
                 }
                 else{
-                    Toast.makeText(EditEventActivity.this, "Some of your fields are invalid.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditEventActivity.this, error_message, Toast.LENGTH_LONG).show();
                 }
 
 
@@ -330,21 +345,3 @@ public class EditEventActivity extends AppCompatActivity {
 }
 
 
-    /*
-    --side note, we have to figure out what to do with the tags(as it won't just be one string), and
-    I believe the date and time text inputs should be seperate in the xml
-        1. Create the create event button in the correct xml with the id(i used id:eventCreate in
-        the code below
-       2. //declare this above the onCreate function in whichever file we are putting it in
-       Button createEvent;
-       3.//so the code below works when placed in an onCreate function for a specific class,
-       this is what leads us to the activity_create_event.xml
-        createEvent = findViewById(R.id.eventCreate);
-        createEvent.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //go to new page
-                Intent intent = new Intent(v.getContext(), CreateEventActivity.class);
-                v.getContext().startActivity(intent);
-            }
-        });
-     */
