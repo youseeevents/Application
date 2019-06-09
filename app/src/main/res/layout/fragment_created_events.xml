@@ -7,43 +7,52 @@
     android:id="@+id/created"
     tools:context=".CreatedEventsFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/created_events_recycler_view"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
-
-    </android.support.v7.widget.RecyclerView>
-
-    <LinearLayout
-        android:id="@+id/created_frag_ui"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/created_events_recycler_view"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/create_events_button"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/created_events_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/button_border"
-            android:text="Create an Event!"
-            android:textColor="@android:color/black" />
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:visibility="visible">
 
-        <TextView
-            android:id="@+id/ui_hint"
+        </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:id="@+id/created_frag_ui"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            android:text="Hold an event for more options!" />
+            android:layout_alignBottom="@id/created_events_recycler_view"
+            android:layout_weight="0"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/create_events_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/button_border"
+                android:text="Create an Event!"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/ui_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:text="Hold an event for more options!" />
+        </LinearLayout>
     </LinearLayout>
+
     <ProgressBar
         android:id="@+id/created_progress_bar"
         android:layout_width="30dp"
