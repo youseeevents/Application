@@ -1,5 +1,6 @@
 package com.example.youseeeventsv1;
 
+import android.media.Image;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -11,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -72,6 +74,7 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
         public TextView e_date;
         public TextView e_location;
         public TextView e_popularity;
+        public ImageView e_image;
         public LinearLayout organizer_buttons;
         public Button delete_button;
         public Button edit_button;
@@ -85,6 +88,7 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             e_date = view.findViewById(R.id.event_date_text);
             e_location = view.findViewById(R.id.event_location_text);
             e_popularity = view.findViewById(R.id.event_popularity_text);
+            e_image = view.findViewById(R.id.event_img);
 
             organizer_buttons = view.findViewById(R.id.org_buttons);
             delete_button = view.findViewById(R.id.delete_button);
@@ -176,6 +180,7 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             String name = mDataset.get(position).getName();
             String date = mDataset.get(position).getDate_readable();
             String location = mDataset.get(position).getLocation();
+            String tag = mDataset.get(position).getTag();
             int pop_count = mDataset.get(position).getCounterGoing();
             String popularity;
             if(pop_count == 1){
@@ -184,22 +189,42 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             else {
                 popularity = mDataset.get(position).getCounterGoing() + " people are interested!";
             }
-            if(name.length() > 34){
-                name = name.substring(0, 30) + "...";
+            if(name.length() > 42){
+                name = name.substring(0, 39) + "...";
             }
-            if(date.length() > 34){
-                date = date.substring(0, 30) + "...";
+            if(date.length() > 42){
+                date = date.substring(0, 39) + "...";
             }
-            if(location.length() > 34){
-                location = location.substring(0, 30) + "...";
+            if(location.length() > 42){
+                location = location.substring(0, 39) + "...";
             }
-            if(popularity.length() > 34){
-                popularity = popularity.substring(0, 30) + "...";
+            if(popularity.length() > 42){
+                popularity = popularity.substring(0, 39) + "...";
             }
             ((MyViewHolder) holder).e_name.setText(name);
             ((MyViewHolder) holder).e_date.setText(date);
             ((MyViewHolder) holder).e_location.setText(location);
             ((MyViewHolder) holder).e_popularity.setText(popularity);
+            switch(tag){
+                case "arts & culture":
+                    ((MyViewHolder) holder).e_image.setImageResource(R.drawable.art_icon);
+                    break;
+                case "fitness & wellbeing":
+                    ((MyViewHolder) holder).e_image.setImageResource(R.drawable.fitness_icon);
+                    break;
+                case "athletics":
+                    ((MyViewHolder) holder).e_image.setImageResource(R.drawable.ic_directions_run_black_24dp);
+                    break;
+                case "seminars & info-sessions":
+                    ((MyViewHolder) holder).e_image.setImageResource(R.drawable.seminar_icon);
+                    break;
+                case "community":
+                    ((MyViewHolder) holder).e_image.setImageResource(R.drawable.ic_group_24dp);
+                    break;
+                case "weekend event":
+                    ((MyViewHolder) holder).e_image.setImageResource(R.drawable.fitness_icon);
+                    break;
+            }
         }
         ((MyViewHolder)holder).bind(mDataset.get(position), listener);
         if(listenerLong != null)

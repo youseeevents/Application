@@ -26,7 +26,8 @@
             android:label="Organizer Sign Up" />
         <activity
             android:name=".EventActivity"
-            android:label="@string/title_activity_event" />
+            android:label="@string/title_activity_event"
+            android:theme="@style/CustomActionBarTheme.NoActionBar"></activity>
         <activity
             android:name=".SignUpActivity"
             android:label="Student Sign Up" />

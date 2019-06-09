@@ -41,7 +41,7 @@ public class EditEventActivity extends AppCompatActivity {
     TextView organizer;
     String[] month_array = {"Jan", "Feb", "Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
     String[] month_format_array = {"01","02","03","04","05","06","07","08","09","10","11","12"};
-    String[] event_Tags_arr = {"Select Tag","Arts and Culture","Fitness and Wellbeing","Athletics","Seminars","Community","Weekend Events"};
+    String[] event_Tags_arr = {"Select Tag","arts & culture","fitness & well-being","athletics","seminars & info-sessions","community","weekend events"};
     String[] event_Years_arr = {"Year", "2019", "2020"};
     String[] event_Month_arr = {"Month", "Jan", "Feb", "Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
     String[] event_Day_arr = {"Day", "1", "2", "3", "4", "5", "6", "7", "8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
@@ -320,6 +320,24 @@ public class EditEventActivity extends AppCompatActivity {
                     String description_text = description.getText().toString().trim();
                     String location_text = location.getText().toString().trim();
                     String selected_tag = tag_spinner.getSelectedItem().toString().toLowerCase();
+                    String[] event_tags_arr = {"arts & culture","fitness & well-being","athletics","seminars & info-sessions","community","weekend event"};
+                    switch(selected_tag){
+                        case "arts and culture":
+                            selected_tag = event_tags_arr[0];
+                            break;
+                        case "fitness and wellbeing":
+                            selected_tag = event_tags_arr[1];
+                            break;
+                        case "athletics":
+                            break;
+                        case "seminars":
+                            selected_tag = event_tags_arr[3];
+                            break;
+                        case "community":
+                            break;
+                        case "weekend event":
+                            break;
+                    }
 
                     //make the changes
                     FirebaseDatabase.getInstance().getReference().child("Events").child(event.getEventId()).child("date").setValue(datetime_text);

@@ -118,6 +118,10 @@ public class HomeFragment extends Fragment {
                         fillEventsArrayBySort("date");
                     case "Popularity":
                         fillEventsArrayBySort("counterGoing");
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                        layoutManager.setReverseLayout(true);
+                        layoutManager.setStackFromEnd(true);
+                        recyclerView.setLayoutManager(layoutManager);
                 }
             }
 

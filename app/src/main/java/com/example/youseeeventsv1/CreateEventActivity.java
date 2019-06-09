@@ -214,6 +214,24 @@ public class CreateEventActivity extends AppCompatActivity {
                     description_text = description.getText().toString().trim();
                     location_text = location.getText().toString().trim();
                     selected_tag = tag_spinner.getSelectedItem().toString().toLowerCase();
+                    String[] event_tags_arr = {"arts & culture","fitness & well-being","athletics","seminars & info-sessions","community","weekend event"};
+                    switch(selected_tag){
+                        case "arts and culture":
+                            selected_tag = event_tags_arr[0];
+                            break;
+                        case "fitness and wellbeing":
+                            selected_tag = event_tags_arr[1];
+                            break;
+                        case "athletics":
+                            break;
+                        case "seminars":
+                            selected_tag = event_tags_arr[3];
+                            break;
+                        case "community":
+                            break;
+                        case "weekend event":
+                            break;
+                    }
                     event_Id = name_ns + date_readable + year_spinner.getSelectedItem().toString();
 
                     //same event check

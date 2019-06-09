@@ -7,7 +7,7 @@
         <item>Athletics</item>
         <item>Seminars</item>
         <item>Community</item>
-        <item>Weekend Events</item>
+        <item>Weekend Event</item>
     </string-array>
     <string-array name="sort_or_filter">
         <item>Filter</item>

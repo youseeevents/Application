@@ -67,7 +67,11 @@ public class EventActivity extends AppCompatActivity {
         tag.setText(event.getTag());
 
         TextView date = findViewById(R.id.event_datetime);
-        date.setText(event.getDate());
+        String date_r = event.getDate_readable();
+        String time_r = event.getTime();
+        if(date_r == null){ date_r = "no date"; }
+        if(time_r == null){ time_r = "no time"; }
+        date.setText(date_r + '\n' + time_r);
 
         TextView location = findViewById(R.id.event_location);
         location.setText(event.getLocation());

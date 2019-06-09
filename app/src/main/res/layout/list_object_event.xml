@@ -74,8 +74,9 @@
 
                 <ImageView
                     android:id="@+id/event_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="0"
                     app:srcCompat="@drawable/calendar_fg" />
 
@@ -89,6 +90,7 @@
                         android:id="@+id/event_name_row"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
                         android:paddingTop="4dp"
                         android:transitionName="event_transition">
 
@@ -139,7 +141,8 @@
                     <TableRow
                         android:id="@+id/event_location_row"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        >
 
                         <ImageView
                             android:id="@+id/location_img"
