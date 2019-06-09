@@ -25,4 +25,6 @@ For testing organizer account access,   *Edward will give a valid organizer acco
 
 **Known Bugs:**
 
+When a user saves an event for the first time by pressing the saved button, the event interested counter increases by 1, which is correct. But whenever that same user opens that saved event, the event interested counter increases by 1 again, which is a bug. This is due to the saved button being forced by the system to be pressed again if the user has that event saved, to indicate that the user already saved that event, and change the button visual.
+
 
