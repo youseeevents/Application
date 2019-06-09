@@ -13,15 +13,18 @@ For testing organizer account access,   *Edward will give a valid organizer acco
 
 **Requrements:**
 
-*Edward help me*
+Minimum Requirements: Andoird OS V.4.4 (KitKat)
 
 **Installation Instruction:**
 
-*Edward help me*
+To download the app on an Android Device:
+1. Download the apk onto your device. 
+2. The device should automatically recognize the apk and give the option to either cancel or install the app. Click install.
 
 **How to Run:**
 
-*Edward help me*
+To run the app on an Android Device:
+Assuming you have installed the app appropriately, you can run the app by clicking on the app icon in the apps screen on the android device.
 
 **Known Bugs:**
 
