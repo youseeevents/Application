@@ -99,6 +99,8 @@ public class EditEventActivity extends AppCompatActivity {
         String eventHour = eventTime.substring(11,13);
         String eventMin = eventTime.substring(14,16);
 
+        System.out.println(eventTime);
+        System.out.println(eventHour);
         int eventHourNum = Integer.parseInt(eventHour);
         //in pm
         if(eventHourNum > 12)
