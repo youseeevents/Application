@@ -123,32 +123,32 @@ public class SearchFragment extends Fragment {
                     //int event_going = snapshot.child("counterGoing").getValue(int.class);
                     //int event_interested = snapshot.child("counterInterested").getValue(int.class);
                     //TODO//
-                    int event_going = 0;
-                    int event_interested = 0;
+                    int event_popularity = snapshot.child("counterGoing").getValue(Integer.class);
+
                     boolean event_added = false;
 
 
                     if(event_name.toLowerCase().contains(searchedString.toLowerCase())) {
                         if(!event_added) {
-                            events.add(new Event(eventId, event_name, event_org, event_description, event_date_full, event_date, event_time, event_location, event_tag));
+                            events.add(new Event(eventId, event_name, event_org, event_description, event_date_full, event_date, event_time, event_location, event_tag, event_popularity));
                             event_added = true;
                         }
                     }
                     else if(event_date.toLowerCase().contains(searchedString.toLowerCase())) {
                         if(!event_added) {
-                            events.add(new Event(eventId, event_name, event_org, event_description, event_date_full, event_date, event_time, event_location, event_tag));
+                            events.add(new Event(eventId, event_name, event_org, event_description, event_date_full, event_date, event_time, event_location, event_tag, event_popularity));
                             event_added = true;
                         }
                     }
                     else if(event_location.toLowerCase().contains(searchedString.toLowerCase())) {
                         if(!event_added) {
-                            events.add(new Event(eventId, event_name, event_org, event_description, event_date_full, event_date, event_time, event_location, event_tag));
+                            events.add(new Event(eventId, event_name, event_org, event_description, event_date_full, event_date, event_time, event_location, event_tag, event_popularity));
                             event_added = true;
                         }
                     }
                     else if(event_tag.toLowerCase().contains(searchedString.toLowerCase())) {
                         if(!event_added) {
-                            events.add(new Event(eventId, event_name, event_org, event_description, event_date_full, event_date, event_time, event_location, event_tag));
+                            events.add(new Event(eventId, event_name, event_org, event_description, event_date_full, event_date, event_time, event_location, event_tag, event_popularity));
                             event_added = true;
                         }
                     }

@@ -23,9 +23,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 
 /**
@@ -372,11 +375,16 @@ public class HomeFragment extends Fragment {
     }
 
     private void fillEventsArray(){
+        Date curr = new Date();
+        System.out.println(curr.toString());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currDate = format.format(curr).replace(' ','T');
+
         mProgressBar.setVisibility(View.VISIBLE);
         events.clear();
         FirebaseDatabase.getInstance().getReference("Events")
                 .orderByChild("date")
-                // startAt(0)
+                .startAt(currDate)
                 //.limitToFirst(20)
                 .addListenerForSingleValueEvent(new ValueEventListener(){
                     @Override
@@ -408,11 +416,18 @@ public class HomeFragment extends Fragment {
     private void fillEventsArrayBySort(final String sortedBy){
         mProgressBar.setVisibility(View.VISIBLE);
         events.clear();
-        FirebaseDatabase.getInstance().getReference("Events")
-                .orderByChild(sortedBy)
+        Query q = FirebaseDatabase.getInstance().getReference("Events")
+                .orderByChild(sortedBy);
+        if(sortedBy == "date"){
+            Date curr = new Date();
+            System.out.println(curr.toString());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String currDate = format.format(curr).replace(' ','T');
+            q = q.startAt(currDate);
+        }
                 // startAt(0)
                 //.limitToFirst(20)
-                .addListenerForSingleValueEvent(new ValueEventListener(){
+        q.addListenerForSingleValueEvent(new ValueEventListener(){
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         int event_ind = 0;

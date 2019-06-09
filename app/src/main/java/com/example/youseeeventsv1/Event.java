@@ -36,6 +36,23 @@ public class Event implements Parcelable {
         this.tag = tag;
         this.eventId = eventId;
     }
+
+    public Event(String eventId, String name, String organizer, String description, String date, String date_readable, String time, String location, String tag, int counterGoing){
+        // eventId will be set up by the database... figure that out
+        this.name = name;
+        this.organizer = organizer;
+        this.description = description;
+
+        this.date = date;
+        this.date_readable = date_readable;
+        this.time = time;
+        this.location = location;
+        this.counterGoing = 0;
+        this.tag = tag;
+        this.eventId = eventId;
+        this.counterGoing = counterGoing;
+    }
+
     public Event(Parcel p){
         // eventId will be set up by the database... figure that out
         this.name = p.readString();
