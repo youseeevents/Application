@@ -7,6 +7,7 @@ public class Event implements Parcelable {
 
     private String eventId;
     protected String name;
+    protected String organizer;
     private String description;
     private int counterGoing;
     private int counterInterested;
@@ -22,9 +23,10 @@ public class Event implements Parcelable {
 
     public Event(){}
 
-    public Event(String eventId, String name, String description, String date, String date_readable, String time, String location, String tag){
+    public Event(String eventId, String name, String organizer, String description, String date, String date_readable, String time, String location, String tag){
         // eventId will be set up by the database... figure that out
         this.name = name;
+        this.organizer = organizer;
         this.description = description;
 
         this.date = date;
@@ -39,13 +41,13 @@ public class Event implements Parcelable {
     public Event(Parcel p){
         // eventId will be set up by the database... figure that out
         this.name = p.readString();
+        this.organizer = p.readString();
         this.description = p.readString();
         this.date = p.readString();
         this.date_readable = p.readString();
         this.time = p.readString();
         this.location = p.readString();
         this.counterGoing = p.readInt();
-        this.counterInterested = p.readInt();
         this.tag = p.readString();
         this.eventId = p.readString();
     }
@@ -98,16 +100,14 @@ public class Event implements Parcelable {
         return name;
     }
 
+    public String getOrganizer() { return organizer; }
+
     public String getDescription() {
         return description;
     }
 
     public int getCounterGoing() {
         return counterGoing;
-    }
-
-    public int getCounterInterested() {
-        return counterInterested;
     }
 
     public String getDate() {
@@ -151,13 +151,13 @@ public class Event implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
+        dest.writeString(organizer);
         dest.writeString(description);
         dest.writeString(date);
         dest.writeString(date_readable);
         dest.writeString(time);
         dest.writeString(location);
         dest.writeInt(counterGoing);
-        dest.writeInt(counterInterested);
         dest.writeString(tag);
         dest.writeString(eventId);
     }

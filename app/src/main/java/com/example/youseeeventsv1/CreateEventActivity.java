@@ -258,7 +258,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
                                 /*System.out.println("ready to add event");
                                 create new event and push to events and the user's created events*/
-                                Event new_event = new Event(event_Id, name_text, description_text,
+                                Event new_event = new Event(event_Id, name_text, organizer.getText().toString(), description_text,
                                         datetime_text, date_readable, time,
                                         location_text, selected_tag);
 

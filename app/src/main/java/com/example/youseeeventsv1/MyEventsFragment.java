@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -60,9 +61,12 @@ public class MyEventsFragment extends Fragment {
         user = auth.getCurrentUser();
 
         if (user == null){
-            // Do something here, user is not logged in. Redirect to login.
+            TextView notice = getActivity().findViewById(R.id.text_login);
+            notice.setVisibility(View.VISIBLE);
         }
         else if (user != null) {
+            TextView notice = getActivity().findViewById(R.id.text_login);
+            notice.setVisibility(View.GONE);
             String display_name = user.getDisplayName();
             if(recyclerView == null) {
                 fillSavedEvents(display_name);

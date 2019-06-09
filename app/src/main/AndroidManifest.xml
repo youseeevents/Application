@@ -20,13 +20,15 @@
             android:theme="@style/CustomActionBarTheme.NoActionBar"></activity>
         <activity
             android:name=".CreateEventActivity"
-            android:label="@string/title_activity_create_event" />
+            android:label="@string/title_activity_create_event"
+            android:theme="@style/CustomActionBarTheme.NoActionBar"></activity>
         <activity
             android:name=".OrganizerSignUp"
             android:label="Organizer Sign Up" />
         <activity
             android:name=".EventActivity"
-            android:label="@string/title_activity_event" />
+            android:label="@string/title_activity_event"
+            android:theme="@style/CustomActionBarTheme.NoActionBar"></activity>
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up" />

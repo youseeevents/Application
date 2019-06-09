@@ -95,6 +95,10 @@ public class SearchFragment extends Fragment {
 
                     /* Fields used for search */
                     String event_name = snapshot.child("name").getValue(String.class);
+                    String event_org = "University of California, San Diego";
+                    if(snapshot.hasChild("organizer")){
+                        event_org = snapshot.child("organizer").getValue(String.class);
+                    }
                     String event_date = snapshot.child("date_readable").getValue(String.class);
                     String event_location = snapshot.child("location").getValue(String.class);
                     String event_tag = snapshot.child("tag").getValue(String.class);
@@ -126,25 +130,25 @@ public class SearchFragment extends Fragment {
 
                     if(event_name.toLowerCase().contains(searchedString.toLowerCase())) {
                         if(!event_added) {
-                            events.add(new Event(eventId, event_name, event_description, event_date_full, event_date, event_time, event_location, event_tag));
+                            events.add(new Event(eventId, event_name, event_org, event_description, event_date_full, event_date, event_time, event_location, event_tag));
                             event_added = true;
                         }
                     }
                     else if(event_date.toLowerCase().contains(searchedString.toLowerCase())) {
                         if(!event_added) {
-                            events.add(new Event(eventId, event_name, event_description, event_date_full, event_date, event_time, event_location, event_tag));
+                            events.add(new Event(eventId, event_name, event_org, event_description, event_date_full, event_date, event_time, event_location, event_tag));
                             event_added = true;
                         }
                     }
                     else if(event_location.toLowerCase().contains(searchedString.toLowerCase())) {
                         if(!event_added) {
-                            events.add(new Event(eventId, event_name, event_description, event_date_full, event_date, event_time, event_location, event_tag));
+                            events.add(new Event(eventId, event_name, event_org, event_description, event_date_full, event_date, event_time, event_location, event_tag));
                             event_added = true;
                         }
                     }
                     else if(event_tag.toLowerCase().contains(searchedString.toLowerCase())) {
                         if(!event_added) {
-                            events.add(new Event(eventId, event_name, event_description, event_date_full, event_date, event_time, event_location, event_tag));
+                            events.add(new Event(eventId, event_name, event_org, event_description, event_date_full, event_date, event_time, event_location, event_tag));
                             event_added = true;
                         }
                     }

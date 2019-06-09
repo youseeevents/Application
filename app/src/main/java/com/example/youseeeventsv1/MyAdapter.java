@@ -71,6 +71,7 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
         public TextView e_name;
         public TextView e_date;
         public TextView e_location;
+        public TextView e_popularity;
         public LinearLayout organizer_buttons;
         public Button delete_button;
         public Button edit_button;
@@ -83,6 +84,7 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             e_name = view.findViewById(R.id.event_name_text);
             e_date = view.findViewById(R.id.event_date_text);
             e_location = view.findViewById(R.id.event_location_text);
+            e_popularity = view.findViewById(R.id.event_popularity_text);
 
             organizer_buttons = view.findViewById(R.id.org_buttons);
             delete_button = view.findViewById(R.id.delete_button);
@@ -174,6 +176,7 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             String name = mDataset.get(position).getName();
             String date = mDataset.get(position).getDate_readable();
             String location = mDataset.get(position).getLocation();
+            String popularity = mDataset.get(position).getCounterGoing() + " people are interested!";
             if(name.length() > 34){
                 name = name.substring(0, 30) + "...";
             }
@@ -183,9 +186,13 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             if(location.length() > 34){
                 location = location.substring(0, 30) + "...";
             }
+            if(popularity.length() > 34){
+                popularity = popularity.substring(0, 30) + "...";
+            }
             ((MyViewHolder) holder).e_name.setText(name);
             ((MyViewHolder) holder).e_date.setText(date);
             ((MyViewHolder) holder).e_location.setText(location);
+            ((MyViewHolder) holder).e_popularity.setText(popularity);
         }
         ((MyViewHolder)holder).bind(mDataset.get(position), listener);
         if(listenerLong != null)
