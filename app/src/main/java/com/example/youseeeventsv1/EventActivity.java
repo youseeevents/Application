@@ -79,17 +79,6 @@ public class EventActivity extends AppCompatActivity {
         final TextView event_description = findViewById(R.id.event_description);
         event_description.setText(event.getDescription());
 
-        /*
-        FloatingActionButton shareButton = findViewById(R.id.shareButton);
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Uri uriUrl = Uri.parse("https://youseeevents.github.io/");
-                Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-                startActivity(launchBrowser);
-            }
-        }); */
-
         // check if the event is already saved under the user and set the buttons toggle
         if(user != null) {
             DatabaseReference user_events_ref = ref.child(user.getDisplayName()).child("events");
@@ -99,10 +88,8 @@ public class EventActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot snapshot) {
                     if (snapshot.hasChild(event.getEventId())) {
                         saveButton.setChecked(true);
-                        initial_press = true;
                     } else {
                         saveButton.setChecked(false);
-                        initial_press = true;
                     }
                 }
 
@@ -115,38 +102,36 @@ public class EventActivity extends AppCompatActivity {
 
         saveButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(initial_press) {
-                    if (isChecked) {
-                        // The toggle is enabled
-                        if (user != null) {
-                            DatabaseReference user_events_ref = ref.child(user.getDisplayName()).child("events");
-                            // user is logged in
-                            user_events_ref.child(event.getEventId()).setValue("");
+                if (isChecked) {
+                    // The toggle is enabled
+                    if (user != null) {
+                        DatabaseReference user_events_ref = ref.child(user.getDisplayName()).child("events");
+                        // user is logged in
+                        user_events_ref.child(event.getEventId()).setValue("");
 
-                            final DatabaseReference event_info_ref = FirebaseDatabase
-                                    .getInstance()
-                                    .getReference("Events")
-                                    .child(event.getEventId());
-                            event_info_ref.child("counterGoing").addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    int counter = dataSnapshot.getValue(Integer.class);
-                                    event_info_ref.child("counterGoing").setValue(counter + 1);
-                                }
+                        final DatabaseReference event_info_ref = FirebaseDatabase
+                            .getInstance()
+                            .getReference("Events")
+                            .child(event.getEventId());
+                        event_info_ref.child("counterGoing").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                int counter = dataSnapshot.getValue(Integer.class);
+                                event_info_ref.child("counterGoing").setValue(counter + 1);
+                            }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                }
-                            });
-                            Toast.makeText(getApplicationContext(), "Event Saved!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // user is not logged in
-                            buttonView.setChecked(false);
-                            startActivity(new Intent(EventActivity.this, LoginActivity.class));
-                        }
+                            }
+                        });
+                        Toast.makeText(getApplicationContext(), "Event Saved!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // user is not logged in
+                        buttonView.setChecked(false);
+                        startActivity(new Intent(EventActivity.this, LoginActivity.class));
                     }
-                } else {
+                 } else {
                     final DatabaseReference user_events_ref = ref.child(user.getDisplayName()).child("events");
                     // The toggle is disabled
                     user_events_ref.addListenerForSingleValueEvent(new ValueEventListener() {

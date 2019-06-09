@@ -270,7 +270,7 @@
                     android:textSize="24sp" />
 
                 <Button
-                    android:id="@+id/image_createEvent"
+                    android:id="@+id/create_events_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

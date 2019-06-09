@@ -222,7 +222,7 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
                     ((MyViewHolder) holder).e_image.setImageResource(R.drawable.ic_group_24dp);
                     break;
                 case "weekend event":
-                    ((MyViewHolder) holder).e_image.setImageResource(R.drawable.fitness_icon);
+                    ((MyViewHolder) holder).e_image.setImageResource(R.drawable.weekend_icon);
                     break;
             }
         }

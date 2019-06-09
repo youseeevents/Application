@@ -1,21 +1,14 @@
 package com.example.youseeeventsv1;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.dynamic.SupportFragmentWrapper;
-import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,8 +16,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.security.KeyStore;
 
 public class CreateEventActivity extends AppCompatActivity {
 
@@ -96,7 +87,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
 
         //create event button
-        createEventImageButton = (Button)findViewById(R.id.image_createEvent);
+        createEventImageButton = (Button)findViewById(R.id.create_events_button);
 
         createEventImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
