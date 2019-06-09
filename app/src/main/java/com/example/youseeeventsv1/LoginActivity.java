@@ -16,9 +16,12 @@ import com.example.youseeeventsv1.R;
 import com.example.youseeeventsv1.SignUpActivity;
 import com.example.youseeeventsv1.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
@@ -133,15 +136,25 @@ public class LoginActivity extends AppCompatActivity {
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
+                        /*if (!task.isSuccessful()) {
                             Toast.makeText(com.example.youseeeventsv1.LoginActivity.this, "Authentication failed." + task.getException(),
                                     Toast.LENGTH_SHORT).show();
-                        }
+                        }*/
                         if( task.isSuccessful()) {
                             startActivity(new Intent(com.example.youseeeventsv1.LoginActivity.this, MainActivity.class));
                         }
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if(e instanceof FirebaseAuthInvalidCredentialsException) {
+                            Toast.makeText(LoginActivity.this, "Incorrect password, please try again.", Toast.LENGTH_SHORT).show();
+                        }
+                        if(e instanceof FirebaseAuthInvalidUserException) {
+                            Toast.makeText( LoginActivity.this, "User does not exist, please try again.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+        });
     }
 
     public void setEmail( String email ) {
