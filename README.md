@@ -8,6 +8,8 @@ You See Events aims to solve this problem by presenting all of the events on cam
 **Login Credentials:**
 
 For testing non-organizer accounts, create an account and login.
+Email: youseeevents.test@gmail.com
+Email_Pw: Testpassword! (for checking "forgot password, reset password")
 
 For testing organizer account access this organizer account
 User: test_organizer
