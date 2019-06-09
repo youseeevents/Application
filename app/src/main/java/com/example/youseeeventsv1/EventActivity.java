@@ -3,6 +3,7 @@ package com.example.youseeeventsv1;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -31,6 +32,7 @@ public class EventActivity extends AppCompatActivity {
     private DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
     private Event event;
     private static ToggleButton saveButton;
+    private boolean initial_press = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,11 @@ public class EventActivity extends AppCompatActivity {
         title.setText(event.getName());
 
         TextView organizer = findViewById(R.id.event_organizer);
-        organizer.setText("Not implemented.");
+        String organizer_name = event.getOrganizer();
+        if(organizer_name == null) {
+            organizer_name = "University of California, San Diego";
+        }
+        organizer.setText(organizer_name);
 
         TextView tag = findViewById(R.id.event_tag);
         tag.setText(event.getTag());
@@ -66,9 +72,10 @@ public class EventActivity extends AppCompatActivity {
         TextView location = findViewById(R.id.event_location);
         location.setText(event.getLocation());
 
-        TextView event_description = findViewById(R.id.event_description);
+        final TextView event_description = findViewById(R.id.event_description);
         event_description.setText(event.getDescription());
 
+        /*
         FloatingActionButton shareButton = findViewById(R.id.shareButton);
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +84,7 @@ public class EventActivity extends AppCompatActivity {
                 Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
                 startActivity(launchBrowser);
             }
-        });
+        }); */
 
         // check if the event is already saved under the user and set the buttons toggle
         if(user != null) {
@@ -88,8 +95,10 @@ public class EventActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot snapshot) {
                     if (snapshot.hasChild(event.getEventId())) {
                         saveButton.setChecked(true);
+                        initial_press = true;
                     } else {
                         saveButton.setChecked(false);
+                        initial_press = true;
                     }
                 }
 
@@ -102,18 +111,36 @@ public class EventActivity extends AppCompatActivity {
 
         saveButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // The toggle is enabled
-                    if(user != null) {
-                        DatabaseReference user_events_ref = ref.child(user.getDisplayName()).child("events");
-                        // user is logged in
-                        user_events_ref.child(event.getEventId()).setValue("");
-                        Toast.makeText(getApplicationContext(), "Event Saved!", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        // user is not logged in
-                        buttonView.setChecked(false);
-                        startActivity(new Intent( EventActivity.this, LoginActivity.class));
+                if(initial_press) {
+                    if (isChecked) {
+                        // The toggle is enabled
+                        if (user != null) {
+                            DatabaseReference user_events_ref = ref.child(user.getDisplayName()).child("events");
+                            // user is logged in
+                            user_events_ref.child(event.getEventId()).setValue("");
+
+                            final DatabaseReference event_info_ref = FirebaseDatabase
+                                    .getInstance()
+                                    .getReference("Events")
+                                    .child(event.getEventId());
+                            event_info_ref.child("counterGoing").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    int counter = dataSnapshot.getValue(Integer.class);
+                                    event_info_ref.child("counterGoing").setValue(counter + 1);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                            Toast.makeText(getApplicationContext(), "Event Saved!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // user is not logged in
+                            buttonView.setChecked(false);
+                            startActivity(new Intent(EventActivity.this, LoginActivity.class));
+                        }
                     }
                 } else {
                     final DatabaseReference user_events_ref = ref.child(user.getDisplayName()).child("events");
@@ -124,6 +151,22 @@ public class EventActivity extends AppCompatActivity {
                             ToggleButton saveButton = (ToggleButton) findViewById(R.id.saveButton);
                             if (snapshot.hasChild(event.getEventId())) {
                                 user_events_ref.child(event.getEventId()).removeValue();
+                                final DatabaseReference event_info_ref = FirebaseDatabase
+                                        .getInstance()
+                                        .getReference("Events")
+                                        .child(event.getEventId());
+                                event_info_ref.child("counterGoing").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        int counter = dataSnapshot.getValue(Integer.class);
+                                        if((counter - 1) >= 0)
+                                            event_info_ref.child("counterGoing").setValue(counter - 1);
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
                                 Toast.makeText(getApplicationContext(), "Event Unsaved!", Toast.LENGTH_SHORT).show();
                             }
                         }

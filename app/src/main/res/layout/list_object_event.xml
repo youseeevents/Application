@@ -62,7 +62,7 @@
         <TableLayout
             android:id="@+id/event_container"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
             android:background="@drawable/event_border"
             android:padding="2dp">
 
@@ -139,11 +139,10 @@
                     <TableRow
                         android:id="@+id/event_location_row"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="4dp">
+                        android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/locationimg"
+                            android:id="@+id/location_img"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -152,6 +151,31 @@
 
                         <TextView
                             android:id="@+id/event_location_text"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7"
+                            android:maxLines="1"
+                            android:paddingRight="10dp"
+                            android:text="@null"
+                            android:textColor="@android:color/black"
+                            android:transitionName="event_transition" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/event_popularity_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="4dp">
+
+                        <ImageView
+                            android:id="@+id/popularity_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/ic_group_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/event_popularity_text"
                             android:layout_height="match_parent"
                             android:layout_weight="0.7"
                             android:maxLines="1"

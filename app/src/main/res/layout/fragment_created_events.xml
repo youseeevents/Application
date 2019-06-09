@@ -7,7 +7,6 @@
     android:id="@+id/created"
     tools:context=".CreatedEventsFragment">
 
-<<<<<<< HEAD
     <android.support.v7.widget.RecyclerView
         android:id="@+id/created_events_recycler_view"
         android:layout_width="match_parent"
@@ -45,42 +44,6 @@
             android:gravity="center"
             android:text="Hold an event for more options!" />
     </LinearLayout>
-=======
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/created_events_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@drawable/text_border"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="Created Events"
-            android:textSize="24dp" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/created_events_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"
-            android:visibility="visible" />
-
-        <Button
-            android:id="@+id/create_events_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Create an Event!" />
-
-    </LinearLayout>
-
-
->>>>>>> 0e772e26ecca79b23a377a36746aaa3729d1ca16
-
     <ProgressBar
         android:id="@+id/created_progress_bar"
         android:layout_width="30dp"
