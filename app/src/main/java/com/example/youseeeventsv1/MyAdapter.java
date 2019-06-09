@@ -209,7 +209,7 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
                 case "arts & culture":
                     ((MyViewHolder) holder).e_image.setImageResource(R.drawable.art_icon);
                     break;
-                case "fitness & wellbeing":
+                case "fitness & well-being":
                     ((MyViewHolder) holder).e_image.setImageResource(R.drawable.fitness_icon);
                     break;
                 case "athletics":

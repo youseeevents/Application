@@ -111,17 +111,22 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String choice = sort_list[position];
+                LinearLayoutManager layoutManager;
                 switch(choice){
                     case "Please select a value to sort by":
                         break;
                     case "Date":
                         fillEventsArrayBySort("date");
+                        layoutManager = new LinearLayoutManager(getActivity());
+                        recyclerView.setLayoutManager(layoutManager);
+                        break;
                     case "Popularity":
                         fillEventsArrayBySort("counterGoing");
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                        layoutManager = new LinearLayoutManager(getActivity());
                         layoutManager.setReverseLayout(true);
                         layoutManager.setStackFromEnd(true);
                         recyclerView.setLayoutManager(layoutManager);
+                        break;
                 }
             }
 
@@ -390,6 +395,8 @@ public class HomeFragment extends Fragment {
                             mProgressBar.setVisibility(View.GONE);
                             recyclerView.setAdapter(myAdapter);
                             recyclerView.setVisibility(View.VISIBLE);
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                            recyclerView.setLayoutManager(layoutManager);
                         }
                     }
                     @Override
@@ -452,7 +459,7 @@ public class HomeFragment extends Fragment {
                 if (newEvent.tag.equals("community")) {
                     community.add(newEvent);
                 }
-                if (newEvent.tag.equals("weekend events")) {
+                if (newEvent.tag.equals("weekend event")) {
                     weekend.add(newEvent);
                 }
                 if (newEvent.tag.equals("athletics")) {
