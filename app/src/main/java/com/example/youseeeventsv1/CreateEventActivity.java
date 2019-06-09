@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -29,7 +30,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
     private DatabaseReference databaseRef;
     private DatabaseReference databaseRefUsers;
-    ImageButton createEventImageButton;
+    Button createEventImageButton;
     EditText name;
     EditText description;
     EditText location;
@@ -95,7 +96,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
 
         //create event button
-        createEventImageButton = (ImageButton) findViewById(R.id.image_createEvent);
+        createEventImageButton = (Button)findViewById(R.id.image_createEvent);
 
         createEventImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

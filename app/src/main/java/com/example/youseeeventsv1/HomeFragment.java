@@ -118,10 +118,6 @@ public class HomeFragment extends Fragment {
                         fillEventsArrayBySort("date");
                     case "Popularity":
                         fillEventsArrayBySort("counterGoing");
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                        layoutManager.setReverseLayout(true);
-                        layoutManager.setStackFromEnd(true);
-                        recyclerView.setLayoutManager(layoutManager);
                 }
             }
 
@@ -431,7 +427,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void fillEachArray(){
-        fillEventsArray();
         arts.clear();
         fitness.clear();
         weekend.clear();
@@ -453,7 +448,7 @@ public class HomeFragment extends Fragment {
                 if (newEvent.tag.equals("community")) {
                     community.add(newEvent);
                 }
-                if (newEvent.tag.equals("weekend event")) {
+                if (newEvent.tag.equals("weekend events")) {
                     weekend.add(newEvent);
                 }
                 if (newEvent.tag.equals("athletics")) {
