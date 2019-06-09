@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
+import java.util.Iterator;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword, inputUsername;
@@ -87,7 +89,7 @@ public class SignUpActivity extends AppCompatActivity {
                 CharSequence edu = ".edu";
                 CharSequence net = ".net";
                 CharSequence org = ".org";
-                if (email.indexOf('@') == -1 || !email.contains(com) || !email.contains(edu) || !email.contains(net) || !email.contains(org)) {
+                if (email.indexOf('@') == -1 || (!email.contains(com) && !email.contains(edu) && !email.contains(net) && !email.contains(org))) {
                     Toast.makeText(getApplicationContext(), "Email address is invalid! Please enter a valid email address.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -106,8 +108,14 @@ public class SignUpActivity extends AppCompatActivity {
                 rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
+                        for(DataSnapshot childSnap : snapshot.getChildren()) {
+                            if(childSnap.child("email").getValue().equals(email)) {
+                                Toast.makeText(getApplicationContext(), "Email address is already in use! Please choose a different email address.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
                         if (snapshot.hasChild(username)) {
-                            Toast.makeText(getApplicationContext(), "Username already exists!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Username already exists! Please choose a different username.", Toast.LENGTH_SHORT).show();
                             return;
                         }
                         else{
