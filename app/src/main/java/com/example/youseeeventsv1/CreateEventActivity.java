@@ -179,6 +179,8 @@ public class CreateEventActivity extends AppCompatActivity {
                     //same for day
                     if(day_spinner.getSelectedItem().toString().length() == 1){
                         date_day_convert = "0" + day_spinner.getSelectedItem().toString();
+                    } else {
+                        date_day_convert = day_spinner.getSelectedItem().toString();
                     }
 
                     //time converter
