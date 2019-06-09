@@ -431,6 +431,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void fillEachArray(){
+        fillEventsArray();
         arts.clear();
         fitness.clear();
         weekend.clear();
@@ -439,23 +440,25 @@ public class HomeFragment extends Fragment {
         athletics.clear();
         for(int i = 0; i < events.size(); i++) {
             Event newEvent = events.get(i);
-            if (newEvent.tag.equals("arts & culture")) {
-                arts.add(newEvent);
-            }
-            if (newEvent.tag.equals("fitness & well-being")) {
-                fitness.add(newEvent);
-            }
-            if (newEvent.tag.equals("seminars & info-sessions")) {
-                seminars.add(newEvent);
-            }
-            if (newEvent.tag.equals("community")) {
-                community.add(newEvent);
-            }
-            if (newEvent.tag.equals("weekend event")) {
-                weekend.add(newEvent);
-            }
-            if (newEvent.tag.equals("athletics")) {
-                athletics.add(newEvent);
+            if(newEvent.tag != null) {
+                if (newEvent.tag.equals("arts & culture")) {
+                    arts.add(newEvent);
+                }
+                if (newEvent.tag.equals("fitness & well-being")) {
+                    fitness.add(newEvent);
+                }
+                if (newEvent.tag.equals("seminars & info-sessions")) {
+                    seminars.add(newEvent);
+                }
+                if (newEvent.tag.equals("community")) {
+                    community.add(newEvent);
+                }
+                if (newEvent.tag.equals("weekend event")) {
+                    weekend.add(newEvent);
+                }
+                if (newEvent.tag.equals("athletics")) {
+                    athletics.add(newEvent);
+                }
             }
         }
     }

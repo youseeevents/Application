@@ -10,7 +10,6 @@ public class Event implements Parcelable {
     protected String organizer;
     private String description;
     private int counterGoing;
-    private int counterInterested;
 
     private String date;
     private String date_readable;
@@ -34,7 +33,6 @@ public class Event implements Parcelable {
         this.time = time;
         this.location = location;
         this.counterGoing = 0;
-        this.counterInterested = 0;
         this.tag = tag;
         this.eventId = eventId;
     }
@@ -67,10 +65,6 @@ public class Event implements Parcelable {
 
     public void setCounterGoing(int counterGoing) {
         this.counterGoing = counterGoing;
-    }
-
-    public void setCounterInterested(int counterInterested) {
-        this.counterInterested = counterInterested;
     }
 
     public void setDate(String date) {
