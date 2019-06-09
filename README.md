@@ -13,7 +13,7 @@ For testing organizer account access,   *Edward will give a valid organizer acco
 
 **Requrements:**
 
-Minimum Requirements: Andoird OS V.4.4 (KitKat)
+Minimum Requirements: Android OS V.4.4 (KitKat)
 
 **Installation Instruction:**
 
