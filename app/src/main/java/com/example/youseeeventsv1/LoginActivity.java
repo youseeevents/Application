@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
                             if (!snapshot.hasChild(emailUser)) {
-                                Toast.makeText(getApplicationContext(), "Username does not exist!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Username does not exist! Please try again.", Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             else{
@@ -149,9 +149,6 @@ public class LoginActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         if(e instanceof FirebaseAuthInvalidCredentialsException) {
                             Toast.makeText(LoginActivity.this, "Incorrect password, please try again.", Toast.LENGTH_SHORT).show();
-                        }
-                        if(e instanceof FirebaseAuthInvalidUserException) {
-                            Toast.makeText( LoginActivity.this, "User does not exist, please try again.", Toast.LENGTH_SHORT).show();
                         }
                     }
         });
