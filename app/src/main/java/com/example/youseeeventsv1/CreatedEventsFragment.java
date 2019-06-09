@@ -122,7 +122,7 @@ public class CreatedEventsFragment extends Fragment {
                         // go through FirebaseDatabase and read all the events. If the event has the name of
                         // a saved event, display it.
 
-                        if(created_events_names.size() >= dataSnapshot.getChildrenCount()){
+                        if(created_events_names.size() >= dataSnapshot.getChildrenCount()) {
                             FirebaseDatabase.getInstance().getReference("Events")
                                     .orderByChild("date")
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -137,11 +137,11 @@ public class CreatedEventsFragment extends Fragment {
                                              * accessing the values at key = saved_event_name, but I couldn't
                                              * get it to work.
                                              */
-                                            for (String name : created_events_names){
+                                            for (String name : created_events_names) {
                                                 /* So if the saved_event_name is not in the datasnapshot,
                                                  * remove it from the list as well as from the user's field.
                                                  */
-                                                if(!dataSnapshot.hasChild(name)){
+                                                if (!dataSnapshot.hasChild(name)) {
                                                     created_events_names.remove(name);
                                                     FirebaseDatabase.getInstance().getReference("Users")
                                                             .child(user.getDisplayName())
@@ -157,13 +157,14 @@ public class CreatedEventsFragment extends Fragment {
                                                     event_ind += 1;
                                                 }
                                             }
-                                            if(created_events.size() >= created_events_names.size()){
+                                            if (created_events.size() >= created_events_names.size()) {
                                                 initial_load = true;
                                                 mProgressBar.setVisibility(View.GONE);
                                                 recyclerView.setAdapter(myAdapter);
                                                 recyclerView.setVisibility(View.VISIBLE);
                                             }
                                         }
+
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError databaseError) {
                                         }

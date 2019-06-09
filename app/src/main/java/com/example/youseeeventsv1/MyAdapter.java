@@ -176,7 +176,14 @@ class MyAdapter extends android.support.v7.widget.RecyclerView.Adapter {
             String name = mDataset.get(position).getName();
             String date = mDataset.get(position).getDate_readable();
             String location = mDataset.get(position).getLocation();
-            String popularity = mDataset.get(position).getCounterGoing() + " people are interested!";
+            int pop_count = mDataset.get(position).getCounterGoing();
+            String popularity;
+            if(pop_count == 1){
+                popularity = mDataset.get(position).getCounterGoing() + " person is interested!";
+            }
+            else {
+                popularity = mDataset.get(position).getCounterGoing() + " people are interested!";
+            }
             if(name.length() > 34){
                 name = name.substring(0, 30) + "...";
             }

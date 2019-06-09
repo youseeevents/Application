@@ -117,7 +117,11 @@ public class HomeFragment extends Fragment {
                     case "Date":
                         fillEventsArrayBySort("date");
                     case "Popularity":
-                        fillEventsArrayBySort("eventGoing");
+                        fillEventsArrayBySort("counterGoing");
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                        layoutManager.setReverseLayout(true);
+                        layoutManager.setStackFromEnd(true);
+                        recyclerView.setLayoutManager(layoutManager);
                 }
             }
 
@@ -139,8 +143,9 @@ public class HomeFragment extends Fragment {
         }
         // Setting up the recycler view and filling it with objects in the events array.
         recyclerView = (RecyclerView) getView().findViewById(R.id.home_recycler_view);
-        layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+
         myAdapter = new MyAdapter(events, new MyAdapter.OnItemClickListener(){
             @Override public void onItemClick(Event event){
                 // event -> EventActivity
@@ -393,7 +398,7 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-    private void fillEventsArrayBySort(String sortedBy){
+    private void fillEventsArrayBySort(final String sortedBy){
         mProgressBar.setVisibility(View.VISIBLE);
         events.clear();
         FirebaseDatabase.getInstance().getReference("Events")
